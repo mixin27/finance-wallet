@@ -22,5 +22,7 @@ abstract class AccountRepository {
     UpdateAccountRequest request,
   );
   Future<Either<Failure, void>> deleteAccount(String id);
-  Future<Either<Failure, List<AccountType>>> getAccountTypes();
+  Future<Either<Failure, List<AccountType>>> getAccountTypes({
+    bool forceRefresh,
+  });
 }

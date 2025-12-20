@@ -57,6 +57,54 @@ final class DashboardRemoteDataSourceProvider
 String _$dashboardRemoteDataSourceHash() =>
     r'affb1bb38f543dc05b998af90b4cd2e529a0670a';
 
+@ProviderFor(dashboardLocalDataSource)
+const dashboardLocalDataSourceProvider = DashboardLocalDataSourceProvider._();
+
+final class DashboardLocalDataSourceProvider
+    extends
+        $FunctionalProvider<
+          DashboardLocalDatasource,
+          DashboardLocalDatasource,
+          DashboardLocalDatasource
+        >
+    with $Provider<DashboardLocalDatasource> {
+  const DashboardLocalDataSourceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'dashboardLocalDataSourceProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$dashboardLocalDataSourceHash();
+
+  @$internal
+  @override
+  $ProviderElement<DashboardLocalDatasource> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  DashboardLocalDatasource create(Ref ref) {
+    return dashboardLocalDataSource(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DashboardLocalDatasource value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DashboardLocalDatasource>(value),
+    );
+  }
+}
+
+String _$dashboardLocalDataSourceHash() =>
+    r'06cf7212861f285494720cda506dc4b987fda7e0';
+
 @ProviderFor(dashboardRepository)
 const dashboardRepositoryProvider = DashboardRepositoryProvider._();
 
@@ -103,4 +151,4 @@ final class DashboardRepositoryProvider
 }
 
 String _$dashboardRepositoryHash() =>
-    r'8d70de5b55e7d51f4a78de53719ca7c9a7757638';
+    r'8d05efab7f25d6dd02413da30f5207e90b5027b8';

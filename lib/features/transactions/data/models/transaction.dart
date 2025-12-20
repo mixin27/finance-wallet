@@ -1,8 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../accounts/data/models/currency.dart';
-import 'category.dart';
-import 'tag.dart';
+import '../../../currencies/data/models/currency.dart';
 
 part 'transaction.freezed.dart';
 part 'transaction.g.dart';
@@ -59,4 +57,26 @@ abstract class AccountTypeInfo with _$AccountTypeInfo {
 
   factory AccountTypeInfo.fromJson(Map<String, dynamic> json) =>
       _$AccountTypeInfoFromJson(json);
+}
+
+@freezed
+abstract class Category with _$Category {
+  const factory Category({
+    required String id,
+    required String name,
+    required String type, // INCOME, EXPENSE, TRANSFER
+    String? color,
+    String? icon,
+  }) = _Category;
+
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      _$CategoryFromJson(json);
+}
+
+@freezed
+abstract class Tag with _$Tag {
+  const factory Tag({required String id, required String name, String? color}) =
+      _Tag;
+
+  factory Tag.fromJson(Map<String, dynamic> json) => _$TagFromJson(json);
 }

@@ -78,6 +78,15 @@ class Pageable {
     required this.unpaged,
   });
 
+  factory Pageable.empty() => Pageable(
+    pageNumber: 0,
+    pageSize: 0,
+    sort: Sort(sorted: false, unsorted: true, empty: true),
+    offset: 0,
+    paged: false,
+    unpaged: true,
+  );
+
   factory Pageable.fromJson(Map<String, dynamic> json) {
     return Pageable(
       pageNumber: json['pageNumber'] as int,

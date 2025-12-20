@@ -96,3 +96,31 @@ Map<String, dynamic> _$AccountTypeInfoToJson(_AccountTypeInfo instance) =>
       'name': instance.name,
       'icon': instance.icon,
     };
+
+_Category _$CategoryFromJson(Map<String, dynamic> json) => _Category(
+  id: json['id'] as String,
+  name: json['name'] as String,
+  type: json['type'] as String,
+  color: json['color'] as String?,
+  icon: json['icon'] as String?,
+);
+
+Map<String, dynamic> _$CategoryToJson(_Category instance) => <String, dynamic>{
+  'id': instance.id,
+  'name': instance.name,
+  'type': instance.type,
+  'color': instance.color,
+  'icon': instance.icon,
+};
+
+_Tag _$TagFromJson(Map<String, dynamic> json) => _Tag(
+  id: json['id'] as String,
+  name: json['name'] as String,
+  color: json['color'] as String?,
+);
+
+Map<String, dynamic> _$TagToJson(_Tag instance) => <String, dynamic>{
+  'id': instance.id,
+  'name': instance.name,
+  'color': instance.color,
+};

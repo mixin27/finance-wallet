@@ -1,9 +1,9 @@
-import 'package:finance_wallet/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
+import '../../../../app/presentation/providers/app_providers.dart';
 import '../../../../core/network/api_client.dart';
-import '../../data/cache/transaction_cache_manager.dart';
+import '../../data/datasources/transaction_local_datasource.dart';
 import '../../data/datasources/transaction_remote_datasource.dart';
 import '../../data/models/transaction.dart';
 import '../../data/repositories/transaction_repository_impl.dart';
@@ -15,18 +15,18 @@ final transactionRemoteDatasourceProvider =
       return TransactionRemoteDatasource(ApiClient().dio);
     });
 
-final transactionCacheManagerProvider = Provider<TransactionCacheManager>((
-  ref,
-) {
-  return TransactionCacheManager(prefs: sharedPreferences);
-});
+final transactionLocalDatasourceProvider = Provider<TransactionLocalDatasource>(
+  (ref) {
+    return TransactionLocalDatasource(ref.read(appDatabaseProvider));
+  },
+);
 
 // Repository Provider
 final transactionRepositoryProvider = Provider<TransactionRepository>((ref) {
-  final datasource = ref.read(transactionRemoteDatasourceProvider);
-  final cacheManager = ref.read(transactionCacheManagerProvider);
-
-  return TransactionRepositoryImpl(datasource, cacheManager);
+  final remote = ref.read(transactionRemoteDatasourceProvider);
+  final local = ref.read(transactionLocalDatasourceProvider);
+  final networkInfo = ref.read(networkInfoProvider);
+  return TransactionRepositoryImpl(remote, local, networkInfo);
 });
 
 // Transactions List Provider

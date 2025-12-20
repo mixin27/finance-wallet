@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
+import '../../../../app/presentation/providers/app_providers.dart';
 import '../../../../core/network/api_client.dart';
+import '../../data/datasources/account_local_datasource.dart';
 import '../../data/datasources/account_remote_datasource.dart';
 import '../../data/models/account.dart';
 import '../../data/models/account_summary.dart';
@@ -16,10 +18,16 @@ final accountRemoteDatasourceProvider = Provider<AccountRemoteDatasource>((
   return AccountRemoteDatasource(ApiClient().dio);
 });
 
+final accountLocalDatasourceProvider = Provider<AccountLocalDatasource>((ref) {
+  final db = ref.read(appDatabaseProvider);
+  return AccountLocalDatasource(db);
+});
+
 // Repository Provider
 final accountRepositoryProvider = Provider<AccountRepository>((ref) {
-  final datasource = ref.read(accountRemoteDatasourceProvider);
-  return AccountRepositoryImpl(datasource);
+  final remote = ref.read(accountRemoteDatasourceProvider);
+  final local = ref.read(accountLocalDatasourceProvider);
+  return AccountRepositoryImpl(remote, local, ref.read(networkInfoProvider));
 });
 
 // Accounts List Provider

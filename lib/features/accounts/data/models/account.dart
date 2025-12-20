@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../currencies/data/models/currency.dart';
 import 'account_type.dart';
-import 'currency.dart';
 
 part 'account.freezed.dart';
 part 'account.g.dart';
