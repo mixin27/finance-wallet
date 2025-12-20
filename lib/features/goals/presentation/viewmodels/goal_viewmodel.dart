@@ -39,12 +39,15 @@ class GoalViewModel extends StateNotifier<GoalState> {
 
   GoalViewModel(this._repository, this._ref) : super(GoalState());
 
-  Future<void> loadGoals({bool activeOnly = false, bool force = false}) async {
+  Future<void> loadGoals({
+    bool activeOnly = false,
+    bool forceRefresh = false,
+  }) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
 
     final result = await _repository.getGoals(
       activeOnly: activeOnly,
-      force: force,
+      forceRefresh: forceRefresh,
     );
 
     result.fold(
@@ -61,12 +64,9 @@ class GoalViewModel extends StateNotifier<GoalState> {
     );
   }
 
-  Future<void> refreshGoals({
-    bool activeOnly = false,
-    bool force = true,
-  }) async {
+  Future<void> refreshGoals({bool activeOnly = false}) async {
     state = state.copyWith(isRefreshing: true);
-    await loadGoals(activeOnly: activeOnly, force: force);
+    await loadGoals(activeOnly: activeOnly, forceRefresh: true);
     state = state.copyWith(isRefreshing: false);
   }
 

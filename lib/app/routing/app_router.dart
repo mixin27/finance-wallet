@@ -7,6 +7,9 @@ import '../../features/accounts/presentation/pages/add_account_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/auth/presentation/pages/splash_page.dart';
+import '../../features/budgets/presentation/pages/add_budget_page.dart';
+import '../../features/budgets/presentation/pages/budget_detail_page.dart';
+import '../../features/budgets/presentation/pages/budgets_page.dart';
 import '../../features/categories/presentation/pages/add_category_page.dart';
 import '../../features/categories/presentation/pages/categories_page.dart';
 import '../../features/dashboard/presentation/pages/dashboard_page.dart';
@@ -142,6 +145,23 @@ class AppRouter {
         builder: (context, state) {
           final id = state.pathParameters['id']!;
           return GoalDetailPage(goalId: id);
+        },
+      ),
+
+      // Budgets
+      GoRoute(
+        path: '/budgets',
+        builder: (context, state) => const BudgetsPage(),
+      ),
+      GoRoute(
+        path: '/add-budget',
+        builder: (context, state) => const AddBudgetPage(),
+      ),
+      GoRoute(
+        path: '/budget-detail/:id',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return BudgetDetailPage(budgetId: id);
         },
       ),
     ],

@@ -37,10 +37,12 @@ class DashboardViewModel extends StateNotifier<DashboardState> {
   DashboardViewModel(this._repository, this._ref) : super(DashboardState());
 
   /// Load dashboard overview
-  Future<void> loadDashboard() async {
+  Future<void> loadDashboard({bool forceRefresh = false}) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
 
-    final result = await _repository.getDashboardOverview();
+    final result = await _repository.getDashboardOverview(
+      forceRefresh: forceRefresh,
+    );
 
     result.fold(
       (failure) {
@@ -59,7 +61,7 @@ class DashboardViewModel extends StateNotifier<DashboardState> {
   /// Refresh dashboard
   Future<void> refreshDashboard() async {
     state = state.copyWith(isRefreshing: true);
-    await loadDashboard();
+    await loadDashboard(forceRefresh: true);
     state = state.copyWith(isRefreshing: false);
   }
 

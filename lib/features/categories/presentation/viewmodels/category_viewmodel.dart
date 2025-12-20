@@ -39,10 +39,13 @@ class CategoryViewModel extends StateNotifier<CategoryState> {
   CategoryViewModel(this._repository, this._ref) : super(CategoryState());
 
   /// Load all categories
-  Future<void> loadCategories({String? type}) async {
+  Future<void> loadCategories({String? type, bool forceRefresh = false}) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
 
-    final result = await _repository.getCategories(type: type);
+    final result = await _repository.getCategories(
+      type: type,
+      forceRefresh: forceRefresh,
+    );
 
     result.fold(
       (failure) {
@@ -61,7 +64,7 @@ class CategoryViewModel extends StateNotifier<CategoryState> {
   /// Refresh categories
   Future<void> refreshCategories({String? type}) async {
     state = state.copyWith(isRefreshing: true);
-    await loadCategories(type: type);
+    await loadCategories(type: type, forceRefresh: true);
     state = state.copyWith(isRefreshing: false);
   }
 

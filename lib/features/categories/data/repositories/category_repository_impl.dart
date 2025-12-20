@@ -16,12 +16,12 @@ class CategoryRepositoryImpl implements CategoryRepository {
   @override
   Future<Either<Failure, List<CategoryDetailed>>> getCategories({
     String? type,
-    bool force = false,
+    bool forceRefresh = false,
   }) async {
     try {
       final categories = await _remoteDatasource.getCategories(
         type: type,
-        force: force,
+        force: forceRefresh,
       );
       return Right(categories);
     } on ServerException catch (e) {

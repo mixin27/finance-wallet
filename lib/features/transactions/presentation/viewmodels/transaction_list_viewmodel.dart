@@ -113,6 +113,7 @@ class TransactionListViewModel extends StateNotifier<TransactionListState> {
       accountId: accountId,
       categoryId: categoryId,
       resetPage: false,
+      forceRefresh: true,
     );
   }
 

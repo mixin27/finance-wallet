@@ -64,7 +64,7 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage>
               incomeCategories.isEmpty &&
               expenseCategories.isEmpty
           ? _buildLoadingState()
-          : RefreshIndicator(
+          : RefreshIndicator.adaptive(
               onRefresh: _onRefresh,
               child: TabBarView(
                 controller: _tabController,

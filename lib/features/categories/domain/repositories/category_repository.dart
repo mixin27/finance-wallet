@@ -8,7 +8,7 @@ import '../../data/models/update_category_request.dart';
 abstract class CategoryRepository {
   Future<Either<Failure, List<CategoryDetailed>>> getCategories({
     String? type,
-    bool force,
+    bool forceRefresh,
   });
   Future<Either<Failure, CategoryDetailed>> getCategoryById(String id);
   Future<Either<Failure, CategoryDetailed>> createCategory(

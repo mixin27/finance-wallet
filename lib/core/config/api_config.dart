@@ -30,4 +30,5 @@ class ApiConfig {
   static const String currencies = '/currencies';
   static const String categories = '/categories';
   static const String goals = '/goals';
+  static const String budgets = '/budgets';
 }

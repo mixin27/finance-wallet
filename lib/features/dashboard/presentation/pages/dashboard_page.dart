@@ -81,18 +81,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                     );
                   },
                 ),
-                IconButton(
-                  icon: const Icon(Icons.category_outlined),
-                  onPressed: () {
-                    context.push('/categories');
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.trending_up),
-                  onPressed: () {
-                    context.push('/goals');
-                  },
-                ),
               ],
             ),
 

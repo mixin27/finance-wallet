@@ -55,6 +55,24 @@ class ProfilePage extends ConsumerWidget {
 
           const SizedBox(height: AppDimensions.space24),
 
+          // Finance Section
+          _buildMenuItem(context, 'Categories', Icons.category_outlined, () {
+            context.push('/categories');
+          }),
+          _buildMenuItem(context, 'Goals', Icons.flag_outlined, () {
+            context.push('/goals');
+          }),
+          _buildMenuItem(
+            context,
+            'Budgets',
+            Icons.account_balance_wallet_outlined,
+            () {
+              context.push('/budgets');
+            },
+          ),
+
+          const SizedBox(height: AppDimensions.space16),
+
           // Settings
           _buildMenuItem(context, 'Settings', Icons.settings_outlined, () {}),
           _buildMenuItem(

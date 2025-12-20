@@ -17,12 +17,12 @@ class GoalRepositoryImpl implements GoalRepository {
   @override
   Future<Either<Failure, List<Goal>>> getGoals({
     bool activeOnly = false,
-    bool force = false,
+    bool forceRefresh = false,
   }) async {
     try {
       final goals = await _remoteDatasource.getGoals(
         activeOnly: activeOnly,
-        force: force,
+        force: forceRefresh,
       );
       return Right(goals);
     } on ServerException catch (e) {

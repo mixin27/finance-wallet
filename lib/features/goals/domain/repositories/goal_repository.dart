@@ -7,7 +7,10 @@ import '../../data/models/update_goal_request.dart';
 import '../../data/models/update_progress_request.dart';
 
 abstract class GoalRepository {
-  Future<Either<Failure, List<Goal>>> getGoals({bool activeOnly, bool force});
+  Future<Either<Failure, List<Goal>>> getGoals({
+    bool activeOnly,
+    bool forceRefresh,
+  });
   Future<Either<Failure, Goal>> getGoalById(String id);
   Future<Either<Failure, Goal>> createGoal(CreateGoalRequest request);
   Future<Either<Failure, Goal>> updateGoal(
