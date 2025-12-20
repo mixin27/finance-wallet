@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
@@ -19,11 +22,26 @@ class GoalRepositoryImpl implements GoalRepository {
     bool activeOnly = false,
     bool forceRefresh = false,
   }) async {
+    final prefs = await SharedPreferences.getInstance();
+    final cachedGoalsKey = activeOnly ? 'cached_active_goals' : 'cached_goals';
+
     try {
-      final goals = await _remoteDatasource.getGoals(
-        activeOnly: activeOnly,
-        force: forceRefresh,
+      final cachedData = prefs.getString(cachedGoalsKey);
+      if (cachedData != null && !forceRefresh) {
+        final List<dynamic> jsonData = jsonDecode(cachedData);
+        final goals = jsonData
+            .map((json) => Goal.fromJson(json as Map<String, dynamic>))
+            .toList();
+        return Right(goals);
+      }
+
+      final goals = await _remoteDatasource.getGoals(activeOnly: activeOnly);
+      // Cache the fetched goals
+      await prefs.setString(
+        cachedGoalsKey,
+        jsonEncode(goals.map((e) => e.toJson()).toList()),
       );
+
       return Right(goals);
     } on ServerException catch (e) {
       return Left(Failure.server(e.message, statusCode: e.statusCode));

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
@@ -18,10 +21,29 @@ class CategoryRepositoryImpl implements CategoryRepository {
     String? type,
     bool forceRefresh = false,
   }) async {
+    final prefs = await SharedPreferences.getInstance();
+    final cachedCategoriesKey = type != null
+        ? 'cached_${type}_categories'
+        : 'cached_categories';
+
     try {
-      final categories = await _remoteDatasource.getCategories(
-        type: type,
-        force: forceRefresh,
+      final cachedData = prefs.getString(cachedCategoriesKey);
+      if (cachedData != null && !forceRefresh) {
+        final List<dynamic> jsonData = jsonDecode(cachedData);
+        final categories = jsonData
+            .map(
+              (json) => CategoryDetailed.fromJson(json as Map<String, dynamic>),
+            )
+            .toList();
+        return Right(categories);
+      }
+
+      final categories = await _remoteDatasource.getCategories(type: type);
+
+      // Cache the fetched goals
+      await prefs.setString(
+        cachedCategoriesKey,
+        jsonEncode(categories.map((e) => e.toJson()).toList()),
       );
       return Right(categories);
     } on ServerException catch (e) {

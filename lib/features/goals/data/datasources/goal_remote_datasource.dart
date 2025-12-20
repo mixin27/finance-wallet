@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/config/api_config.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -16,22 +13,8 @@ class GoalRemoteDatasource {
 
   GoalRemoteDatasource(this._dio);
 
-  Future<List<Goal>> getGoals({
-    bool activeOnly = false,
-    bool force = false,
-  }) async {
-    final prefs = await SharedPreferences.getInstance();
-    final cachedGoalsKey = activeOnly ? 'cached_active_goals' : 'cached_goals';
+  Future<List<Goal>> getGoals({bool activeOnly = false}) async {
     try {
-      final cachedData = prefs.getString(cachedGoalsKey);
-      if (cachedData != null && !force) {
-        final List<dynamic> jsonData = jsonDecode(cachedData);
-        final goals = jsonData
-            .map((json) => Goal.fromJson(json as Map<String, dynamic>))
-            .toList();
-        return goals;
-      }
-
       final response = await _dio.get(
         ApiConfig.goals,
         queryParameters: activeOnly ? {'activeOnly': true} : null,
@@ -46,12 +29,6 @@ class GoalRemoteDatasource {
         final goals = apiResponse.data!
             .map((json) => Goal.fromJson(json as Map<String, dynamic>))
             .toList();
-
-        // Cache the fetched goals
-        await prefs.setString(
-          cachedGoalsKey,
-          jsonEncode(goals.map((e) => e.toJson()).toList()),
-        );
 
         return goals;
       } else {

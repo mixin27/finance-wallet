@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/config/api_config.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -15,29 +12,8 @@ class CategoryRemoteDatasource {
 
   CategoryRemoteDatasource(this._dio);
 
-  // todo(mixin27): refactor caching mechanism to use sqlite or
-  // hive for better performance
-  Future<List<CategoryDetailed>> getCategories({
-    String? type,
-    bool force = false,
-  }) async {
-    final prefs = await SharedPreferences.getInstance();
-    final cachedCategoriesKey = type != null
-        ? 'cached_${type}_categories'
-        : 'cached_categories';
-
+  Future<List<CategoryDetailed>> getCategories({String? type}) async {
     try {
-      final cachedData = prefs.getString(cachedCategoriesKey);
-      if (cachedData != null && !force) {
-        final List<dynamic> jsonData = jsonDecode(cachedData);
-        final categories = jsonData
-            .map(
-              (json) => CategoryDetailed.fromJson(json as Map<String, dynamic>),
-            )
-            .toList();
-        return categories;
-      }
-
       final queryParams = <String, dynamic>{};
       if (type != null) queryParams['type'] = type;
 
@@ -57,12 +33,6 @@ class CategoryRemoteDatasource {
               (json) => CategoryDetailed.fromJson(json as Map<String, dynamic>),
             )
             .toList();
-
-        // Cache the fetched goals
-        await prefs.setString(
-          cachedCategoriesKey,
-          jsonEncode(categories.map((e) => e.toJson()).toList()),
-        );
 
         return categories;
       } else {
