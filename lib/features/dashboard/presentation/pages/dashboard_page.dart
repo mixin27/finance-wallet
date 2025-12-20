@@ -55,6 +55,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
               floating: false,
               pinned: true,
               backgroundColor: AppColors.primary,
+              foregroundColor: AppColors.white,
               flexibleSpace: FlexibleSpaceBar(
                 title: const Text('Dashboard'),
                 titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
@@ -78,6 +79,12 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                         content: Text('Statistics feature coming soon!'),
                       ),
                     );
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.category_outlined),
+                  onPressed: () {
+                    context.push('/categories');
                   },
                 ),
               ],

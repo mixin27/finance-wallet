@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/failure.dart';
 import '../../../../core/network/page.dart';
-import '../../data/models/category.dart';
 import '../../data/models/create_transaction_request.dart';
 import '../../data/models/transaction.dart';
 import '../../data/models/transaction_filter.dart';
@@ -27,6 +26,4 @@ abstract class TransactionRepository {
   );
 
   Future<Either<Failure, void>> deleteTransaction(String id);
-
-  Future<Either<Failure, List<Category>>> getCategories({String? type});
 }

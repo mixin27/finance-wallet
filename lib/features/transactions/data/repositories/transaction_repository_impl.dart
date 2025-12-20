@@ -5,7 +5,6 @@ import '../../../../core/errors/failure.dart';
 import '../../../../core/network/page.dart';
 import '../../domain/repositories/transaction_repository.dart';
 import '../datasources/transaction_remote_datasource.dart';
-import '../models/category.dart';
 import '../models/create_transaction_request.dart';
 import '../models/transaction.dart';
 import '../models/transaction_filter.dart';
@@ -101,20 +100,6 @@ class TransactionRepositoryImpl implements TransactionRepository {
     try {
       await _remoteDatasource.deleteTransaction(id);
       return const Right(null);
-    } on ServerException catch (e) {
-      return Left(Failure.server(e.message, statusCode: e.statusCode));
-    } on NetworkException catch (e) {
-      return Left(Failure.network(e.message));
-    } catch (e) {
-      return Left(Failure.server(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<Category>>> getCategories({String? type}) async {
-    try {
-      final categories = await _remoteDatasource.getCategories(type: type);
-      return Right(categories);
     } on ServerException catch (e) {
       return Left(Failure.server(e.message, statusCode: e.statusCode));
     } on NetworkException catch (e) {

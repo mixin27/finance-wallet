@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 import '../../../../core/errors/failure.dart';
+import '../../../categories/domain/repositories/category_repository.dart';
+import '../../../categories/presentation/providers/category_providers.dart';
 import '../../data/models/create_transaction_request.dart';
 import '../../data/models/transaction.dart';
 import '../../data/models/transfer_request.dart';
@@ -34,16 +36,20 @@ class TransactionFormState {
 
 class TransactionFormViewModel extends StateNotifier<TransactionFormState> {
   final TransactionRepository _repository;
+  final CategoryRepository _categoryRepository;
   final Ref _ref;
 
-  TransactionFormViewModel(this._repository, this._ref)
-    : super(TransactionFormState());
+  TransactionFormViewModel(
+    this._repository,
+    this._categoryRepository,
+    this._ref,
+  ) : super(TransactionFormState());
 
   /// Load categories for the form
   Future<void> loadCategories({String? type}) async {
     state = state.copyWith(isLoadingData: true);
 
-    final result = await _repository.getCategories(type: type);
+    final result = await _categoryRepository.getCategories(type: type);
 
     result.fold(
       (failure) {
@@ -53,7 +59,7 @@ class TransactionFormViewModel extends StateNotifier<TransactionFormState> {
         );
       },
       (categories) {
-        _ref.read(categoriesProvider.notifier).state = categories;
+        _ref.read(allCategoriesProvider.notifier).state = categories;
         state = state.copyWith(isLoadingData: false);
       },
     );
@@ -179,5 +185,6 @@ final transactionFormViewModelProvider =
       TransactionFormState
     >((ref) {
       final repository = ref.read(transactionRepositoryProvider);
-      return TransactionFormViewModel(repository, ref);
+      final categoryRepository = ref.read(categoryRepositoryProvider);
+      return TransactionFormViewModel(repository, categoryRepository, ref);
     });

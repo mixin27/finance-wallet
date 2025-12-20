@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 import '../../../../core/errors/failure.dart';
+import '../../../categories/domain/repositories/category_repository.dart';
+import '../../../categories/presentation/providers/category_providers.dart';
 import '../../data/models/transaction_filter.dart';
 import '../../domain/repositories/transaction_repository.dart';
 import '../providers/transaction_providers.dart';
@@ -36,10 +38,14 @@ class TransactionListState {
 
 class TransactionListViewModel extends StateNotifier<TransactionListState> {
   final TransactionRepository _repository;
+  final CategoryRepository _categoryRepository;
   final Ref _ref;
 
-  TransactionListViewModel(this._repository, this._ref)
-    : super(TransactionListState());
+  TransactionListViewModel(
+    this._repository,
+    this._categoryRepository,
+    this._ref,
+  ) : super(TransactionListState());
 
   /// Load transactions with filters
   Future<void> loadTransactions({
@@ -122,14 +128,14 @@ class TransactionListViewModel extends StateNotifier<TransactionListState> {
 
   /// Load categories for filters
   Future<void> loadCategories() async {
-    final result = await _repository.getCategories();
+    final result = await _categoryRepository.getCategories();
 
     result.fold(
       (failure) {
         // Silently fail for categories
       },
       (categories) {
-        _ref.read(categoriesProvider.notifier).state = categories;
+        _ref.read(allCategoriesProvider.notifier).state = categories;
       },
     );
   }
@@ -202,5 +208,6 @@ final transactionListViewModelProvider =
       ref,
     ) {
       final repository = ref.read(transactionRepositoryProvider);
-      return TransactionListViewModel(repository, ref);
+      final categoryRepository = ref.read(categoryRepositoryProvider);
+      return TransactionListViewModel(repository, categoryRepository, ref);
     });

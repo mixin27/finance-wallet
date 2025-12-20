@@ -9,8 +9,8 @@ import '../../../../app/theme/app_dimensions.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../accounts/presentation/providers/account_providers.dart';
 import '../../../accounts/presentation/viewmodels/account_list_viewmodel.dart';
+import '../../../categories/presentation/providers/category_providers.dart';
 import '../../data/models/create_transaction_request.dart';
-import '../providers/transaction_providers.dart';
 import '../viewmodels/transaction_form_viewmodel.dart';
 
 class AddTransactionPage extends ConsumerStatefulWidget {
@@ -143,8 +143,8 @@ class _AddTransactionPageState extends ConsumerState<AddTransactionPage>
     final state = ref.watch(transactionFormViewModelProvider);
     final accounts = ref.watch(accountsProvider);
     final categories = _selectedType == 'INCOME'
-        ? ref.watch(incomeCategoriesProvider)
-        : ref.watch(expenseCategoriesProvider);
+        ? ref.watch(incomeCategoriesDetailedProvider)
+        : ref.watch(expenseCategoriesDetailedProvider);
 
     return Scaffold(
       appBar: AppBar(

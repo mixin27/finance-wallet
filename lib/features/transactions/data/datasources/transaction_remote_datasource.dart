@@ -4,7 +4,6 @@ import '../../../../core/config/api_config.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/network/api_response.dart';
 import '../../../../core/network/page.dart';
-import '../models/category.dart';
 import '../models/create_transaction_request.dart';
 import '../models/transaction.dart';
 import '../models/transaction_filter.dart';
@@ -178,43 +177,6 @@ class TransactionRemoteDatasource {
       if (e.response != null) {
         throw ServerException(
           e.response!.data['message'] ?? 'Failed to delete transaction',
-          statusCode: e.response!.statusCode,
-        );
-      } else {
-        throw NetworkException('No internet connection');
-      }
-    }
-  }
-
-  /// Get all categories
-  Future<List<Category>> getCategories({String? type}) async {
-    try {
-      final queryParams = <String, dynamic>{};
-      if (type != null) {
-        queryParams['type'] = type;
-      }
-
-      final response = await _dio.get(
-        ApiConfig.categories,
-        queryParameters: queryParams.isEmpty ? null : queryParams,
-      );
-
-      final apiResponse = ApiResponse<List<dynamic>>.fromJson(
-        response.data,
-        (json) => json as List<dynamic>,
-      );
-
-      if (apiResponse.success && apiResponse.data != null) {
-        return apiResponse.data!
-            .map((json) => Category.fromJson(json as Map<String, dynamic>))
-            .toList();
-      } else {
-        throw ServerException(apiResponse.message);
-      }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        throw ServerException(
-          e.response!.data['message'] ?? 'Failed to fetch categories',
           statusCode: e.response!.statusCode,
         );
       } else {
