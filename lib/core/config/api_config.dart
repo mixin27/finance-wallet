@@ -15,6 +15,9 @@ class ApiConfig {
   static const String refreshToken = '/auth/refresh';
   static const String currentUser = '/auth/me';
 
+  static const String dashboard = '/dashboard';
+  static const String dashboardStatistics = '/dashboard/statistics';
+
   static const String accounts = '/accounts';
   static const String accountTypes = '/accounts/types';
   static const String accountSummary = '/accounts/summary';
