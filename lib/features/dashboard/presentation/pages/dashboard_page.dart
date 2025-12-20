@@ -73,12 +73,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                 IconButton(
                   icon: const Icon(Icons.bar_chart),
                   onPressed: () {
-                    // Navigate to detailed statistics
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Statistics feature coming soon!'),
-                      ),
-                    );
+                    context.push('/analytics');
                   },
                 ),
               ],

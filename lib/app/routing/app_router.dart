@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/accounts/presentation/pages/account_detail_page.dart';
 import '../../features/accounts/presentation/pages/accounts_page.dart';
 import '../../features/accounts/presentation/pages/add_account_page.dart';
+import '../../features/analytics/presentation/pages/analytics_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/auth/presentation/pages/splash_page.dart';
@@ -163,6 +164,12 @@ class AppRouter {
           final id = state.pathParameters['id']!;
           return BudgetDetailPage(budgetId: id);
         },
+      ),
+
+      // Analytics Route
+      GoRoute(
+        path: '/analytics',
+        builder: (context, state) => const AnalyticsPage(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(

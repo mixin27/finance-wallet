@@ -70,6 +70,14 @@ class ProfilePage extends ConsumerWidget {
               context.push('/budgets');
             },
           ),
+          _buildMenuItem(
+            context,
+            'Analytics & Reports',
+            Icons.analytics_outlined,
+            () {
+              context.push('/analytics');
+            },
+          ),
 
           const SizedBox(height: AppDimensions.space16),
 
