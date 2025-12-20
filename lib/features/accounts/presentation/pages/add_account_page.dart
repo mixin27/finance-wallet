@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_dimensions.dart';
 import '../../../../core/utils/validators.dart';
+import '../../../currencies/presentation/providers/currency_providers.dart';
 import '../../data/models/create_account_request.dart';
 import '../providers/account_providers.dart';
 import '../viewmodels/account_form_viewmodel.dart';

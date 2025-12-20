@@ -1,7 +1,9 @@
+import 'package:finance_wallet/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 import '../../../../core/network/api_client.dart';
+import '../../data/cache/transaction_cache_manager.dart';
 import '../../data/datasources/transaction_remote_datasource.dart';
 import '../../data/models/transaction.dart';
 import '../../data/repositories/transaction_repository_impl.dart';
@@ -13,10 +15,18 @@ final transactionRemoteDatasourceProvider =
       return TransactionRemoteDatasource(ApiClient().dio);
     });
 
+final transactionCacheManagerProvider = Provider<TransactionCacheManager>((
+  ref,
+) {
+  return TransactionCacheManager(prefs: sharedPreferences);
+});
+
 // Repository Provider
 final transactionRepositoryProvider = Provider<TransactionRepository>((ref) {
   final datasource = ref.read(transactionRemoteDatasourceProvider);
-  return TransactionRepositoryImpl(datasource);
+  final cacheManager = ref.read(transactionCacheManagerProvider);
+
+  return TransactionRepositoryImpl(datasource, cacheManager);
 });
 
 // Transactions List Provider

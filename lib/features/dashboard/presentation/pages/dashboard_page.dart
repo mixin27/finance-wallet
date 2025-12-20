@@ -45,7 +45,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     final transactions = ref.watch(transactionsProvider).take(5).toList();
 
     return Scaffold(
-      body: RefreshIndicator(
+      body: RefreshIndicator.adaptive(
         onRefresh: _onRefresh,
         child: CustomScrollView(
           slivers: [
@@ -85,6 +85,12 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                   icon: const Icon(Icons.category_outlined),
                   onPressed: () {
                     context.push('/categories');
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.trending_up),
+                  onPressed: () {
+                    context.push('/goals');
                   },
                 ),
               ],

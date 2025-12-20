@@ -6,7 +6,10 @@ import '../../data/models/create_category_request.dart';
 import '../../data/models/update_category_request.dart';
 
 abstract class CategoryRepository {
-  Future<Either<Failure, List<CategoryDetailed>>> getCategories({String? type});
+  Future<Either<Failure, List<CategoryDetailed>>> getCategories({
+    String? type,
+    bool force,
+  });
   Future<Either<Failure, CategoryDetailed>> getCategoryById(String id);
   Future<Either<Failure, CategoryDetailed>> createCategory(
     CreateCategoryRequest request,

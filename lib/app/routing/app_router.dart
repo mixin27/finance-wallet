@@ -10,6 +10,9 @@ import '../../features/auth/presentation/pages/splash_page.dart';
 import '../../features/categories/presentation/pages/add_category_page.dart';
 import '../../features/categories/presentation/pages/categories_page.dart';
 import '../../features/dashboard/presentation/pages/dashboard_page.dart';
+import '../../features/goals/presentation/pages/add_goal_page.dart';
+import '../../features/goals/presentation/pages/goal_detail_page.dart';
+import '../../features/goals/presentation/pages/goals_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/transactions/presentation/pages/add_transaction_page.dart';
 import '../../features/transactions/presentation/pages/transaction_detail_page.dart';
@@ -125,6 +128,20 @@ class AppRouter {
         builder: (context, state) {
           final type = state.uri.queryParameters['type'] ?? 'EXPENSE';
           return AddCategoryPage(type: type);
+        },
+      ),
+
+      // Goal Routes
+      GoRoute(path: '/goals', builder: (context, state) => const GoalsPage()),
+      GoRoute(
+        path: '/add-goal',
+        builder: (context, state) => const AddGoalPage(),
+      ),
+      GoRoute(
+        path: '/goal-detail/:id',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return GoalDetailPage(goalId: id);
         },
       ),
     ],

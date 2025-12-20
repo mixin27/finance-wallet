@@ -2,9 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 import '../../../../core/errors/failure.dart';
+import '../../../currencies/data/models/currency.dart';
+import '../../../currencies/domain/repositories/currency_repository.dart';
+import '../../../currencies/presentation/providers/currency_providers.dart';
 import '../../data/models/account_type.dart';
 import '../../data/models/create_account_request.dart';
-import '../../data/models/currency.dart';
 import '../../data/models/update_account_request.dart';
 import '../../domain/repositories/account_repository.dart';
 import '../providers/account_providers.dart';
@@ -36,9 +38,11 @@ class AccountFormState {
 
 class AccountFormViewModel extends StateNotifier<AccountFormState> {
   final AccountRepository _repository;
+  final CurrencyRepository _currencyRepository;
   final Ref _ref;
 
-  AccountFormViewModel(this._repository, this._ref) : super(AccountFormState());
+  AccountFormViewModel(this._repository, this._currencyRepository, this._ref)
+    : super(AccountFormState());
 
   Future<void> loadFormData() async {
     state = state.copyWith(isLoadingData: true);
@@ -46,7 +50,7 @@ class AccountFormViewModel extends StateNotifier<AccountFormState> {
     // Load account types and currencies in parallel
     final results = await Future.wait([
       _repository.getAccountTypes(),
-      _repository.getCurrencies(),
+      _currencyRepository.getCurrencies(),
     ]);
 
     results[0].fold(
@@ -134,5 +138,6 @@ final accountFormViewModelProvider =
       ref,
     ) {
       final repository = ref.read(accountRepositoryProvider);
-      return AccountFormViewModel(repository, ref);
+      final currencyRepository = ref.read(currencyRepositoryProvider);
+      return AccountFormViewModel(repository, currencyRepository, ref);
     });

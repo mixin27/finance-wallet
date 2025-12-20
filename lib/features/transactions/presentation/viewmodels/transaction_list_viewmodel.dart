@@ -52,6 +52,7 @@ class TransactionListViewModel extends StateNotifier<TransactionListState> {
     String? accountId,
     String? categoryId,
     bool resetPage = true,
+    bool forceRefresh = false,
   }) async {
     if (resetPage) {
       _ref.read(currentPageProvider.notifier).state = 0;
@@ -75,7 +76,10 @@ class TransactionListViewModel extends StateNotifier<TransactionListState> {
       size: 20,
     );
 
-    final result = await _repository.getTransactions(filter);
+    final result = await _repository.getTransactions(
+      filter,
+      forceRefresh: forceRefresh,
+    );
 
     result.fold(
       (failure) {
@@ -122,6 +126,7 @@ class TransactionListViewModel extends StateNotifier<TransactionListState> {
       accountId: accountId,
       categoryId: categoryId,
       resetPage: true,
+      forceRefresh: true,
     );
     state = state.copyWith(isRefreshing: false);
   }

@@ -9,7 +9,6 @@ import '../models/account.dart';
 import '../models/account_summary.dart';
 import '../models/account_type.dart';
 import '../models/create_account_request.dart';
-import '../models/currency.dart';
 import '../models/update_account_request.dart';
 
 class AccountRemoteDatasource {
@@ -196,34 +195,6 @@ class AccountRemoteDatasource {
       if (e.response != null) {
         throw ServerException(
           e.response!.data['message'] ?? 'Failed to fetch account types',
-          statusCode: e.response!.statusCode,
-        );
-      } else {
-        throw NetworkException('No internet connection');
-      }
-    }
-  }
-
-  Future<List<Currency>> getCurrencies() async {
-    try {
-      final response = await _dio.get(ApiConfig.currencies);
-
-      final apiResponse = ApiResponse<List<dynamic>>.fromJson(
-        response.data,
-        (json) => json as List<dynamic>,
-      );
-
-      if (apiResponse.success && apiResponse.data != null) {
-        return apiResponse.data!
-            .map((json) => Currency.fromJson(json as Map<String, dynamic>))
-            .toList();
-      } else {
-        throw ServerException(apiResponse.message);
-      }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        throw ServerException(
-          e.response!.data['message'] ?? 'Failed to fetch currencies',
           statusCode: e.response!.statusCode,
         );
       } else {

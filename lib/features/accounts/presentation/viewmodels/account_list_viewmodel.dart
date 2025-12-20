@@ -35,11 +35,15 @@ class AccountListViewModel extends StateNotifier<AccountListState> {
 
   AccountListViewModel(this._repository, this._ref) : super(AccountListState());
 
-  Future<void> loadAccounts({bool includeInactive = false}) async {
+  Future<void> loadAccounts({
+    bool includeInactive = false,
+    bool forceRefresh = false,
+  }) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
 
     final result = await _repository.getAccounts(
       includeInactive: includeInactive,
+      forceRefresh: forceRefresh,
     );
 
     result.fold(
@@ -56,8 +60,10 @@ class AccountListViewModel extends StateNotifier<AccountListState> {
     );
   }
 
-  Future<void> loadAccountSummary() async {
-    final result = await _repository.getAccountSummary();
+  Future<void> loadAccountSummary({bool forceRefresh = false}) async {
+    final result = await _repository.getAccountSummary(
+      forceRefresh: forceRefresh,
+    );
 
     result.fold(
       (failure) {
@@ -71,8 +77,8 @@ class AccountListViewModel extends StateNotifier<AccountListState> {
 
   Future<void> refreshAccounts() async {
     state = state.copyWith(isRefreshing: true);
-    await loadAccounts();
-    await loadAccountSummary();
+    await loadAccounts(forceRefresh: true);
+    await loadAccountSummary(forceRefresh: true);
     state = state.copyWith(isRefreshing: false);
   }
 
@@ -86,8 +92,8 @@ class AccountListViewModel extends StateNotifier<AccountListState> {
       },
       (_) {
         // Refresh accounts after deletion
-        loadAccounts();
-        loadAccountSummary();
+        loadAccounts(forceRefresh: true);
+        loadAccountSummary(forceRefresh: true);
         return true;
       },
     );

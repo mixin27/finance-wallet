@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
@@ -8,7 +11,6 @@ import '../models/account.dart';
 import '../models/account_summary.dart';
 import '../models/account_type.dart';
 import '../models/create_account_request.dart';
-import '../models/currency.dart';
 import '../models/update_account_request.dart';
 
 class AccountRepositoryImpl implements AccountRepository {
@@ -19,11 +21,30 @@ class AccountRepositoryImpl implements AccountRepository {
   @override
   Future<Either<Failure, List<Account>>> getAccounts({
     bool includeInactive = false,
+    bool forceRefresh = false,
   }) async {
+    final prefs = await SharedPreferences.getInstance();
+    final cachedAccountsKey = 'cached_accounts';
+
     try {
+      final cachedData = prefs.getString(cachedAccountsKey);
+      if (cachedData != null && !forceRefresh) {
+        final List<dynamic> decodedJson = jsonDecode(cachedData);
+        final accounts = decodedJson
+            .map((json) => Account.fromJson(json as Map<String, dynamic>))
+            .toList();
+        return Right(accounts);
+      }
+
       final accounts = await _remoteDatasource.getAccounts(
         includeInactive: includeInactive,
       );
+
+      await prefs.setString(
+        cachedAccountsKey,
+        jsonEncode(accounts.map((e) => e.toJson()).toList()),
+      );
+
       return Right(accounts);
     } on ServerException catch (e) {
       return Left(Failure.server(e.message, statusCode: e.statusCode));
@@ -35,9 +56,26 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
-  Future<Either<Failure, AccountSummary>> getAccountSummary() async {
+  Future<Either<Failure, AccountSummary>> getAccountSummary({
+    bool forceRefresh = false,
+  }) async {
+    final prefs = await SharedPreferences.getInstance();
+    final cachedAccountSummaryKey = 'cached_account_summary';
     try {
+      final cachedData = prefs.getString(cachedAccountSummaryKey);
+      if (cachedData != null && !forceRefresh) {
+        final Map<String, dynamic> decodedJson =
+            jsonDecode(cachedData) as Map<String, dynamic>;
+        final summary = AccountSummary.fromJson(decodedJson);
+        return Right(summary);
+      }
+
       final summary = await _remoteDatasource.getAccountSummary();
+
+      await prefs.setString(
+        cachedAccountSummaryKey,
+        jsonEncode(summary.toJson()),
+      );
       return Right(summary);
     } on ServerException catch (e) {
       return Left(Failure.server(e.message, statusCode: e.statusCode));
@@ -114,20 +152,6 @@ class AccountRepositoryImpl implements AccountRepository {
     try {
       final types = await _remoteDatasource.getAccountTypes();
       return Right(types);
-    } on ServerException catch (e) {
-      return Left(Failure.server(e.message, statusCode: e.statusCode));
-    } on NetworkException catch (e) {
-      return Left(Failure.network(e.message));
-    } catch (e) {
-      return Left(Failure.server(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<Currency>>> getCurrencies() async {
-    try {
-      final currencies = await _remoteDatasource.getCurrencies();
-      return Right(currencies);
     } on ServerException catch (e) {
       return Left(Failure.server(e.message, statusCode: e.statusCode));
     } on NetworkException catch (e) {

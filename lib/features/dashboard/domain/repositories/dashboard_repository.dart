@@ -5,14 +5,23 @@ import '../../data/models/dashboard_overview.dart';
 import '../../data/models/statistics.dart';
 
 abstract class DashboardRepository {
-  Future<Either<Failure, DashboardOverview>> getDashboardOverview();
+  Future<Either<Failure, DashboardOverview>> getDashboardOverview({
+    bool forceRefresh,
+  });
 
   Future<Either<Failure, Statistics>> getStatistics({
     required String startDate,
     required String endDate,
+    bool forceRefresh,
   });
 
-  Future<Either<Failure, Statistics>> getThisMonthStatistics();
-  Future<Either<Failure, Statistics>> getLastMonthStatistics();
-  Future<Either<Failure, Statistics>> getThisYearStatistics();
+  Future<Either<Failure, Statistics>> getThisMonthStatistics({
+    bool forceRefresh,
+  });
+  Future<Either<Failure, Statistics>> getLastMonthStatistics({
+    bool forceRefresh,
+  });
+  Future<Either<Failure, Statistics>> getThisYearStatistics({
+    bool forceRefresh,
+  });
 }

@@ -9,8 +9,9 @@ import '../../data/models/transfer_request.dart';
 
 abstract class TransactionRepository {
   Future<Either<Failure, Page<Transaction>>> getTransactions(
-    TransactionFilter filter,
-  );
+    TransactionFilter filter, {
+    bool forceRefresh,
+  });
 
   Future<Either<Failure, Transaction>> getTransactionById(String id);
 
