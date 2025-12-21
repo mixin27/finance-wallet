@@ -189,6 +189,7 @@ class GoalViewModel extends StateNotifier<GoalState> {
       cache: (message) => message,
       unauthorized: (message) => message,
       validation: (message) => message,
+      unknown: (message) => message,
     );
   }
 }

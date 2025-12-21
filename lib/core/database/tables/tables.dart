@@ -1,5 +1,22 @@
 import 'package:drift/drift.dart';
 
+class Users extends Table {
+  TextColumn get id => text()();
+  TextColumn get email => text()();
+  TextColumn get username => text()();
+  TextColumn get fullName => text()();
+  TextColumn get phoneNumber => text().nullable()();
+  TextColumn get profileImageUrl => text().nullable()();
+  BoolColumn get isEmailVerified => boolean()();
+  TextColumn get authProvider => text()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get lastLoginAt => dateTime().nullable()();
+  DateTimeColumn get cachedAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 class Accounts extends Table {
   TextColumn get id => text()();
   TextColumn get name => text()();

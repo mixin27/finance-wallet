@@ -56,6 +56,7 @@ class LoginViewModel extends StateNotifier<LoginState> {
       cache: (message) => message,
       unauthorized: (message) => message,
       validation: (message) => message,
+      unknown: (message) => message,
     );
   }
 }

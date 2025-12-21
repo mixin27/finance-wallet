@@ -147,6 +147,7 @@ class BudgetViewModel extends StateNotifier<BudgetState> {
       cache: (message) => message,
       unauthorized: (message) => message,
       validation: (message) => message,
+      unknown: (message) => message,
     );
   }
 }

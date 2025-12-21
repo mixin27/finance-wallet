@@ -106,6 +106,7 @@ class AccountListViewModel extends StateNotifier<AccountListState> {
       cache: (message) => message,
       unauthorized: (message) => message,
       validation: (message) => message,
+      unknown: (message) => message,
     );
   }
 }

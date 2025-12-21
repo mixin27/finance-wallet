@@ -205,6 +205,7 @@ class TransactionListViewModel extends StateNotifier<TransactionListState> {
       cache: (message) => message,
       unauthorized: (message) => message,
       validation: (message) => message,
+      unknown: (message) => message,
     );
   }
 }

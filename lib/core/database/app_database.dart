@@ -8,6 +8,7 @@ part 'app_database.g.dart';
 
 @DriftDatabase(
   tables: [
+    Users,
     Accounts,
     AccountTypes,
     Budgets,

@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/config/api_config.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -17,8 +14,6 @@ class AuthRemoteDatasource {
   AuthRemoteDatasource(this._dio);
 
   Future<AuthResponse> login(LoginRequest request) async {
-    final prefs = await SharedPreferences.getInstance();
-
     try {
       final response = await _dio.post(ApiConfig.login, data: request.toJson());
 
@@ -29,9 +24,6 @@ class AuthRemoteDatasource {
 
       if (apiResponse.success && apiResponse.data != null) {
         final authResponse = AuthResponse.fromJson(apiResponse.data!);
-        final user = authResponse.user;
-        await prefs.setString('_user', jsonEncode(user.toJson()));
-
         return authResponse;
       } else {
         throw ServerException(apiResponse.message);
@@ -80,22 +72,17 @@ class AuthRemoteDatasource {
   }
 
   Future<User> getCurrentUser() async {
-    final prefs = await SharedPreferences.getInstance();
-
     try {
-      final cachedUser = prefs.getString('_user');
-      if (cachedUser != null && cachedUser.isNotEmpty) {
-        final decoded = jsonDecode(cachedUser);
-        final user = User.fromJson(decoded);
-        return user;
-      }
-
       final response = await _dio.get(ApiConfig.currentUser);
 
       final apiResponse = ApiResponse<Map<String, dynamic>>.fromJson(
         response.data,
         (json) => json as Map<String, dynamic>,
       );
+
+      if (!apiResponse.success && response.statusCode == 401) {
+        throw UnauthorizedException('Unauthorized');
+      }
 
       if (apiResponse.success && apiResponse.data != null) {
         return User.fromJson(apiResponse.data!);
@@ -106,6 +93,21 @@ class AuthRemoteDatasource {
       if (e.response != null) {
         throw ServerException(
           e.response!.data['message'] ?? 'Failed to get user',
+          statusCode: e.response!.statusCode,
+        );
+      } else {
+        throw NetworkException('No internet connection');
+      }
+    }
+  }
+
+  Future<void> logout(String refreshToken) async {
+    try {
+      await _dio.post(ApiConfig.logout, data: {'refreshToken': refreshToken});
+    } on DioException catch (e) {
+      if (e.response != null) {
+        throw ServerException(
+          e.response!.data['message'] ?? 'Failed to logout',
           statusCode: e.response!.statusCode,
         );
       } else {

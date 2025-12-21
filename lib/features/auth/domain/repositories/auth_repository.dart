@@ -9,7 +9,7 @@ import '../../data/models/user.dart';
 abstract class AuthRepository {
   Future<Either<Failure, AuthResponse>> login(LoginRequest request);
   Future<Either<Failure, AuthResponse>> register(RegisterRequest request);
-  Future<Either<Failure, User>> getCurrentUser();
+  Future<Either<Failure, User>> getCurrentUser({bool forceRefresh});
   Future<void> logout();
   Future<bool> isLoggedIn();
 }

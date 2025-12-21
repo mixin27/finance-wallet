@@ -67,6 +67,7 @@ class RegisterViewModel extends StateNotifier<RegisterState> {
       cache: (message) => message,
       unauthorized: (message) => message,
       validation: (message) => message,
+      unknown: (message) => message,
     );
   }
 }

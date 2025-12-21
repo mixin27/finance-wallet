@@ -120,6 +120,7 @@ class DashboardViewModel extends StateNotifier<DashboardState> {
       cache: (message) => message,
       unauthorized: (message) => message,
       validation: (message) => message,
+      unknown: (message) => message,
     );
   }
 }
