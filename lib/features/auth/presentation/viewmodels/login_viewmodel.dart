@@ -1,16 +1,16 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:finance_auth/finance_auth.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/errors/failure.dart';
-import '../../data/models/login_request.dart';
-import '../../domain/repositories/auth_repository.dart';
 import '../providers/auth_providers.dart';
 
+part 'login_viewmodel.g.dart';
+
+/// State for login operations
 class LoginState {
   final bool isLoading;
   final String? errorMessage;
 
-  LoginState({this.isLoading = false, this.errorMessage});
+  const LoginState({this.isLoading = false, this.errorMessage});
 
   LoginState copyWith({bool? isLoading, String? errorMessage}) {
     return LoginState(
@@ -20,49 +20,37 @@ class LoginState {
   }
 }
 
-class LoginViewModel extends StateNotifier<LoginState> {
-  final AuthRepository _authRepository;
-  final Ref _ref;
+@riverpod
+class LoginViewModel extends _$LoginViewModel {
+  @override
+  LoginState build() {
+    return const LoginState();
+  }
 
-  LoginViewModel(this._authRepository, this._ref) : super(LoginState());
-
-  Future<bool> login(String email, String password) async {
+  /// Login user
+  Future<void> login({
+    required String email,
+    required String password,
+    required bool rememberMe,
+  }) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
 
-    final request = LoginRequest(email: email, password: password);
-    final result = await _authRepository.login(request);
+    try {
+      final authService = ref.read(authServiceProvider);
 
-    return result.fold(
-      (failure) {
-        state = state.copyWith(
-          isLoading: false,
-          errorMessage: _mapFailureToMessage(failure),
-        );
-        return false;
-      },
-      (authResponse) {
-        state = state.copyWith(isLoading: false);
-        _ref.read(currentUserProvider.notifier).state = authResponse.user;
-        _ref.read(authStateProvider.notifier).state = true;
-        return true;
-      },
-    );
+      await authService.login(
+        Credentials(email: email, password: password, rememberMe: rememberMe),
+      );
+
+      state = state.copyWith(isLoading: false);
+    } catch (e) {
+      state = state.copyWith(isLoading: false, errorMessage: e.toString());
+      rethrow; // Rethrow to allow caller to handle navigation
+    }
   }
 
-  String _mapFailureToMessage(Failure failure) {
-    return failure.when(
-      server: (message, statusCode) => message,
-      network: (message) => message,
-      cache: (message) => message,
-      unauthorized: (message) => message,
-      validation: (message) => message,
-      unknown: (message) => message,
-    );
+  /// Clear error message
+  void clearError() {
+    state = state.copyWith(errorMessage: null);
   }
 }
-
-final loginViewModelProvider =
-    StateNotifierProvider.autoDispose<LoginViewModel, LoginState>((ref) {
-      final repository = ref.read(authRepositoryProvider);
-      return LoginViewModel(repository, ref);
-    });

@@ -1,5 +1,9 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/accounts/presentation/pages/account_detail_page.dart';
 import '../../features/accounts/presentation/pages/accounts_page.dart';
@@ -8,6 +12,7 @@ import '../../features/analytics/presentation/pages/analytics_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/auth/presentation/pages/splash_page.dart';
+import '../../features/auth/presentation/providers/auth_providers.dart';
 import '../../features/budgets/presentation/pages/add_budget_page.dart';
 import '../../features/budgets/presentation/pages/budget_detail_page.dart';
 import '../../features/budgets/presentation/pages/budgets_page.dart';
@@ -24,20 +29,51 @@ import '../../features/transactions/presentation/pages/transactions_page.dart';
 import '../../features/transactions/presentation/pages/transfer_page.dart';
 import '../presentation/pages/main_screen.dart';
 
-class AppRouter {
-  static final _rootNavigatorKey = GlobalKey<NavigatorState>();
+part 'app_router.g.dart';
 
-  static final GoRouter router = GoRouter(
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+
+final publicRoutes = ["/splash", "/onboarding", "/terms"];
+
+@riverpod
+GoRouter goRouter(Ref ref) {
+  final authService = ref.watch(authServiceProvider);
+
+  return GoRouter(
+    debugLogDiagnostics: kDebugMode,
     navigatorKey: _rootNavigatorKey,
     initialLocation: '/',
+    refreshListenable: GoRouterRefreshStream(authService.authStateStream),
+    redirect: (context, state) {
+      final isOnPublicRoute =
+          publicRoutes.contains(state.matchedLocation) ||
+          state.matchedLocation.startsWith('/auth');
+
+      final isAuthenticated = authService.isAuthenticated;
+
+      // If not authenticated and not on public route, redirect to login
+      if (!isAuthenticated && !isOnPublicRoute) {
+        return '/auth/login';
+      }
+
+      // If authenticated and on login page, redirect to home
+      if (isAuthenticated && state.matchedLocation == '/auth/login') {
+        return '/dashboard'; // Redirect to home or dashboard
+      }
+
+      return null;
+    },
     routes: [
       // Splash Screen
       GoRoute(path: '/', builder: (context, state) => const SplashPage()),
 
       // Auth Routes
-      GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
       GoRoute(
-        path: '/register',
+        path: '/auth/login',
+        builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: '/auth/register',
         builder: (context, state) => const RegisterPage(),
       ),
 
@@ -51,7 +87,8 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/main',
+                path: '/dashboard',
+                name: 'dashboard',
                 builder: (context, state) => const DashboardPage(),
               ),
             ],
@@ -182,7 +219,7 @@ class AppRouter {
             Text('Error: ${state.error}'),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () => context.go('/main'),
+              onPressed: () => context.go('/dashboard'),
               child: const Text('Go Home'),
             ),
           ],
@@ -190,4 +227,21 @@ class AppRouter {
       ),
     ),
   );
+}
+
+/// Helper class to refresh GoRouter when auth state changes
+class GoRouterRefreshStream extends ChangeNotifier {
+  GoRouterRefreshStream(Stream<dynamic> stream) {
+    _subscription = stream.listen((state) {
+      notifyListeners();
+    });
+  }
+
+  late final StreamSubscription<dynamic> _subscription;
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
 }

@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 import '../../../../app/presentation/providers/app_providers.dart';
-import '../../../../core/network/api_client.dart';
 import '../../data/datasources/category_local_datasource.dart';
 import '../../data/datasources/category_remote_datasource.dart';
 import '../../data/models/category_detailed.dart';
@@ -14,7 +13,8 @@ import '../../domain/repositories/category_repository.dart';
 final categoryRemoteDatasourceProvider = Provider<CategoryRemoteDatasource>((
   ref,
 ) {
-  return CategoryRemoteDatasource(ApiClient().dio);
+  final apiClient = ref.read(apiClientProvider);
+  return CategoryRemoteDatasource(apiClient.dio);
 });
 final categoryLocalDatasourceProvider = Provider<CategoryLocalDatasource>((
   ref,

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../config/api_config.dart';
-import 'api_interceptor.dart';
+import 'interceptors/loggin_interceptor.dart';
 
 class ApiClient {
   static final ApiClient _instance = ApiClient._internal();
@@ -25,18 +25,14 @@ class ApiClient {
       ),
     );
 
-    // Add interceptors
-    _dio.interceptors.add(ApiInterceptor());
+    _dio.interceptors.add(LoggingInterceptor());
+  }
 
-    // Add logging in debug mode
-    _dio.interceptors.add(
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-        error: true,
-        requestHeader: true,
-        responseHeader: false,
-      ),
-    );
+  void addInterceptor(Interceptor interceptor) {
+    _dio.interceptors.add(interceptor);
+  }
+
+  void addAll(Iterable<Interceptor> iterable) {
+    _dio.interceptors.addAll(iterable);
   }
 }

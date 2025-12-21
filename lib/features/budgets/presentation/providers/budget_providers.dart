@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 import '../../../../app/presentation/providers/app_providers.dart';
-import '../../../../core/network/api_client.dart';
 import '../../data/datasources/budget_local_datasource.dart';
 import '../../data/datasources/budget_remote_datasource.dart';
 import '../../data/models/budget.dart';
@@ -10,7 +9,8 @@ import '../../data/repositories/budget_repository_impl.dart';
 import '../../domain/repositories/budget_repository.dart';
 
 final budgetRemoteDatasourceProvider = Provider<BudgetRemoteDatasource>((ref) {
-  return BudgetRemoteDatasource(ApiClient().dio);
+  final apiClient = ref.read(apiClientProvider);
+  return BudgetRemoteDatasource(apiClient.dio);
 });
 
 final budgetLocalDatasourceProvider = Provider<BudgetLocalDatasource>((ref) {

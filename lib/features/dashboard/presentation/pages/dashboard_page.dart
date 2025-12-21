@@ -152,29 +152,33 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             else
               SliverFillRemaining(
                 child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        size: 64,
-                        color: AppColors.grey400,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        state.errorMessage ?? 'Failed to load dashboard',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () {
-                          ref
-                              .read(dashboardViewModelProvider.notifier)
-                              .loadDashboard();
-                        },
-                        child: const Text('Retry'),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppDimensions.space24),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.error_outline,
+                          size: 64,
+                          color: AppColors.grey400,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          state.errorMessage ?? 'Failed to load dashboard',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            ref
+                                .read(dashboardViewModelProvider.notifier)
+                                .loadDashboard();
+                          },
+                          child: const Text('Retry'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

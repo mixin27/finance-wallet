@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_dimensions.dart';
 import '../../../../core/utils/validators.dart';
+import '../../../../widgets/banner_message.dart';
 import '../viewmodels/login_viewmodel.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -31,29 +32,29 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final success = await ref
-        .read(loginViewModelProvider.notifier)
-        .login(_emailController.text.trim(), _passwordController.text);
-
-    if (!mounted) return;
-
-    if (success) {
-      context.go('/main');
-    } else {
-      final errorMessage = ref.read(loginViewModelProvider).errorMessage;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(errorMessage ?? 'Login failed'),
-          backgroundColor: AppColors.error,
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-    }
+    final viewModel = ref.read(loginViewModelProvider.notifier);
+    await viewModel.login(
+      email: _emailController.text.trim(),
+      password: _passwordController.text,
+      rememberMe: true,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(loginViewModelProvider);
+
+    // Listen for successful registration to navigate
+    ref.listen(loginViewModelProvider, (previous, next) {
+      if (!next.isLoading &&
+          previous?.isLoading == true &&
+          next.errorMessage == null) {
+        // Login successful - navigate to home
+        if (context.mounted) {
+          context.go('/dashboard');
+        }
+      }
+    });
 
     return Scaffold(
       body: SafeArea(
@@ -110,12 +111,24 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                 const SizedBox(height: AppDimensions.space48),
 
+                // Error message updates reactively from parent
+                if (state.errorMessage != null) ...[
+                  GlassErrorMessage(
+                    message: state.errorMessage!,
+                    onDismiss: () {
+                      // Parent handles state, this is just for UI feedback
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                ],
+
                 // Email Field
                 TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                       validator: Validators.email,
+                      enabled: !state.isLoading,
                       decoration: InputDecoration(
                         labelText: 'Email',
                         hintText: 'Enter your email',
@@ -134,6 +147,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       obscureText: _obscurePassword,
                       textInputAction: TextInputAction.done,
                       validator: Validators.password,
+                      enabled: !state.isLoading,
                       onFieldSubmitted: (_) => _handleLogin(),
                       decoration: InputDecoration(
                         labelText: 'Password',
@@ -224,7 +238,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 // Register Button
                 OutlinedButton(
                       onPressed: () {
-                        context.push('/register');
+                        context.push('/auth/register');
                       },
                       style: OutlinedButton.styleFrom(
                         side: const BorderSide(color: AppColors.primary),

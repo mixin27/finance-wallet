@@ -48,34 +48,31 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
   Future<void> _handleRegister() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final success = await ref
-        .read(registerViewModelProvider.notifier)
-        .register(
-          email: _emailController.text.trim(),
-          username: _usernameController.text.trim(),
-          password: _passwordController.text,
-          fullName: _fullNameController.text.trim(),
-        );
-
-    if (!mounted) return;
-
-    if (success) {
-      context.go('/main');
-    } else {
-      final errorMessage = ref.read(registerViewModelProvider).errorMessage;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(errorMessage ?? 'Registration failed'),
-          backgroundColor: AppColors.error,
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-    }
+    final viewModel = ref.read(registerViewModelProvider.notifier);
+    await viewModel.register(
+      email: _emailController.text.trim(),
+      username: _usernameController.text.trim(),
+      password: _passwordController.text,
+      fullName: _fullNameController.text.trim(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(registerViewModelProvider);
+
+    // Listen for successful registration to navigate
+    ref.listen(registerViewModelProvider, (previous, next) {
+      if (!next.isLoading &&
+          previous?.isLoading == true &&
+          next.errorMessage == null) {
+        context.go('/auth/login');
+        // Registration successful - navigate to verify email or login
+        // if (context.mounted && next.email != null) {
+        //   context.go('/auth/verify-email?email=${next.email}');
+        // }
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -121,6 +118,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         hintText: 'Enter your full name',
                         prefixIcon: Icon(Icons.person_outline),
                       ),
+                      enabled: !state.isLoading,
                     )
                     .animate()
                     .fadeIn(delay: 200.ms, duration: 600.ms)
@@ -139,6 +137,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         hintText: 'Choose a username',
                         prefixIcon: Icon(Icons.alternate_email),
                       ),
+                      enabled: !state.isLoading,
                     )
                     .animate()
                     .fadeIn(delay: 300.ms, duration: 600.ms)
@@ -157,6 +156,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         hintText: 'Enter your email',
                         prefixIcon: Icon(Icons.email_outlined),
                       ),
+                      enabled: !state.isLoading,
                     )
                     .animate()
                     .fadeIn(delay: 400.ms, duration: 600.ms)
@@ -170,6 +170,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       obscureText: _obscurePassword,
                       textInputAction: TextInputAction.next,
                       validator: Validators.password,
+                      enabled: !state.isLoading,
                       decoration: InputDecoration(
                         labelText: 'Password',
                         hintText: 'Create a password',
@@ -200,6 +201,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       obscureText: _obscureConfirmPassword,
                       textInputAction: TextInputAction.done,
                       validator: _validateConfirmPassword,
+                      enabled: !state.isLoading,
                       onFieldSubmitted: (_) => _handleRegister(),
                       decoration: InputDecoration(
                         labelText: 'Confirm Password',

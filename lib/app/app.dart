@@ -1,20 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'routing/app_router.dart';
 import 'theme/app_theme.dart';
 
-class FinanceWalletApp extends StatelessWidget {
+class FinanceWalletApp extends ConsumerWidget {
   const FinanceWalletApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(goRouterProvider);
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Finance Wallet',
+
+      // Theming
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
-      routerConfig: AppRouter.router,
+
+      // Routing
+      routerConfig: router,
+
+      // Builder for global overlays
+      builder: (context, child) {
+        return GestureDetector(
+          onTap: () {
+            // Dismiss keyboard when tapping outside
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: child,
+        );
+      },
     );
   }
 }

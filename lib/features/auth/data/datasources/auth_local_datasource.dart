@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
+import 'package:finance_auth/finance_auth.dart' as models;
 
 import '../../../../core/database/app_database.dart';
-import '../models/user.dart' as models;
 
 class AuthLocalDatasource {
   final AppDatabase _database;

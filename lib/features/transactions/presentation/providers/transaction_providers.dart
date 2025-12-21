@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 import '../../../../app/presentation/providers/app_providers.dart';
-import '../../../../core/network/api_client.dart';
 import '../../data/datasources/transaction_local_datasource.dart';
 import '../../data/datasources/transaction_remote_datasource.dart';
 import '../../data/models/transaction.dart';
@@ -12,7 +11,8 @@ import '../../domain/repositories/transaction_repository.dart';
 // Datasource Provider
 final transactionRemoteDatasourceProvider =
     Provider<TransactionRemoteDatasource>((ref) {
-      return TransactionRemoteDatasource(ApiClient().dio);
+      final apiClient = ref.read(apiClientProvider);
+      return TransactionRemoteDatasource(apiClient.dio);
     });
 
 final transactionLocalDatasourceProvider = Provider<TransactionLocalDatasource>(

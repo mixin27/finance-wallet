@@ -2,7 +2,6 @@ import 'package:finance_wallet/app/presentation/providers/app_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
-import '../../../../core/network/api_client.dart';
 import '../../data/datasources/currency_local_datasource.dart';
 import '../../data/datasources/currency_remote_datasource.dart';
 import '../../data/models/currency.dart';
@@ -13,7 +12,8 @@ import '../../domain/repositories/currency_repository.dart';
 final currencyRemoteDatasourceProvider = Provider<CurrencyRemoteDatasource>((
   ref,
 ) {
-  return CurrencyRemoteDatasource(ApiClient().dio);
+  final apiClient = ref.read(apiClientProvider);
+  return CurrencyRemoteDatasource(apiClient.dio);
 });
 final currencyLocalDatasourceProvider = Provider<CurrencyLocalDatasource>((
   ref,

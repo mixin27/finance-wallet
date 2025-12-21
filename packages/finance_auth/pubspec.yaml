@@ -1,0 +1,27 @@
+name: finance_auth
+description: "A flexible authentication package for finance wallet applications"
+version: 1.0.0
+publish_to: none
+homepage: https://github.com/mixin27/finance-wallet/packages/finance_auth
+resolution: workspace
+
+environment:
+  sdk: ^3.10.4
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  rxdart: ^0.28.0
+  dio: ^5.9.0
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
+  flutter_secure_storage: ^10.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.10.4
+  json_serializable: ^6.11.2
+  freezed: ^3.2.3

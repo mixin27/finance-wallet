@@ -1,79 +1,65 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../core/errors/failure.dart';
-import '../../data/models/register_request.dart';
-import '../../domain/repositories/auth_repository.dart';
 import '../providers/auth_providers.dart';
 
+part 'register_viewmodel.g.dart';
+
+/// State for registration operations
 class RegisterState {
   final bool isLoading;
   final String? errorMessage;
+  final String? email;
 
-  RegisterState({this.isLoading = false, this.errorMessage});
+  const RegisterState({this.isLoading = false, this.errorMessage, this.email});
 
-  RegisterState copyWith({bool? isLoading, String? errorMessage}) {
+  RegisterState copyWith({
+    bool? isLoading,
+    String? errorMessage,
+    String? email,
+  }) {
     return RegisterState(
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage,
+      email: email ?? this.email,
     );
   }
 }
 
-class RegisterViewModel extends StateNotifier<RegisterState> {
-  final AuthRepository _authRepository;
-  final Ref _ref;
+@riverpod
+class RegisterViewModel extends _$RegisterViewModel {
+  @override
+  RegisterState build() {
+    return const RegisterState();
+  }
 
-  RegisterViewModel(this._authRepository, this._ref) : super(RegisterState());
-
-  Future<bool> register({
-    required String email,
+  /// Register new user
+  Future<void> register({
     required String username,
+    required String email,
     required String password,
     required String fullName,
   }) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
 
-    final request = RegisterRequest(
-      email: email,
-      username: username,
-      password: password,
-      fullName: fullName,
-    );
+    try {
+      final authService = ref.read(authServiceProvider);
 
-    final result = await _authRepository.register(request);
+      await authService.register(
+        username: username,
+        email: email,
+        password: password,
+        fullName: fullName,
+      );
 
-    return result.fold(
-      (failure) {
-        state = state.copyWith(
-          isLoading: false,
-          errorMessage: _mapFailureToMessage(failure),
-        );
-        return false;
-      },
-      (authResponse) {
-        state = state.copyWith(isLoading: false);
-        _ref.read(currentUserProvider.notifier).state = authResponse.user;
-        _ref.read(authStateProvider.notifier).state = true;
-        return true;
-      },
-    );
+      state = state.copyWith(isLoading: false, email: email);
+    } catch (e) {
+      state = state.copyWith(isLoading: false, errorMessage: e.toString());
+      rethrow; // Rethrow to allow caller to handle navigation
+    }
   }
 
-  String _mapFailureToMessage(Failure failure) {
-    return failure.when(
-      server: (message, statusCode) => message,
-      network: (message) => message,
-      cache: (message) => message,
-      unauthorized: (message) => message,
-      validation: (message) => message,
-      unknown: (message) => message,
-    );
+  /// Clear error message
+  void clearError() {
+    state = state.copyWith(errorMessage: null);
   }
 }
-
-final registerViewModelProvider =
-    StateNotifierProvider.autoDispose<RegisterViewModel, RegisterState>((ref) {
-      final repository = ref.read(authRepositoryProvider);
-      return RegisterViewModel(repository, ref);
-    });

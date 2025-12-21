@@ -55,7 +55,7 @@ final class DashboardRemoteDataSourceProvider
 }
 
 String _$dashboardRemoteDataSourceHash() =>
-    r'affb1bb38f543dc05b998af90b4cd2e529a0670a';
+    r'd622a4fa2b5f109f2815e2b3d4812b203779870f';
 
 @ProviderFor(dashboardLocalDataSource)
 const dashboardLocalDataSourceProvider = DashboardLocalDataSourceProvider._();

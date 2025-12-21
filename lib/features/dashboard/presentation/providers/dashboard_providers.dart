@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../app/presentation/providers/app_providers.dart';
-import '../../../../core/network/api_client.dart';
 import '../../data/datasources/dashboard_local_datasource.dart';
 import '../../data/datasources/dashboard_remote_datasource.dart';
 import '../../data/models/dashboard_overview.dart';
@@ -15,7 +14,8 @@ part 'dashboard_providers.g.dart';
 // Datasource Provider
 @riverpod
 DashboardRemoteDatasource dashboardRemoteDataSource(Ref ref) {
-  return DashboardRemoteDatasource(ApiClient().dio);
+  final apiClient = ref.read(apiClientProvider);
+  return DashboardRemoteDatasource(apiClient.dio);
 }
 
 @riverpod

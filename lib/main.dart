@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/app.dart';
 import 'core/network/api_client.dart';
+import 'features/auth/presentation/providers/auth_providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,5 +22,14 @@ void main() async {
   // Initialize API Client
   ApiClient().init();
 
-  runApp(const ProviderScope(child: FinanceWalletApp()));
+  // Create provider container
+  final container = ProviderContainer();
+
+  // Initialize auth service
+  final authService = container.read(authServiceProvider);
+  await authService.initialize();
+
+  runApp(
+    UncontrolledProviderScope(container: container, child: FinanceWalletApp()),
+  );
 }

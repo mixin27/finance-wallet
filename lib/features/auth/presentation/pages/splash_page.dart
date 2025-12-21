@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme/app_colors.dart';
-import '../providers/auth_providers.dart';
 
 class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
@@ -25,30 +24,31 @@ class _SplashPageState extends ConsumerState<SplashPage> {
     await Future.delayed(const Duration(seconds: 2));
 
     if (!mounted) return;
+    context.go('/dashboard');
 
-    final repository = ref.read(authRepositoryProvider);
-    final isLoggedIn = await repository.isLoggedIn();
+    // final repository = ref.read(authRepositoryProvider);
+    // final isLoggedIn = await repository.isLoggedIn();
 
-    if (!mounted) return;
+    // if (!mounted) return;
 
-    if (isLoggedIn) {
-      // Try to get current user
-      final result = await repository.getCurrentUser();
-      result.fold(
-        (failure) {
-          // Token might be expired, go to login
-          context.go('/login');
-        },
-        (user) {
-          // Set user and navigate to dashboard
-          ref.read(currentUserProvider.notifier).state = user;
-          ref.read(authStateProvider.notifier).state = true;
-          context.go('/main');
-        },
-      );
-    } else {
-      context.go('/login');
-    }
+    // if (isLoggedIn) {
+    //   // Try to get current user
+    //   final result = await repository.getCurrentUser();
+    //   result.fold(
+    //     (failure) {
+    //       // Token might be expired, go to login
+    //       context.go('/login');
+    //     },
+    //     (user) {
+    //       // Set user and navigate to dashboard
+    //       ref.read(currentUserProvider.notifier).state = user;
+    //       ref.read(authStateProvider.notifier).state = true;
+    //       context.go('/dashboard');
+    //     },
+    //   );
+    // } else {
+    //   context.go('/login');
+    // }
   }
 
   @override
