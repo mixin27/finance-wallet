@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../app/theme/app_dimensions.dart';
 import '../../../../app/theme/app_colors.dart';
+import '../../../../core/providers/biometric_providers.dart';
 import '../../data/models/update_user_preference_request.dart';
 import '../viewmodels/user_preference_viewmodel.dart';
 
@@ -114,9 +115,52 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   subtitle: const Text('Use Fingerprint or Face ID'),
                   value: state.userPreference!.enableBiometric,
                   secondary: const Icon(Icons.fingerprint),
-                  onChanged: (value) => _updatePreference(
-                    UpdateUserPreferenceRequest(enableBiometric: value),
-                  ),
+                  onChanged: (value) async {
+                    if (value) {
+                      // Request biometric authentication when enabling
+                      final isAvailable = await ref.read(
+                        isBiometricAvailableProvider.future,
+                      );
+                      if (!isAvailable) {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Biometric authentication is not available on this device',
+                              ),
+                            ),
+                          );
+                        }
+                        return;
+                      }
+
+                      final authenticated = await ref
+                          .read(biometricServiceProvider)
+                          .authenticate(
+                            localizedReason:
+                                'Please authenticate to enable Biometric Lock',
+                          );
+
+                      if (authenticated) {
+                        _updatePreference(
+                          UpdateUserPreferenceRequest(enableBiometric: true),
+                        );
+                      } else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Authentication failed'),
+                            ),
+                          );
+                        }
+                      }
+                    } else {
+                      // Disabling doesn't require authentication
+                      _updatePreference(
+                        UpdateUserPreferenceRequest(enableBiometric: false),
+                      );
+                    }
+                  },
                 ),
                 SwitchListTile(
                   title: const Text('Auto Backup'),

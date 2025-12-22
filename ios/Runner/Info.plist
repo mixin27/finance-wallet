@@ -52,5 +52,8 @@
         <key>NSAllowsArbitraryLoadsInWebContent</key>
         <true/>
     </dict>
+    <!-- biometric -->
+    <key>NSFaceIDUsageDescription</key>
+    <string>Use Face ID to authenticate</string>
 </dict>
 </plist>
