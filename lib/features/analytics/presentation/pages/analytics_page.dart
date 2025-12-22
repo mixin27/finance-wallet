@@ -136,7 +136,10 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       Text(
-                        CurrencyFormatter.format(overview.monthIncome),
+                        CurrencyFormatter.format(
+                          overview.monthIncome,
+                          symbol: overview.defaultCurrency.symbol,
+                        ),
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               color: AppColors.success,
@@ -173,7 +176,10 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       Text(
-                        CurrencyFormatter.format(overview.monthExpenses),
+                        CurrencyFormatter.format(
+                          overview.monthExpenses,
+                          symbol: overview.defaultCurrency.symbol,
+                        ),
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               color: AppColors.error,
@@ -199,7 +205,10 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
               children: [
                 Text('Savings', style: Theme.of(context).textTheme.bodyLarge),
                 Text(
-                  CurrencyFormatter.format(overview.savings),
+                  CurrencyFormatter.format(
+                    overview.savings,
+                    symbol: overview.defaultCurrency.symbol,
+                  ),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: overview.savings >= 0
                         ? AppColors.success
@@ -278,7 +287,7 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
                     const SizedBox(width: 8),
                     Expanded(child: Text(category.categoryName)),
                     Text(
-                      CurrencyFormatter.format(category.amount),
+                      CurrencyFormatter.format(category.amount, symbol: ''),
                       style: const TextStyle(fontWeight: FontWeight.w600),
                     ),
                   ],
@@ -433,7 +442,7 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
                           ],
                         ),
                         Text(
-                          CurrencyFormatter.format(category.amount),
+                          CurrencyFormatter.format(category.amount, symbol: ''),
                           style: const TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ],

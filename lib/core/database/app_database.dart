@@ -17,6 +17,7 @@ part 'app_database.g.dart';
     Goals,
     Transactions,
     DashboardCache,
+    UserPreferences,
   ],
 )
 class AppDatabase extends _$AppDatabase {

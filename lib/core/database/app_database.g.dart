@@ -6585,6 +6585,864 @@ class DashboardCacheCompanion extends UpdateCompanion<DashboardCacheData> {
   }
 }
 
+class $UserPreferencesTable extends UserPreferences
+    with TableInfo<$UserPreferencesTable, UserPreference> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $UserPreferencesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _defaultCurrencyIdMeta = const VerificationMeta(
+    'defaultCurrencyId',
+  );
+  @override
+  late final GeneratedColumn<String> defaultCurrencyId =
+      GeneratedColumn<String>(
+        'default_currency_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _defaultCurrencyCodeMeta =
+      const VerificationMeta('defaultCurrencyCode');
+  @override
+  late final GeneratedColumn<String> defaultCurrencyCode =
+      GeneratedColumn<String>(
+        'default_currency_code',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _defaultCurrencySymbolMeta =
+      const VerificationMeta('defaultCurrencySymbol');
+  @override
+  late final GeneratedColumn<String> defaultCurrencySymbol =
+      GeneratedColumn<String>(
+        'default_currency_symbol',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _languageMeta = const VerificationMeta(
+    'language',
+  );
+  @override
+  late final GeneratedColumn<String> language = GeneratedColumn<String>(
+    'language',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateFormatMeta = const VerificationMeta(
+    'dateFormat',
+  );
+  @override
+  late final GeneratedColumn<String> dateFormat = GeneratedColumn<String>(
+    'date_format',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _firstDayOfWeekMeta = const VerificationMeta(
+    'firstDayOfWeek',
+  );
+  @override
+  late final GeneratedColumn<int> firstDayOfWeek = GeneratedColumn<int>(
+    'first_day_of_week',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _timezoneMeta = const VerificationMeta(
+    'timezone',
+  );
+  @override
+  late final GeneratedColumn<String> timezone = GeneratedColumn<String>(
+    'timezone',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _themeMeta = const VerificationMeta('theme');
+  @override
+  late final GeneratedColumn<String> theme = GeneratedColumn<String>(
+    'theme',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _enableNotificationsMeta =
+      const VerificationMeta('enableNotifications');
+  @override
+  late final GeneratedColumn<bool> enableNotifications = GeneratedColumn<bool>(
+    'enable_notifications',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("enable_notifications" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _enableBiometricMeta = const VerificationMeta(
+    'enableBiometric',
+  );
+  @override
+  late final GeneratedColumn<bool> enableBiometric = GeneratedColumn<bool>(
+    'enable_biometric',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("enable_biometric" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _autoBackupMeta = const VerificationMeta(
+    'autoBackup',
+  );
+  @override
+  late final GeneratedColumn<bool> autoBackup = GeneratedColumn<bool>(
+    'auto_backup',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("auto_backup" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    userId,
+    defaultCurrencyId,
+    defaultCurrencyCode,
+    defaultCurrencySymbol,
+    language,
+    dateFormat,
+    firstDayOfWeek,
+    timezone,
+    theme,
+    enableNotifications,
+    enableBiometric,
+    autoBackup,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'user_preferences';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<UserPreference> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('default_currency_id')) {
+      context.handle(
+        _defaultCurrencyIdMeta,
+        defaultCurrencyId.isAcceptableOrUnknown(
+          data['default_currency_id']!,
+          _defaultCurrencyIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_defaultCurrencyIdMeta);
+    }
+    if (data.containsKey('default_currency_code')) {
+      context.handle(
+        _defaultCurrencyCodeMeta,
+        defaultCurrencyCode.isAcceptableOrUnknown(
+          data['default_currency_code']!,
+          _defaultCurrencyCodeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_defaultCurrencyCodeMeta);
+    }
+    if (data.containsKey('default_currency_symbol')) {
+      context.handle(
+        _defaultCurrencySymbolMeta,
+        defaultCurrencySymbol.isAcceptableOrUnknown(
+          data['default_currency_symbol']!,
+          _defaultCurrencySymbolMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_defaultCurrencySymbolMeta);
+    }
+    if (data.containsKey('language')) {
+      context.handle(
+        _languageMeta,
+        language.isAcceptableOrUnknown(data['language']!, _languageMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_languageMeta);
+    }
+    if (data.containsKey('date_format')) {
+      context.handle(
+        _dateFormatMeta,
+        dateFormat.isAcceptableOrUnknown(data['date_format']!, _dateFormatMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateFormatMeta);
+    }
+    if (data.containsKey('first_day_of_week')) {
+      context.handle(
+        _firstDayOfWeekMeta,
+        firstDayOfWeek.isAcceptableOrUnknown(
+          data['first_day_of_week']!,
+          _firstDayOfWeekMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_firstDayOfWeekMeta);
+    }
+    if (data.containsKey('timezone')) {
+      context.handle(
+        _timezoneMeta,
+        timezone.isAcceptableOrUnknown(data['timezone']!, _timezoneMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_timezoneMeta);
+    }
+    if (data.containsKey('theme')) {
+      context.handle(
+        _themeMeta,
+        theme.isAcceptableOrUnknown(data['theme']!, _themeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_themeMeta);
+    }
+    if (data.containsKey('enable_notifications')) {
+      context.handle(
+        _enableNotificationsMeta,
+        enableNotifications.isAcceptableOrUnknown(
+          data['enable_notifications']!,
+          _enableNotificationsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_enableNotificationsMeta);
+    }
+    if (data.containsKey('enable_biometric')) {
+      context.handle(
+        _enableBiometricMeta,
+        enableBiometric.isAcceptableOrUnknown(
+          data['enable_biometric']!,
+          _enableBiometricMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_enableBiometricMeta);
+    }
+    if (data.containsKey('auto_backup')) {
+      context.handle(
+        _autoBackupMeta,
+        autoBackup.isAcceptableOrUnknown(data['auto_backup']!, _autoBackupMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_autoBackupMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {userId};
+  @override
+  UserPreference map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return UserPreference(
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      defaultCurrencyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}default_currency_id'],
+      )!,
+      defaultCurrencyCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}default_currency_code'],
+      )!,
+      defaultCurrencySymbol: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}default_currency_symbol'],
+      )!,
+      language: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language'],
+      )!,
+      dateFormat: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}date_format'],
+      )!,
+      firstDayOfWeek: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}first_day_of_week'],
+      )!,
+      timezone: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}timezone'],
+      )!,
+      theme: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}theme'],
+      )!,
+      enableNotifications: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}enable_notifications'],
+      )!,
+      enableBiometric: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}enable_biometric'],
+      )!,
+      autoBackup: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}auto_backup'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $UserPreferencesTable createAlias(String alias) {
+    return $UserPreferencesTable(attachedDatabase, alias);
+  }
+}
+
+class UserPreference extends DataClass implements Insertable<UserPreference> {
+  final String userId;
+  final String defaultCurrencyId;
+  final String defaultCurrencyCode;
+  final String defaultCurrencySymbol;
+  final String language;
+  final String dateFormat;
+  final int firstDayOfWeek;
+  final String timezone;
+  final String theme;
+  final bool enableNotifications;
+  final bool enableBiometric;
+  final bool autoBackup;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const UserPreference({
+    required this.userId,
+    required this.defaultCurrencyId,
+    required this.defaultCurrencyCode,
+    required this.defaultCurrencySymbol,
+    required this.language,
+    required this.dateFormat,
+    required this.firstDayOfWeek,
+    required this.timezone,
+    required this.theme,
+    required this.enableNotifications,
+    required this.enableBiometric,
+    required this.autoBackup,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['user_id'] = Variable<String>(userId);
+    map['default_currency_id'] = Variable<String>(defaultCurrencyId);
+    map['default_currency_code'] = Variable<String>(defaultCurrencyCode);
+    map['default_currency_symbol'] = Variable<String>(defaultCurrencySymbol);
+    map['language'] = Variable<String>(language);
+    map['date_format'] = Variable<String>(dateFormat);
+    map['first_day_of_week'] = Variable<int>(firstDayOfWeek);
+    map['timezone'] = Variable<String>(timezone);
+    map['theme'] = Variable<String>(theme);
+    map['enable_notifications'] = Variable<bool>(enableNotifications);
+    map['enable_biometric'] = Variable<bool>(enableBiometric);
+    map['auto_backup'] = Variable<bool>(autoBackup);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  UserPreferencesCompanion toCompanion(bool nullToAbsent) {
+    return UserPreferencesCompanion(
+      userId: Value(userId),
+      defaultCurrencyId: Value(defaultCurrencyId),
+      defaultCurrencyCode: Value(defaultCurrencyCode),
+      defaultCurrencySymbol: Value(defaultCurrencySymbol),
+      language: Value(language),
+      dateFormat: Value(dateFormat),
+      firstDayOfWeek: Value(firstDayOfWeek),
+      timezone: Value(timezone),
+      theme: Value(theme),
+      enableNotifications: Value(enableNotifications),
+      enableBiometric: Value(enableBiometric),
+      autoBackup: Value(autoBackup),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory UserPreference.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return UserPreference(
+      userId: serializer.fromJson<String>(json['userId']),
+      defaultCurrencyId: serializer.fromJson<String>(json['defaultCurrencyId']),
+      defaultCurrencyCode: serializer.fromJson<String>(
+        json['defaultCurrencyCode'],
+      ),
+      defaultCurrencySymbol: serializer.fromJson<String>(
+        json['defaultCurrencySymbol'],
+      ),
+      language: serializer.fromJson<String>(json['language']),
+      dateFormat: serializer.fromJson<String>(json['dateFormat']),
+      firstDayOfWeek: serializer.fromJson<int>(json['firstDayOfWeek']),
+      timezone: serializer.fromJson<String>(json['timezone']),
+      theme: serializer.fromJson<String>(json['theme']),
+      enableNotifications: serializer.fromJson<bool>(
+        json['enableNotifications'],
+      ),
+      enableBiometric: serializer.fromJson<bool>(json['enableBiometric']),
+      autoBackup: serializer.fromJson<bool>(json['autoBackup']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'userId': serializer.toJson<String>(userId),
+      'defaultCurrencyId': serializer.toJson<String>(defaultCurrencyId),
+      'defaultCurrencyCode': serializer.toJson<String>(defaultCurrencyCode),
+      'defaultCurrencySymbol': serializer.toJson<String>(defaultCurrencySymbol),
+      'language': serializer.toJson<String>(language),
+      'dateFormat': serializer.toJson<String>(dateFormat),
+      'firstDayOfWeek': serializer.toJson<int>(firstDayOfWeek),
+      'timezone': serializer.toJson<String>(timezone),
+      'theme': serializer.toJson<String>(theme),
+      'enableNotifications': serializer.toJson<bool>(enableNotifications),
+      'enableBiometric': serializer.toJson<bool>(enableBiometric),
+      'autoBackup': serializer.toJson<bool>(autoBackup),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  UserPreference copyWith({
+    String? userId,
+    String? defaultCurrencyId,
+    String? defaultCurrencyCode,
+    String? defaultCurrencySymbol,
+    String? language,
+    String? dateFormat,
+    int? firstDayOfWeek,
+    String? timezone,
+    String? theme,
+    bool? enableNotifications,
+    bool? enableBiometric,
+    bool? autoBackup,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => UserPreference(
+    userId: userId ?? this.userId,
+    defaultCurrencyId: defaultCurrencyId ?? this.defaultCurrencyId,
+    defaultCurrencyCode: defaultCurrencyCode ?? this.defaultCurrencyCode,
+    defaultCurrencySymbol: defaultCurrencySymbol ?? this.defaultCurrencySymbol,
+    language: language ?? this.language,
+    dateFormat: dateFormat ?? this.dateFormat,
+    firstDayOfWeek: firstDayOfWeek ?? this.firstDayOfWeek,
+    timezone: timezone ?? this.timezone,
+    theme: theme ?? this.theme,
+    enableNotifications: enableNotifications ?? this.enableNotifications,
+    enableBiometric: enableBiometric ?? this.enableBiometric,
+    autoBackup: autoBackup ?? this.autoBackup,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  UserPreference copyWithCompanion(UserPreferencesCompanion data) {
+    return UserPreference(
+      userId: data.userId.present ? data.userId.value : this.userId,
+      defaultCurrencyId: data.defaultCurrencyId.present
+          ? data.defaultCurrencyId.value
+          : this.defaultCurrencyId,
+      defaultCurrencyCode: data.defaultCurrencyCode.present
+          ? data.defaultCurrencyCode.value
+          : this.defaultCurrencyCode,
+      defaultCurrencySymbol: data.defaultCurrencySymbol.present
+          ? data.defaultCurrencySymbol.value
+          : this.defaultCurrencySymbol,
+      language: data.language.present ? data.language.value : this.language,
+      dateFormat: data.dateFormat.present
+          ? data.dateFormat.value
+          : this.dateFormat,
+      firstDayOfWeek: data.firstDayOfWeek.present
+          ? data.firstDayOfWeek.value
+          : this.firstDayOfWeek,
+      timezone: data.timezone.present ? data.timezone.value : this.timezone,
+      theme: data.theme.present ? data.theme.value : this.theme,
+      enableNotifications: data.enableNotifications.present
+          ? data.enableNotifications.value
+          : this.enableNotifications,
+      enableBiometric: data.enableBiometric.present
+          ? data.enableBiometric.value
+          : this.enableBiometric,
+      autoBackup: data.autoBackup.present
+          ? data.autoBackup.value
+          : this.autoBackup,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UserPreference(')
+          ..write('userId: $userId, ')
+          ..write('defaultCurrencyId: $defaultCurrencyId, ')
+          ..write('defaultCurrencyCode: $defaultCurrencyCode, ')
+          ..write('defaultCurrencySymbol: $defaultCurrencySymbol, ')
+          ..write('language: $language, ')
+          ..write('dateFormat: $dateFormat, ')
+          ..write('firstDayOfWeek: $firstDayOfWeek, ')
+          ..write('timezone: $timezone, ')
+          ..write('theme: $theme, ')
+          ..write('enableNotifications: $enableNotifications, ')
+          ..write('enableBiometric: $enableBiometric, ')
+          ..write('autoBackup: $autoBackup, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    userId,
+    defaultCurrencyId,
+    defaultCurrencyCode,
+    defaultCurrencySymbol,
+    language,
+    dateFormat,
+    firstDayOfWeek,
+    timezone,
+    theme,
+    enableNotifications,
+    enableBiometric,
+    autoBackup,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is UserPreference &&
+          other.userId == this.userId &&
+          other.defaultCurrencyId == this.defaultCurrencyId &&
+          other.defaultCurrencyCode == this.defaultCurrencyCode &&
+          other.defaultCurrencySymbol == this.defaultCurrencySymbol &&
+          other.language == this.language &&
+          other.dateFormat == this.dateFormat &&
+          other.firstDayOfWeek == this.firstDayOfWeek &&
+          other.timezone == this.timezone &&
+          other.theme == this.theme &&
+          other.enableNotifications == this.enableNotifications &&
+          other.enableBiometric == this.enableBiometric &&
+          other.autoBackup == this.autoBackup &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class UserPreferencesCompanion extends UpdateCompanion<UserPreference> {
+  final Value<String> userId;
+  final Value<String> defaultCurrencyId;
+  final Value<String> defaultCurrencyCode;
+  final Value<String> defaultCurrencySymbol;
+  final Value<String> language;
+  final Value<String> dateFormat;
+  final Value<int> firstDayOfWeek;
+  final Value<String> timezone;
+  final Value<String> theme;
+  final Value<bool> enableNotifications;
+  final Value<bool> enableBiometric;
+  final Value<bool> autoBackup;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const UserPreferencesCompanion({
+    this.userId = const Value.absent(),
+    this.defaultCurrencyId = const Value.absent(),
+    this.defaultCurrencyCode = const Value.absent(),
+    this.defaultCurrencySymbol = const Value.absent(),
+    this.language = const Value.absent(),
+    this.dateFormat = const Value.absent(),
+    this.firstDayOfWeek = const Value.absent(),
+    this.timezone = const Value.absent(),
+    this.theme = const Value.absent(),
+    this.enableNotifications = const Value.absent(),
+    this.enableBiometric = const Value.absent(),
+    this.autoBackup = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  UserPreferencesCompanion.insert({
+    required String userId,
+    required String defaultCurrencyId,
+    required String defaultCurrencyCode,
+    required String defaultCurrencySymbol,
+    required String language,
+    required String dateFormat,
+    required int firstDayOfWeek,
+    required String timezone,
+    required String theme,
+    required bool enableNotifications,
+    required bool enableBiometric,
+    required bool autoBackup,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : userId = Value(userId),
+       defaultCurrencyId = Value(defaultCurrencyId),
+       defaultCurrencyCode = Value(defaultCurrencyCode),
+       defaultCurrencySymbol = Value(defaultCurrencySymbol),
+       language = Value(language),
+       dateFormat = Value(dateFormat),
+       firstDayOfWeek = Value(firstDayOfWeek),
+       timezone = Value(timezone),
+       theme = Value(theme),
+       enableNotifications = Value(enableNotifications),
+       enableBiometric = Value(enableBiometric),
+       autoBackup = Value(autoBackup),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<UserPreference> custom({
+    Expression<String>? userId,
+    Expression<String>? defaultCurrencyId,
+    Expression<String>? defaultCurrencyCode,
+    Expression<String>? defaultCurrencySymbol,
+    Expression<String>? language,
+    Expression<String>? dateFormat,
+    Expression<int>? firstDayOfWeek,
+    Expression<String>? timezone,
+    Expression<String>? theme,
+    Expression<bool>? enableNotifications,
+    Expression<bool>? enableBiometric,
+    Expression<bool>? autoBackup,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (userId != null) 'user_id': userId,
+      if (defaultCurrencyId != null) 'default_currency_id': defaultCurrencyId,
+      if (defaultCurrencyCode != null)
+        'default_currency_code': defaultCurrencyCode,
+      if (defaultCurrencySymbol != null)
+        'default_currency_symbol': defaultCurrencySymbol,
+      if (language != null) 'language': language,
+      if (dateFormat != null) 'date_format': dateFormat,
+      if (firstDayOfWeek != null) 'first_day_of_week': firstDayOfWeek,
+      if (timezone != null) 'timezone': timezone,
+      if (theme != null) 'theme': theme,
+      if (enableNotifications != null)
+        'enable_notifications': enableNotifications,
+      if (enableBiometric != null) 'enable_biometric': enableBiometric,
+      if (autoBackup != null) 'auto_backup': autoBackup,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  UserPreferencesCompanion copyWith({
+    Value<String>? userId,
+    Value<String>? defaultCurrencyId,
+    Value<String>? defaultCurrencyCode,
+    Value<String>? defaultCurrencySymbol,
+    Value<String>? language,
+    Value<String>? dateFormat,
+    Value<int>? firstDayOfWeek,
+    Value<String>? timezone,
+    Value<String>? theme,
+    Value<bool>? enableNotifications,
+    Value<bool>? enableBiometric,
+    Value<bool>? autoBackup,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return UserPreferencesCompanion(
+      userId: userId ?? this.userId,
+      defaultCurrencyId: defaultCurrencyId ?? this.defaultCurrencyId,
+      defaultCurrencyCode: defaultCurrencyCode ?? this.defaultCurrencyCode,
+      defaultCurrencySymbol:
+          defaultCurrencySymbol ?? this.defaultCurrencySymbol,
+      language: language ?? this.language,
+      dateFormat: dateFormat ?? this.dateFormat,
+      firstDayOfWeek: firstDayOfWeek ?? this.firstDayOfWeek,
+      timezone: timezone ?? this.timezone,
+      theme: theme ?? this.theme,
+      enableNotifications: enableNotifications ?? this.enableNotifications,
+      enableBiometric: enableBiometric ?? this.enableBiometric,
+      autoBackup: autoBackup ?? this.autoBackup,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (defaultCurrencyId.present) {
+      map['default_currency_id'] = Variable<String>(defaultCurrencyId.value);
+    }
+    if (defaultCurrencyCode.present) {
+      map['default_currency_code'] = Variable<String>(
+        defaultCurrencyCode.value,
+      );
+    }
+    if (defaultCurrencySymbol.present) {
+      map['default_currency_symbol'] = Variable<String>(
+        defaultCurrencySymbol.value,
+      );
+    }
+    if (language.present) {
+      map['language'] = Variable<String>(language.value);
+    }
+    if (dateFormat.present) {
+      map['date_format'] = Variable<String>(dateFormat.value);
+    }
+    if (firstDayOfWeek.present) {
+      map['first_day_of_week'] = Variable<int>(firstDayOfWeek.value);
+    }
+    if (timezone.present) {
+      map['timezone'] = Variable<String>(timezone.value);
+    }
+    if (theme.present) {
+      map['theme'] = Variable<String>(theme.value);
+    }
+    if (enableNotifications.present) {
+      map['enable_notifications'] = Variable<bool>(enableNotifications.value);
+    }
+    if (enableBiometric.present) {
+      map['enable_biometric'] = Variable<bool>(enableBiometric.value);
+    }
+    if (autoBackup.present) {
+      map['auto_backup'] = Variable<bool>(autoBackup.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UserPreferencesCompanion(')
+          ..write('userId: $userId, ')
+          ..write('defaultCurrencyId: $defaultCurrencyId, ')
+          ..write('defaultCurrencyCode: $defaultCurrencyCode, ')
+          ..write('defaultCurrencySymbol: $defaultCurrencySymbol, ')
+          ..write('language: $language, ')
+          ..write('dateFormat: $dateFormat, ')
+          ..write('firstDayOfWeek: $firstDayOfWeek, ')
+          ..write('timezone: $timezone, ')
+          ..write('theme: $theme, ')
+          ..write('enableNotifications: $enableNotifications, ')
+          ..write('enableBiometric: $enableBiometric, ')
+          ..write('autoBackup: $autoBackup, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -6597,6 +7455,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $GoalsTable goals = $GoalsTable(this);
   late final $TransactionsTable transactions = $TransactionsTable(this);
   late final $DashboardCacheTable dashboardCache = $DashboardCacheTable(this);
+  late final $UserPreferencesTable userPreferences = $UserPreferencesTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -6611,6 +7472,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     goals,
     transactions,
     dashboardCache,
+    userPreferences,
   ];
 }
 
@@ -9692,6 +10554,399 @@ typedef $$DashboardCacheTableProcessedTableManager =
       DashboardCacheData,
       PrefetchHooks Function()
     >;
+typedef $$UserPreferencesTableCreateCompanionBuilder =
+    UserPreferencesCompanion Function({
+      required String userId,
+      required String defaultCurrencyId,
+      required String defaultCurrencyCode,
+      required String defaultCurrencySymbol,
+      required String language,
+      required String dateFormat,
+      required int firstDayOfWeek,
+      required String timezone,
+      required String theme,
+      required bool enableNotifications,
+      required bool enableBiometric,
+      required bool autoBackup,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$UserPreferencesTableUpdateCompanionBuilder =
+    UserPreferencesCompanion Function({
+      Value<String> userId,
+      Value<String> defaultCurrencyId,
+      Value<String> defaultCurrencyCode,
+      Value<String> defaultCurrencySymbol,
+      Value<String> language,
+      Value<String> dateFormat,
+      Value<int> firstDayOfWeek,
+      Value<String> timezone,
+      Value<String> theme,
+      Value<bool> enableNotifications,
+      Value<bool> enableBiometric,
+      Value<bool> autoBackup,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$UserPreferencesTableFilterComposer
+    extends Composer<_$AppDatabase, $UserPreferencesTable> {
+  $$UserPreferencesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get defaultCurrencyId => $composableBuilder(
+    column: $table.defaultCurrencyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get defaultCurrencyCode => $composableBuilder(
+    column: $table.defaultCurrencyCode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get defaultCurrencySymbol => $composableBuilder(
+    column: $table.defaultCurrencySymbol,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get language => $composableBuilder(
+    column: $table.language,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get dateFormat => $composableBuilder(
+    column: $table.dateFormat,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get firstDayOfWeek => $composableBuilder(
+    column: $table.firstDayOfWeek,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get timezone => $composableBuilder(
+    column: $table.timezone,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get theme => $composableBuilder(
+    column: $table.theme,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get enableNotifications => $composableBuilder(
+    column: $table.enableNotifications,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get enableBiometric => $composableBuilder(
+    column: $table.enableBiometric,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get autoBackup => $composableBuilder(
+    column: $table.autoBackup,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$UserPreferencesTableOrderingComposer
+    extends Composer<_$AppDatabase, $UserPreferencesTable> {
+  $$UserPreferencesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get defaultCurrencyId => $composableBuilder(
+    column: $table.defaultCurrencyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get defaultCurrencyCode => $composableBuilder(
+    column: $table.defaultCurrencyCode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get defaultCurrencySymbol => $composableBuilder(
+    column: $table.defaultCurrencySymbol,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get language => $composableBuilder(
+    column: $table.language,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get dateFormat => $composableBuilder(
+    column: $table.dateFormat,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get firstDayOfWeek => $composableBuilder(
+    column: $table.firstDayOfWeek,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get timezone => $composableBuilder(
+    column: $table.timezone,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get theme => $composableBuilder(
+    column: $table.theme,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get enableNotifications => $composableBuilder(
+    column: $table.enableNotifications,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get enableBiometric => $composableBuilder(
+    column: $table.enableBiometric,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get autoBackup => $composableBuilder(
+    column: $table.autoBackup,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$UserPreferencesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $UserPreferencesTable> {
+  $$UserPreferencesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<String> get defaultCurrencyId => $composableBuilder(
+    column: $table.defaultCurrencyId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get defaultCurrencyCode => $composableBuilder(
+    column: $table.defaultCurrencyCode,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get defaultCurrencySymbol => $composableBuilder(
+    column: $table.defaultCurrencySymbol,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get language =>
+      $composableBuilder(column: $table.language, builder: (column) => column);
+
+  GeneratedColumn<String> get dateFormat => $composableBuilder(
+    column: $table.dateFormat,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get firstDayOfWeek => $composableBuilder(
+    column: $table.firstDayOfWeek,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get timezone =>
+      $composableBuilder(column: $table.timezone, builder: (column) => column);
+
+  GeneratedColumn<String> get theme =>
+      $composableBuilder(column: $table.theme, builder: (column) => column);
+
+  GeneratedColumn<bool> get enableNotifications => $composableBuilder(
+    column: $table.enableNotifications,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get enableBiometric => $composableBuilder(
+    column: $table.enableBiometric,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get autoBackup => $composableBuilder(
+    column: $table.autoBackup,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$UserPreferencesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $UserPreferencesTable,
+          UserPreference,
+          $$UserPreferencesTableFilterComposer,
+          $$UserPreferencesTableOrderingComposer,
+          $$UserPreferencesTableAnnotationComposer,
+          $$UserPreferencesTableCreateCompanionBuilder,
+          $$UserPreferencesTableUpdateCompanionBuilder,
+          (
+            UserPreference,
+            BaseReferences<
+              _$AppDatabase,
+              $UserPreferencesTable,
+              UserPreference
+            >,
+          ),
+          UserPreference,
+          PrefetchHooks Function()
+        > {
+  $$UserPreferencesTableTableManager(
+    _$AppDatabase db,
+    $UserPreferencesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$UserPreferencesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$UserPreferencesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$UserPreferencesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> userId = const Value.absent(),
+                Value<String> defaultCurrencyId = const Value.absent(),
+                Value<String> defaultCurrencyCode = const Value.absent(),
+                Value<String> defaultCurrencySymbol = const Value.absent(),
+                Value<String> language = const Value.absent(),
+                Value<String> dateFormat = const Value.absent(),
+                Value<int> firstDayOfWeek = const Value.absent(),
+                Value<String> timezone = const Value.absent(),
+                Value<String> theme = const Value.absent(),
+                Value<bool> enableNotifications = const Value.absent(),
+                Value<bool> enableBiometric = const Value.absent(),
+                Value<bool> autoBackup = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => UserPreferencesCompanion(
+                userId: userId,
+                defaultCurrencyId: defaultCurrencyId,
+                defaultCurrencyCode: defaultCurrencyCode,
+                defaultCurrencySymbol: defaultCurrencySymbol,
+                language: language,
+                dateFormat: dateFormat,
+                firstDayOfWeek: firstDayOfWeek,
+                timezone: timezone,
+                theme: theme,
+                enableNotifications: enableNotifications,
+                enableBiometric: enableBiometric,
+                autoBackup: autoBackup,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String userId,
+                required String defaultCurrencyId,
+                required String defaultCurrencyCode,
+                required String defaultCurrencySymbol,
+                required String language,
+                required String dateFormat,
+                required int firstDayOfWeek,
+                required String timezone,
+                required String theme,
+                required bool enableNotifications,
+                required bool enableBiometric,
+                required bool autoBackup,
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => UserPreferencesCompanion.insert(
+                userId: userId,
+                defaultCurrencyId: defaultCurrencyId,
+                defaultCurrencyCode: defaultCurrencyCode,
+                defaultCurrencySymbol: defaultCurrencySymbol,
+                language: language,
+                dateFormat: dateFormat,
+                firstDayOfWeek: firstDayOfWeek,
+                timezone: timezone,
+                theme: theme,
+                enableNotifications: enableNotifications,
+                enableBiometric: enableBiometric,
+                autoBackup: autoBackup,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$UserPreferencesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $UserPreferencesTable,
+      UserPreference,
+      $$UserPreferencesTableFilterComposer,
+      $$UserPreferencesTableOrderingComposer,
+      $$UserPreferencesTableAnnotationComposer,
+      $$UserPreferencesTableCreateCompanionBuilder,
+      $$UserPreferencesTableUpdateCompanionBuilder,
+      (
+        UserPreference,
+        BaseReferences<_$AppDatabase, $UserPreferencesTable, UserPreference>,
+      ),
+      UserPreference,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -9714,4 +10969,6 @@ class $AppDatabaseManager {
       $$TransactionsTableTableManager(_db, _db.transactions);
   $$DashboardCacheTableTableManager get dashboardCache =>
       $$DashboardCacheTableTableManager(_db, _db.dashboardCache);
+  $$UserPreferencesTableTableManager get userPreferences =>
+      $$UserPreferencesTableTableManager(_db, _db.userPreferences);
 }

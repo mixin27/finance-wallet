@@ -4,9 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../app/presentation/widgets/currency_selector_sheet.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_dimensions.dart';
 import '../../../../core/utils/currency_formatter.dart';
+import '../../../user_preferences/presentation/viewmodels/user_preference_viewmodel.dart';
 import '../../data/models/account.dart';
 import '../../data/models/account_summary.dart';
 import '../providers/account_providers.dart';
@@ -25,6 +27,7 @@ class _AccountsPageState extends ConsumerState<AccountsPage> {
     super.initState();
     // Load accounts on page load
     Future.microtask(() {
+      ref.read(userPreferenceViewModelProvider.notifier).loadUserPreferences();
       ref.read(accountListViewModelProvider.notifier).loadAccounts();
       ref.read(accountListViewModelProvider.notifier).loadAccountSummary();
     });
@@ -149,11 +152,40 @@ class _AccountsPageState extends ConsumerState<AccountsPage> {
             ),
           ),
           const SizedBox(height: AppDimensions.space8),
-          Text(
-            CurrencyFormatter.format(summary.totalBalance),
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+          GestureDetector(
+            onTap: () async {
+              final changed = await CurrencySelectorSheet.show(context);
+              if (changed == true) {
+                ref
+                    .read(accountListViewModelProvider.notifier)
+                    .refreshAccounts();
+              }
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  CurrencyFormatter.format(
+                    summary.totalBalance,
+                    symbol:
+                        ref
+                            .watch(userPreferenceViewModelProvider)
+                            .userPreference
+                            ?.defaultCurrencySymbol ??
+                        '',
+                  ),
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: AppDimensions.space8),
+                Icon(
+                  Icons.expand_more,
+                  color: Colors.white.withValues(alpha: 0.8),
+                  size: 20,
+                ),
+              ],
             ),
           ),
           const SizedBox(height: AppDimensions.space16),

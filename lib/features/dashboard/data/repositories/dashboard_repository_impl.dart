@@ -266,4 +266,9 @@ class DashboardRepositoryImpl implements DashboardRepository {
       return Left(Failure.server(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> changeDefaultCurrency(String currencyId) async {
+    throw UnimplementedError();
+  }
 }

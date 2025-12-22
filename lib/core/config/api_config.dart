@@ -34,4 +34,7 @@ class ApiConfig {
   static const String categories = '/categories';
   static const String goals = '/goals';
   static const String budgets = '/budgets';
+
+  static const String userPreferences = '/user/preferences';
+  static const String userPreferencesReset = '/user/preferences/reset';
 }

@@ -162,3 +162,23 @@ class DashboardCache extends Table {
   @override
   Set<Column> get primaryKey => {key};
 }
+
+class UserPreferences extends Table {
+  TextColumn get userId => text()();
+  TextColumn get defaultCurrencyId => text()();
+  TextColumn get defaultCurrencyCode => text()();
+  TextColumn get defaultCurrencySymbol => text()();
+  TextColumn get language => text()();
+  TextColumn get dateFormat => text()();
+  IntColumn get firstDayOfWeek => integer()();
+  TextColumn get timezone => text()();
+  TextColumn get theme => text()();
+  BoolColumn get enableNotifications => boolean()();
+  BoolColumn get enableBiometric => boolean()();
+  BoolColumn get autoBackup => boolean()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {userId};
+}

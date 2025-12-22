@@ -24,4 +24,5 @@ abstract class DashboardRepository {
   Future<Either<Failure, Statistics>> getThisYearStatistics({
     bool forceRefresh,
   });
+  Future<Either<Failure, void>> changeDefaultCurrency(String currencyId);
 }

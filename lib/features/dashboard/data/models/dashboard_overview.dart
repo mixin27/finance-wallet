@@ -7,6 +7,8 @@ part 'dashboard_overview.g.dart';
 abstract class DashboardOverview with _$DashboardOverview {
   const factory DashboardOverview({
     required double totalBalance,
+    required DefaultCurrency defaultCurrency,
+    required List<AccountBalance> accountBalances,
     required double monthIncome,
     required double monthExpenses,
     required double savings,
@@ -34,4 +36,31 @@ abstract class CategoryBreakdown with _$CategoryBreakdown {
 
   factory CategoryBreakdown.fromJson(Map<String, dynamic> json) =>
       _$CategoryBreakdownFromJson(json);
+}
+
+@freezed
+abstract class DefaultCurrency with _$DefaultCurrency {
+  const factory DefaultCurrency({
+    required String id,
+    required String code,
+    required String symbol,
+    required String name,
+  }) = _DefaultCurrency;
+
+  factory DefaultCurrency.fromJson(Map<String, dynamic> json) =>
+      _$DefaultCurrencyFromJson(json);
+}
+
+@freezed
+abstract class AccountBalance with _$AccountBalance {
+  const factory AccountBalance({
+    required String accountId,
+    required String accountName,
+    required double balance,
+    required DefaultCurrency currency,
+    required double balanceInDefaultCurrency,
+  }) = _AccountBalance;
+
+  factory AccountBalance.fromJson(Map<String, dynamic> json) =>
+      _$AccountBalanceFromJson(json);
 }

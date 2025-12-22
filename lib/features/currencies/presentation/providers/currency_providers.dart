@@ -31,3 +31,13 @@ final currencyRepositoryProvider = Provider<CurrencyRepository>((ref) {
 
 // Currencies Provider
 final currenciesProvider = StateProvider<List<Currency>>((ref) => []);
+
+final currenciesFutureProvider = FutureProvider<List<Currency>>((ref) async {
+  final repository = ref.read(currencyRepositoryProvider);
+  final result = await repository.getCurrencies();
+
+  return result.fold((failure) => throw failure, (currencies) {
+    ref.read(currenciesProvider.notifier).state = currencies;
+    return currencies;
+  });
+});

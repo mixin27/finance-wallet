@@ -9,8 +9,11 @@ import '../../../../app/theme/app_dimensions.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../../../transactions/presentation/providers/transaction_providers.dart';
 import '../../../transactions/presentation/viewmodels/transaction_list_viewmodel.dart';
+import '../../data/models/dashboard_overview.dart';
 import '../providers/dashboard_providers.dart';
 import '../viewmodels/dashboard_viewmodel.dart';
+import '../../../user_preferences/presentation/viewmodels/user_preference_viewmodel.dart';
+import '../../../../app/presentation/widgets/currency_selector_sheet.dart';
 
 class DashboardPage extends ConsumerStatefulWidget {
   const DashboardPage({super.key});
@@ -25,6 +28,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     super.initState();
     // Load dashboard data on page load
     Future.microtask(() {
+      ref.read(userPreferenceViewModelProvider.notifier).loadUserPreferences();
       ref.read(dashboardViewModelProvider.notifier).loadDashboard();
       // Load recent transactions for the list
       ref.read(transactionListViewModelProvider.notifier).loadTransactions();
@@ -201,7 +205,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     );
   }
 
-  Widget _buildBalanceCard(BuildContext context, overview) {
+  Widget _buildBalanceCard(BuildContext context, DashboardOverview overview) {
     return Container(
       padding: const EdgeInsets.all(AppDimensions.space24),
       decoration: BoxDecoration(
@@ -237,28 +241,63 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                   color: Colors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Text(
-                  overview.currentMonth,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
+                child: InkWell(
+                  onTap: () async {
+                    final changed = await CurrencySelectorSheet.show(context);
+                    if (changed == true) {
+                      ref
+                          .read(dashboardViewModelProvider.notifier)
+                          .refreshDashboard();
+                    }
+                  },
+                  borderRadius: BorderRadius.circular(12),
+                  child: Text(
+                    overview.currentMonth,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: AppDimensions.space8),
-          Text(
-            CurrencyFormatter.format(overview.totalBalance),
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+          GestureDetector(
+            onTap: () async {
+              final changed = await CurrencySelectorSheet.show(context);
+              if (changed == true) {
+                ref
+                    .read(dashboardViewModelProvider.notifier)
+                    .refreshDashboard();
+              }
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  CurrencyFormatter.format(
+                    overview.totalBalance,
+                    symbol: overview.defaultCurrency.symbol,
+                  ),
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: AppDimensions.space8),
+                Icon(
+                  Icons.expand_more,
+                  color: Colors.white.withValues(alpha: 0.8),
+                  size: 20,
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 4),
           Text(
-            'Savings: ${CurrencyFormatter.format(overview.savings)}',
+            'Savings: ${CurrencyFormatter.format(overview.savings, symbol: overview.defaultCurrency.symbol)}',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: Colors.white.withValues(alpha: 0.7),
             ),
@@ -270,7 +309,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                 child: _buildBalanceItem(
                   context,
                   'Income',
-                  CurrencyFormatter.format(overview.monthIncome),
+                  CurrencyFormatter.format(
+                    overview.monthIncome,
+                    symbol: overview.defaultCurrency.symbol,
+                  ),
                   Icons.arrow_downward,
                   AppColors.success,
                   overview.incomeChange,
@@ -281,7 +323,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                 child: _buildBalanceItem(
                   context,
                   'Expense',
-                  CurrencyFormatter.format(overview.monthExpenses),
+                  CurrencyFormatter.format(
+                    overview.monthExpenses,
+                    symbol: overview.defaultCurrency.symbol,
+                  ),
                   Icons.arrow_upward,
                   AppColors.error,
                   overview.expenseChange,
@@ -443,7 +488,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     );
   }
 
-  Widget _buildSpendingBreakdown(BuildContext context, overview) {
+  Widget _buildSpendingBreakdown(
+    BuildContext context,
+    DashboardOverview overview,
+  ) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(AppDimensions.space16),
@@ -481,7 +529,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                           ],
                         ),
                         Text(
-                          CurrencyFormatter.format(category.amount),
+                          CurrencyFormatter.format(
+                            category.amount,
+                            symbol: overview.defaultCurrency.symbol,
+                          ),
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(fontWeight: FontWeight.w600),
                         ),

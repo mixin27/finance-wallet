@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DashboardOverview {
 
- double get totalBalance; double get monthIncome; double get monthExpenses; double get savings; double get incomeChange; double get expenseChange; List<CategoryBreakdown> get categoryBreakdown; int get recentTransactionsCount; int get activeBudgetsCount; String get currentMonth;
+ double get totalBalance; DefaultCurrency get defaultCurrency; List<AccountBalance> get accountBalances; double get monthIncome; double get monthExpenses; double get savings; double get incomeChange; double get expenseChange; List<CategoryBreakdown> get categoryBreakdown; int get recentTransactionsCount; int get activeBudgetsCount; String get currentMonth;
 /// Create a copy of DashboardOverview
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $DashboardOverviewCopyWith<DashboardOverview> get copyWith => _$DashboardOvervie
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DashboardOverview&&(identical(other.totalBalance, totalBalance) || other.totalBalance == totalBalance)&&(identical(other.monthIncome, monthIncome) || other.monthIncome == monthIncome)&&(identical(other.monthExpenses, monthExpenses) || other.monthExpenses == monthExpenses)&&(identical(other.savings, savings) || other.savings == savings)&&(identical(other.incomeChange, incomeChange) || other.incomeChange == incomeChange)&&(identical(other.expenseChange, expenseChange) || other.expenseChange == expenseChange)&&const DeepCollectionEquality().equals(other.categoryBreakdown, categoryBreakdown)&&(identical(other.recentTransactionsCount, recentTransactionsCount) || other.recentTransactionsCount == recentTransactionsCount)&&(identical(other.activeBudgetsCount, activeBudgetsCount) || other.activeBudgetsCount == activeBudgetsCount)&&(identical(other.currentMonth, currentMonth) || other.currentMonth == currentMonth));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DashboardOverview&&(identical(other.totalBalance, totalBalance) || other.totalBalance == totalBalance)&&(identical(other.defaultCurrency, defaultCurrency) || other.defaultCurrency == defaultCurrency)&&const DeepCollectionEquality().equals(other.accountBalances, accountBalances)&&(identical(other.monthIncome, monthIncome) || other.monthIncome == monthIncome)&&(identical(other.monthExpenses, monthExpenses) || other.monthExpenses == monthExpenses)&&(identical(other.savings, savings) || other.savings == savings)&&(identical(other.incomeChange, incomeChange) || other.incomeChange == incomeChange)&&(identical(other.expenseChange, expenseChange) || other.expenseChange == expenseChange)&&const DeepCollectionEquality().equals(other.categoryBreakdown, categoryBreakdown)&&(identical(other.recentTransactionsCount, recentTransactionsCount) || other.recentTransactionsCount == recentTransactionsCount)&&(identical(other.activeBudgetsCount, activeBudgetsCount) || other.activeBudgetsCount == activeBudgetsCount)&&(identical(other.currentMonth, currentMonth) || other.currentMonth == currentMonth));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,totalBalance,monthIncome,monthExpenses,savings,incomeChange,expenseChange,const DeepCollectionEquality().hash(categoryBreakdown),recentTransactionsCount,activeBudgetsCount,currentMonth);
+int get hashCode => Object.hash(runtimeType,totalBalance,defaultCurrency,const DeepCollectionEquality().hash(accountBalances),monthIncome,monthExpenses,savings,incomeChange,expenseChange,const DeepCollectionEquality().hash(categoryBreakdown),recentTransactionsCount,activeBudgetsCount,currentMonth);
 
 @override
 String toString() {
-  return 'DashboardOverview(totalBalance: $totalBalance, monthIncome: $monthIncome, monthExpenses: $monthExpenses, savings: $savings, incomeChange: $incomeChange, expenseChange: $expenseChange, categoryBreakdown: $categoryBreakdown, recentTransactionsCount: $recentTransactionsCount, activeBudgetsCount: $activeBudgetsCount, currentMonth: $currentMonth)';
+  return 'DashboardOverview(totalBalance: $totalBalance, defaultCurrency: $defaultCurrency, accountBalances: $accountBalances, monthIncome: $monthIncome, monthExpenses: $monthExpenses, savings: $savings, incomeChange: $incomeChange, expenseChange: $expenseChange, categoryBreakdown: $categoryBreakdown, recentTransactionsCount: $recentTransactionsCount, activeBudgetsCount: $activeBudgetsCount, currentMonth: $currentMonth)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $DashboardOverviewCopyWith<$Res>  {
   factory $DashboardOverviewCopyWith(DashboardOverview value, $Res Function(DashboardOverview) _then) = _$DashboardOverviewCopyWithImpl;
 @useResult
 $Res call({
- double totalBalance, double monthIncome, double monthExpenses, double savings, double incomeChange, double expenseChange, List<CategoryBreakdown> categoryBreakdown, int recentTransactionsCount, int activeBudgetsCount, String currentMonth
+ double totalBalance, DefaultCurrency defaultCurrency, List<AccountBalance> accountBalances, double monthIncome, double monthExpenses, double savings, double incomeChange, double expenseChange, List<CategoryBreakdown> categoryBreakdown, int recentTransactionsCount, int activeBudgetsCount, String currentMonth
 });
 
 
-
+$DefaultCurrencyCopyWith<$Res> get defaultCurrency;
 
 }
 /// @nodoc
@@ -65,10 +65,12 @@ class _$DashboardOverviewCopyWithImpl<$Res>
 
 /// Create a copy of DashboardOverview
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? totalBalance = null,Object? monthIncome = null,Object? monthExpenses = null,Object? savings = null,Object? incomeChange = null,Object? expenseChange = null,Object? categoryBreakdown = null,Object? recentTransactionsCount = null,Object? activeBudgetsCount = null,Object? currentMonth = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? totalBalance = null,Object? defaultCurrency = null,Object? accountBalances = null,Object? monthIncome = null,Object? monthExpenses = null,Object? savings = null,Object? incomeChange = null,Object? expenseChange = null,Object? categoryBreakdown = null,Object? recentTransactionsCount = null,Object? activeBudgetsCount = null,Object? currentMonth = null,}) {
   return _then(_self.copyWith(
 totalBalance: null == totalBalance ? _self.totalBalance : totalBalance // ignore: cast_nullable_to_non_nullable
-as double,monthIncome: null == monthIncome ? _self.monthIncome : monthIncome // ignore: cast_nullable_to_non_nullable
+as double,defaultCurrency: null == defaultCurrency ? _self.defaultCurrency : defaultCurrency // ignore: cast_nullable_to_non_nullable
+as DefaultCurrency,accountBalances: null == accountBalances ? _self.accountBalances : accountBalances // ignore: cast_nullable_to_non_nullable
+as List<AccountBalance>,monthIncome: null == monthIncome ? _self.monthIncome : monthIncome // ignore: cast_nullable_to_non_nullable
 as double,monthExpenses: null == monthExpenses ? _self.monthExpenses : monthExpenses // ignore: cast_nullable_to_non_nullable
 as double,savings: null == savings ? _self.savings : savings // ignore: cast_nullable_to_non_nullable
 as double,incomeChange: null == incomeChange ? _self.incomeChange : incomeChange // ignore: cast_nullable_to_non_nullable
@@ -80,7 +82,16 @@ as int,currentMonth: null == currentMonth ? _self.currentMonth : currentMonth //
 as String,
   ));
 }
-
+/// Create a copy of DashboardOverview
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$DefaultCurrencyCopyWith<$Res> get defaultCurrency {
+  
+  return $DefaultCurrencyCopyWith<$Res>(_self.defaultCurrency, (value) {
+    return _then(_self.copyWith(defaultCurrency: value));
+  });
+}
 }
 
 
@@ -162,10 +173,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double totalBalance,  double monthIncome,  double monthExpenses,  double savings,  double incomeChange,  double expenseChange,  List<CategoryBreakdown> categoryBreakdown,  int recentTransactionsCount,  int activeBudgetsCount,  String currentMonth)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double totalBalance,  DefaultCurrency defaultCurrency,  List<AccountBalance> accountBalances,  double monthIncome,  double monthExpenses,  double savings,  double incomeChange,  double expenseChange,  List<CategoryBreakdown> categoryBreakdown,  int recentTransactionsCount,  int activeBudgetsCount,  String currentMonth)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DashboardOverview() when $default != null:
-return $default(_that.totalBalance,_that.monthIncome,_that.monthExpenses,_that.savings,_that.incomeChange,_that.expenseChange,_that.categoryBreakdown,_that.recentTransactionsCount,_that.activeBudgetsCount,_that.currentMonth);case _:
+return $default(_that.totalBalance,_that.defaultCurrency,_that.accountBalances,_that.monthIncome,_that.monthExpenses,_that.savings,_that.incomeChange,_that.expenseChange,_that.categoryBreakdown,_that.recentTransactionsCount,_that.activeBudgetsCount,_that.currentMonth);case _:
   return orElse();
 
 }
@@ -183,10 +194,10 @@ return $default(_that.totalBalance,_that.monthIncome,_that.monthExpenses,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double totalBalance,  double monthIncome,  double monthExpenses,  double savings,  double incomeChange,  double expenseChange,  List<CategoryBreakdown> categoryBreakdown,  int recentTransactionsCount,  int activeBudgetsCount,  String currentMonth)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double totalBalance,  DefaultCurrency defaultCurrency,  List<AccountBalance> accountBalances,  double monthIncome,  double monthExpenses,  double savings,  double incomeChange,  double expenseChange,  List<CategoryBreakdown> categoryBreakdown,  int recentTransactionsCount,  int activeBudgetsCount,  String currentMonth)  $default,) {final _that = this;
 switch (_that) {
 case _DashboardOverview():
-return $default(_that.totalBalance,_that.monthIncome,_that.monthExpenses,_that.savings,_that.incomeChange,_that.expenseChange,_that.categoryBreakdown,_that.recentTransactionsCount,_that.activeBudgetsCount,_that.currentMonth);case _:
+return $default(_that.totalBalance,_that.defaultCurrency,_that.accountBalances,_that.monthIncome,_that.monthExpenses,_that.savings,_that.incomeChange,_that.expenseChange,_that.categoryBreakdown,_that.recentTransactionsCount,_that.activeBudgetsCount,_that.currentMonth);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +214,10 @@ return $default(_that.totalBalance,_that.monthIncome,_that.monthExpenses,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double totalBalance,  double monthIncome,  double monthExpenses,  double savings,  double incomeChange,  double expenseChange,  List<CategoryBreakdown> categoryBreakdown,  int recentTransactionsCount,  int activeBudgetsCount,  String currentMonth)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double totalBalance,  DefaultCurrency defaultCurrency,  List<AccountBalance> accountBalances,  double monthIncome,  double monthExpenses,  double savings,  double incomeChange,  double expenseChange,  List<CategoryBreakdown> categoryBreakdown,  int recentTransactionsCount,  int activeBudgetsCount,  String currentMonth)?  $default,) {final _that = this;
 switch (_that) {
 case _DashboardOverview() when $default != null:
-return $default(_that.totalBalance,_that.monthIncome,_that.monthExpenses,_that.savings,_that.incomeChange,_that.expenseChange,_that.categoryBreakdown,_that.recentTransactionsCount,_that.activeBudgetsCount,_that.currentMonth);case _:
+return $default(_that.totalBalance,_that.defaultCurrency,_that.accountBalances,_that.monthIncome,_that.monthExpenses,_that.savings,_that.incomeChange,_that.expenseChange,_that.categoryBreakdown,_that.recentTransactionsCount,_that.activeBudgetsCount,_that.currentMonth);case _:
   return null;
 
 }
@@ -218,10 +229,18 @@ return $default(_that.totalBalance,_that.monthIncome,_that.monthExpenses,_that.s
 @JsonSerializable()
 
 class _DashboardOverview implements DashboardOverview {
-  const _DashboardOverview({required this.totalBalance, required this.monthIncome, required this.monthExpenses, required this.savings, required this.incomeChange, required this.expenseChange, required final  List<CategoryBreakdown> categoryBreakdown, required this.recentTransactionsCount, required this.activeBudgetsCount, required this.currentMonth}): _categoryBreakdown = categoryBreakdown;
+  const _DashboardOverview({required this.totalBalance, required this.defaultCurrency, required final  List<AccountBalance> accountBalances, required this.monthIncome, required this.monthExpenses, required this.savings, required this.incomeChange, required this.expenseChange, required final  List<CategoryBreakdown> categoryBreakdown, required this.recentTransactionsCount, required this.activeBudgetsCount, required this.currentMonth}): _accountBalances = accountBalances,_categoryBreakdown = categoryBreakdown;
   factory _DashboardOverview.fromJson(Map<String, dynamic> json) => _$DashboardOverviewFromJson(json);
 
 @override final  double totalBalance;
+@override final  DefaultCurrency defaultCurrency;
+ final  List<AccountBalance> _accountBalances;
+@override List<AccountBalance> get accountBalances {
+  if (_accountBalances is EqualUnmodifiableListView) return _accountBalances;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_accountBalances);
+}
+
 @override final  double monthIncome;
 @override final  double monthExpenses;
 @override final  double savings;
@@ -251,16 +270,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DashboardOverview&&(identical(other.totalBalance, totalBalance) || other.totalBalance == totalBalance)&&(identical(other.monthIncome, monthIncome) || other.monthIncome == monthIncome)&&(identical(other.monthExpenses, monthExpenses) || other.monthExpenses == monthExpenses)&&(identical(other.savings, savings) || other.savings == savings)&&(identical(other.incomeChange, incomeChange) || other.incomeChange == incomeChange)&&(identical(other.expenseChange, expenseChange) || other.expenseChange == expenseChange)&&const DeepCollectionEquality().equals(other._categoryBreakdown, _categoryBreakdown)&&(identical(other.recentTransactionsCount, recentTransactionsCount) || other.recentTransactionsCount == recentTransactionsCount)&&(identical(other.activeBudgetsCount, activeBudgetsCount) || other.activeBudgetsCount == activeBudgetsCount)&&(identical(other.currentMonth, currentMonth) || other.currentMonth == currentMonth));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DashboardOverview&&(identical(other.totalBalance, totalBalance) || other.totalBalance == totalBalance)&&(identical(other.defaultCurrency, defaultCurrency) || other.defaultCurrency == defaultCurrency)&&const DeepCollectionEquality().equals(other._accountBalances, _accountBalances)&&(identical(other.monthIncome, monthIncome) || other.monthIncome == monthIncome)&&(identical(other.monthExpenses, monthExpenses) || other.monthExpenses == monthExpenses)&&(identical(other.savings, savings) || other.savings == savings)&&(identical(other.incomeChange, incomeChange) || other.incomeChange == incomeChange)&&(identical(other.expenseChange, expenseChange) || other.expenseChange == expenseChange)&&const DeepCollectionEquality().equals(other._categoryBreakdown, _categoryBreakdown)&&(identical(other.recentTransactionsCount, recentTransactionsCount) || other.recentTransactionsCount == recentTransactionsCount)&&(identical(other.activeBudgetsCount, activeBudgetsCount) || other.activeBudgetsCount == activeBudgetsCount)&&(identical(other.currentMonth, currentMonth) || other.currentMonth == currentMonth));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,totalBalance,monthIncome,monthExpenses,savings,incomeChange,expenseChange,const DeepCollectionEquality().hash(_categoryBreakdown),recentTransactionsCount,activeBudgetsCount,currentMonth);
+int get hashCode => Object.hash(runtimeType,totalBalance,defaultCurrency,const DeepCollectionEquality().hash(_accountBalances),monthIncome,monthExpenses,savings,incomeChange,expenseChange,const DeepCollectionEquality().hash(_categoryBreakdown),recentTransactionsCount,activeBudgetsCount,currentMonth);
 
 @override
 String toString() {
-  return 'DashboardOverview(totalBalance: $totalBalance, monthIncome: $monthIncome, monthExpenses: $monthExpenses, savings: $savings, incomeChange: $incomeChange, expenseChange: $expenseChange, categoryBreakdown: $categoryBreakdown, recentTransactionsCount: $recentTransactionsCount, activeBudgetsCount: $activeBudgetsCount, currentMonth: $currentMonth)';
+  return 'DashboardOverview(totalBalance: $totalBalance, defaultCurrency: $defaultCurrency, accountBalances: $accountBalances, monthIncome: $monthIncome, monthExpenses: $monthExpenses, savings: $savings, incomeChange: $incomeChange, expenseChange: $expenseChange, categoryBreakdown: $categoryBreakdown, recentTransactionsCount: $recentTransactionsCount, activeBudgetsCount: $activeBudgetsCount, currentMonth: $currentMonth)';
 }
 
 
@@ -271,11 +290,11 @@ abstract mixin class _$DashboardOverviewCopyWith<$Res> implements $DashboardOver
   factory _$DashboardOverviewCopyWith(_DashboardOverview value, $Res Function(_DashboardOverview) _then) = __$DashboardOverviewCopyWithImpl;
 @override @useResult
 $Res call({
- double totalBalance, double monthIncome, double monthExpenses, double savings, double incomeChange, double expenseChange, List<CategoryBreakdown> categoryBreakdown, int recentTransactionsCount, int activeBudgetsCount, String currentMonth
+ double totalBalance, DefaultCurrency defaultCurrency, List<AccountBalance> accountBalances, double monthIncome, double monthExpenses, double savings, double incomeChange, double expenseChange, List<CategoryBreakdown> categoryBreakdown, int recentTransactionsCount, int activeBudgetsCount, String currentMonth
 });
 
 
-
+@override $DefaultCurrencyCopyWith<$Res> get defaultCurrency;
 
 }
 /// @nodoc
@@ -288,10 +307,12 @@ class __$DashboardOverviewCopyWithImpl<$Res>
 
 /// Create a copy of DashboardOverview
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? totalBalance = null,Object? monthIncome = null,Object? monthExpenses = null,Object? savings = null,Object? incomeChange = null,Object? expenseChange = null,Object? categoryBreakdown = null,Object? recentTransactionsCount = null,Object? activeBudgetsCount = null,Object? currentMonth = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? totalBalance = null,Object? defaultCurrency = null,Object? accountBalances = null,Object? monthIncome = null,Object? monthExpenses = null,Object? savings = null,Object? incomeChange = null,Object? expenseChange = null,Object? categoryBreakdown = null,Object? recentTransactionsCount = null,Object? activeBudgetsCount = null,Object? currentMonth = null,}) {
   return _then(_DashboardOverview(
 totalBalance: null == totalBalance ? _self.totalBalance : totalBalance // ignore: cast_nullable_to_non_nullable
-as double,monthIncome: null == monthIncome ? _self.monthIncome : monthIncome // ignore: cast_nullable_to_non_nullable
+as double,defaultCurrency: null == defaultCurrency ? _self.defaultCurrency : defaultCurrency // ignore: cast_nullable_to_non_nullable
+as DefaultCurrency,accountBalances: null == accountBalances ? _self._accountBalances : accountBalances // ignore: cast_nullable_to_non_nullable
+as List<AccountBalance>,monthIncome: null == monthIncome ? _self.monthIncome : monthIncome // ignore: cast_nullable_to_non_nullable
 as double,monthExpenses: null == monthExpenses ? _self.monthExpenses : monthExpenses // ignore: cast_nullable_to_non_nullable
 as double,savings: null == savings ? _self.savings : savings // ignore: cast_nullable_to_non_nullable
 as double,incomeChange: null == incomeChange ? _self.incomeChange : incomeChange // ignore: cast_nullable_to_non_nullable
@@ -304,7 +325,16 @@ as String,
   ));
 }
 
-
+/// Create a copy of DashboardOverview
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$DefaultCurrencyCopyWith<$Res> get defaultCurrency {
+  
+  return $DefaultCurrencyCopyWith<$Res>(_self.defaultCurrency, (value) {
+    return _then(_self.copyWith(defaultCurrency: value));
+  });
+}
 }
 
 
@@ -580,6 +610,571 @@ as String?,
 }
 
 
+}
+
+
+/// @nodoc
+mixin _$DefaultCurrency {
+
+ String get id; String get code; String get symbol; String get name;
+/// Create a copy of DefaultCurrency
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$DefaultCurrencyCopyWith<DefaultCurrency> get copyWith => _$DefaultCurrencyCopyWithImpl<DefaultCurrency>(this as DefaultCurrency, _$identity);
+
+  /// Serializes this DefaultCurrency to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DefaultCurrency&&(identical(other.id, id) || other.id == id)&&(identical(other.code, code) || other.code == code)&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.name, name) || other.name == name));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,code,symbol,name);
+
+@override
+String toString() {
+  return 'DefaultCurrency(id: $id, code: $code, symbol: $symbol, name: $name)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $DefaultCurrencyCopyWith<$Res>  {
+  factory $DefaultCurrencyCopyWith(DefaultCurrency value, $Res Function(DefaultCurrency) _then) = _$DefaultCurrencyCopyWithImpl;
+@useResult
+$Res call({
+ String id, String code, String symbol, String name
+});
+
+
+
+
+}
+/// @nodoc
+class _$DefaultCurrencyCopyWithImpl<$Res>
+    implements $DefaultCurrencyCopyWith<$Res> {
+  _$DefaultCurrencyCopyWithImpl(this._self, this._then);
+
+  final DefaultCurrency _self;
+  final $Res Function(DefaultCurrency) _then;
+
+/// Create a copy of DefaultCurrency
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? code = null,Object? symbol = null,Object? name = null,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String,symbol: null == symbol ? _self.symbol : symbol // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [DefaultCurrency].
+extension DefaultCurrencyPatterns on DefaultCurrency {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _DefaultCurrency value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _DefaultCurrency() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _DefaultCurrency value)  $default,){
+final _that = this;
+switch (_that) {
+case _DefaultCurrency():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _DefaultCurrency value)?  $default,){
+final _that = this;
+switch (_that) {
+case _DefaultCurrency() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String code,  String symbol,  String name)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _DefaultCurrency() when $default != null:
+return $default(_that.id,_that.code,_that.symbol,_that.name);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String code,  String symbol,  String name)  $default,) {final _that = this;
+switch (_that) {
+case _DefaultCurrency():
+return $default(_that.id,_that.code,_that.symbol,_that.name);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String code,  String symbol,  String name)?  $default,) {final _that = this;
+switch (_that) {
+case _DefaultCurrency() when $default != null:
+return $default(_that.id,_that.code,_that.symbol,_that.name);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _DefaultCurrency implements DefaultCurrency {
+  const _DefaultCurrency({required this.id, required this.code, required this.symbol, required this.name});
+  factory _DefaultCurrency.fromJson(Map<String, dynamic> json) => _$DefaultCurrencyFromJson(json);
+
+@override final  String id;
+@override final  String code;
+@override final  String symbol;
+@override final  String name;
+
+/// Create a copy of DefaultCurrency
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DefaultCurrencyCopyWith<_DefaultCurrency> get copyWith => __$DefaultCurrencyCopyWithImpl<_DefaultCurrency>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$DefaultCurrencyToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DefaultCurrency&&(identical(other.id, id) || other.id == id)&&(identical(other.code, code) || other.code == code)&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.name, name) || other.name == name));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,code,symbol,name);
+
+@override
+String toString() {
+  return 'DefaultCurrency(id: $id, code: $code, symbol: $symbol, name: $name)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DefaultCurrencyCopyWith<$Res> implements $DefaultCurrencyCopyWith<$Res> {
+  factory _$DefaultCurrencyCopyWith(_DefaultCurrency value, $Res Function(_DefaultCurrency) _then) = __$DefaultCurrencyCopyWithImpl;
+@override @useResult
+$Res call({
+ String id, String code, String symbol, String name
+});
+
+
+
+
+}
+/// @nodoc
+class __$DefaultCurrencyCopyWithImpl<$Res>
+    implements _$DefaultCurrencyCopyWith<$Res> {
+  __$DefaultCurrencyCopyWithImpl(this._self, this._then);
+
+  final _DefaultCurrency _self;
+  final $Res Function(_DefaultCurrency) _then;
+
+/// Create a copy of DefaultCurrency
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? code = null,Object? symbol = null,Object? name = null,}) {
+  return _then(_DefaultCurrency(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String,symbol: null == symbol ? _self.symbol : symbol // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$AccountBalance {
+
+ String get accountId; String get accountName; double get balance; DefaultCurrency get currency; double get balanceInDefaultCurrency;
+/// Create a copy of AccountBalance
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AccountBalanceCopyWith<AccountBalance> get copyWith => _$AccountBalanceCopyWithImpl<AccountBalance>(this as AccountBalance, _$identity);
+
+  /// Serializes this AccountBalance to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountBalance&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.accountName, accountName) || other.accountName == accountName)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.balanceInDefaultCurrency, balanceInDefaultCurrency) || other.balanceInDefaultCurrency == balanceInDefaultCurrency));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,accountId,accountName,balance,currency,balanceInDefaultCurrency);
+
+@override
+String toString() {
+  return 'AccountBalance(accountId: $accountId, accountName: $accountName, balance: $balance, currency: $currency, balanceInDefaultCurrency: $balanceInDefaultCurrency)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $AccountBalanceCopyWith<$Res>  {
+  factory $AccountBalanceCopyWith(AccountBalance value, $Res Function(AccountBalance) _then) = _$AccountBalanceCopyWithImpl;
+@useResult
+$Res call({
+ String accountId, String accountName, double balance, DefaultCurrency currency, double balanceInDefaultCurrency
+});
+
+
+$DefaultCurrencyCopyWith<$Res> get currency;
+
+}
+/// @nodoc
+class _$AccountBalanceCopyWithImpl<$Res>
+    implements $AccountBalanceCopyWith<$Res> {
+  _$AccountBalanceCopyWithImpl(this._self, this._then);
+
+  final AccountBalance _self;
+  final $Res Function(AccountBalance) _then;
+
+/// Create a copy of AccountBalance
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? accountId = null,Object? accountName = null,Object? balance = null,Object? currency = null,Object? balanceInDefaultCurrency = null,}) {
+  return _then(_self.copyWith(
+accountId: null == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
+as String,accountName: null == accountName ? _self.accountName : accountName // ignore: cast_nullable_to_non_nullable
+as String,balance: null == balance ? _self.balance : balance // ignore: cast_nullable_to_non_nullable
+as double,currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as DefaultCurrency,balanceInDefaultCurrency: null == balanceInDefaultCurrency ? _self.balanceInDefaultCurrency : balanceInDefaultCurrency // ignore: cast_nullable_to_non_nullable
+as double,
+  ));
+}
+/// Create a copy of AccountBalance
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$DefaultCurrencyCopyWith<$Res> get currency {
+  
+  return $DefaultCurrencyCopyWith<$Res>(_self.currency, (value) {
+    return _then(_self.copyWith(currency: value));
+  });
+}
+}
+
+
+/// Adds pattern-matching-related methods to [AccountBalance].
+extension AccountBalancePatterns on AccountBalance {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AccountBalance value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _AccountBalance() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AccountBalance value)  $default,){
+final _that = this;
+switch (_that) {
+case _AccountBalance():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AccountBalance value)?  $default,){
+final _that = this;
+switch (_that) {
+case _AccountBalance() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String accountId,  String accountName,  double balance,  DefaultCurrency currency,  double balanceInDefaultCurrency)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _AccountBalance() when $default != null:
+return $default(_that.accountId,_that.accountName,_that.balance,_that.currency,_that.balanceInDefaultCurrency);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String accountId,  String accountName,  double balance,  DefaultCurrency currency,  double balanceInDefaultCurrency)  $default,) {final _that = this;
+switch (_that) {
+case _AccountBalance():
+return $default(_that.accountId,_that.accountName,_that.balance,_that.currency,_that.balanceInDefaultCurrency);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String accountId,  String accountName,  double balance,  DefaultCurrency currency,  double balanceInDefaultCurrency)?  $default,) {final _that = this;
+switch (_that) {
+case _AccountBalance() when $default != null:
+return $default(_that.accountId,_that.accountName,_that.balance,_that.currency,_that.balanceInDefaultCurrency);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _AccountBalance implements AccountBalance {
+  const _AccountBalance({required this.accountId, required this.accountName, required this.balance, required this.currency, required this.balanceInDefaultCurrency});
+  factory _AccountBalance.fromJson(Map<String, dynamic> json) => _$AccountBalanceFromJson(json);
+
+@override final  String accountId;
+@override final  String accountName;
+@override final  double balance;
+@override final  DefaultCurrency currency;
+@override final  double balanceInDefaultCurrency;
+
+/// Create a copy of AccountBalance
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$AccountBalanceCopyWith<_AccountBalance> get copyWith => __$AccountBalanceCopyWithImpl<_AccountBalance>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$AccountBalanceToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountBalance&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.accountName, accountName) || other.accountName == accountName)&&(identical(other.balance, balance) || other.balance == balance)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.balanceInDefaultCurrency, balanceInDefaultCurrency) || other.balanceInDefaultCurrency == balanceInDefaultCurrency));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,accountId,accountName,balance,currency,balanceInDefaultCurrency);
+
+@override
+String toString() {
+  return 'AccountBalance(accountId: $accountId, accountName: $accountName, balance: $balance, currency: $currency, balanceInDefaultCurrency: $balanceInDefaultCurrency)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$AccountBalanceCopyWith<$Res> implements $AccountBalanceCopyWith<$Res> {
+  factory _$AccountBalanceCopyWith(_AccountBalance value, $Res Function(_AccountBalance) _then) = __$AccountBalanceCopyWithImpl;
+@override @useResult
+$Res call({
+ String accountId, String accountName, double balance, DefaultCurrency currency, double balanceInDefaultCurrency
+});
+
+
+@override $DefaultCurrencyCopyWith<$Res> get currency;
+
+}
+/// @nodoc
+class __$AccountBalanceCopyWithImpl<$Res>
+    implements _$AccountBalanceCopyWith<$Res> {
+  __$AccountBalanceCopyWithImpl(this._self, this._then);
+
+  final _AccountBalance _self;
+  final $Res Function(_AccountBalance) _then;
+
+/// Create a copy of AccountBalance
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? accountId = null,Object? accountName = null,Object? balance = null,Object? currency = null,Object? balanceInDefaultCurrency = null,}) {
+  return _then(_AccountBalance(
+accountId: null == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
+as String,accountName: null == accountName ? _self.accountName : accountName // ignore: cast_nullable_to_non_nullable
+as String,balance: null == balance ? _self.balance : balance // ignore: cast_nullable_to_non_nullable
+as double,currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as DefaultCurrency,balanceInDefaultCurrency: null == balanceInDefaultCurrency ? _self.balanceInDefaultCurrency : balanceInDefaultCurrency // ignore: cast_nullable_to_non_nullable
+as double,
+  ));
+}
+
+/// Create a copy of AccountBalance
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$DefaultCurrencyCopyWith<$Res> get currency {
+  
+  return $DefaultCurrencyCopyWith<$Res>(_self.currency, (value) {
+    return _then(_self.copyWith(currency: value));
+  });
+}
 }
 
 // dart format on
