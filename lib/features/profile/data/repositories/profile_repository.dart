@@ -1,5 +1,7 @@
+import 'package:dartz/dartz.dart';
 import 'package:finance_auth/finance_auth.dart' as auth;
 
+import '../../../../core/errors/failure.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/network/network_info.dart';
 import '../datasources/user_local_datasource.dart';
@@ -77,56 +79,56 @@ class ProfileRepository {
   }
 
   /// Update user profile
-  // Future<Either<Failure, User>> updateProfile({
-  //   String? username,
-  //   String? fullName,
-  //   String? phoneNumber,
-  // }) async {
-  //   try {
-  //     final isConnected = await _networkInfo.isConnected;
-  //     if (!isConnected) {
-  //       return Left(Failure.network('No internet connection'));
-  //     }
+  Future<Either<Failure, auth.User>> updateProfile({
+    String? username,
+    String? fullName,
+    String? phoneNumber,
+  }) async {
+    try {
+      final isConnected = await _networkInfo.isConnected;
+      if (!isConnected) {
+        return const Left(Failure.network('No internet connection'));
+      }
 
-  //     final user = await _remoteDatasource.updateProfile(
-  //       username: username,
-  //       fullName: fullName,
-  //       phoneNumber: phoneNumber,
-  //     );
+      final user = await _remoteDatasource.updateProfile(
+        username: username,
+        fullName: fullName,
+        phoneNumber: phoneNumber,
+      );
 
-  //     // Update cache
-  //     await _localDatasource.cacheUser(user);
+      // Update cache
+      await _localDatasource.cacheUser(user);
 
-  //     return Right(user);
-  //   } on ServerException catch (e) {
-  //     return Left(Failure.server(e.message, statusCode: e.statusCode));
-  //   } on NetworkException catch (e) {
-  //     return Left(Failure.network(e.message));
-  //   } catch (e) {
-  //     return Left(Failure.server(e.toString()));
-  //   }
-  // }
+      return Right(user);
+    } on ServerException catch (e) {
+      return Left(Failure.server(e.message, statusCode: e.statusCode));
+    } on NetworkException catch (e) {
+      return Left(Failure.network(e.message));
+    } catch (e) {
+      return Left(Failure.server(e.toString()));
+    }
+  }
 
-  // /// Update profile image
-  // Future<Either<Failure, User>> updateProfileImage(String imageUrl) async {
-  //   try {
-  //     final isConnected = await _networkInfo.isConnected;
-  //     if (!isConnected) {
-  //       return Left(Failure.network('No internet connection'));
-  //     }
+  /// Update profile image
+  Future<Either<Failure, auth.User>> updateProfileImage(String imageUrl) async {
+    try {
+      final isConnected = await _networkInfo.isConnected;
+      if (!isConnected) {
+        return const Left(Failure.network('No internet connection'));
+      }
 
-  //     final user = await _remoteDatasource.updateProfileImage(imageUrl);
+      final user = await _remoteDatasource.updateProfileImage(imageUrl);
 
-  //     // Update cache
-  //     await _localDatasource.cacheUser(user);
+      // Update cache
+      await _localDatasource.cacheUser(user);
 
-  //     return Right(user);
-  //   } on ServerException catch (e) {
-  //     return Left(Failure.server(e.message, statusCode: e.statusCode));
-  //   } on NetworkException catch (e) {
-  //     return Left(Failure.network(e.message));
-  //   } catch (e) {
-  //     return Left(Failure.server(e.toString()));
-  //   }
-  // }
+      return Right(user);
+    } on ServerException catch (e) {
+      return Left(Failure.server(e.message, statusCode: e.statusCode));
+    } on NetworkException catch (e) {
+      return Left(Failure.network(e.message));
+    } catch (e) {
+      return Left(Failure.server(e.toString()));
+    }
+  }
 }

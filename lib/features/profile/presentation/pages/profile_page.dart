@@ -79,9 +79,19 @@ class ProfilePage extends ConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: AppDimensions.space16),
-                        Text(
-                          user.fullName,
-                          style: Theme.of(context).textTheme.headlineSmall,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              user.fullName,
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.edit_outlined, size: 20),
+                              onPressed: () => context.push('/edit-profile'),
+                              visualDensity: VisualDensity.compact,
+                            ),
+                          ],
                         ),
                         const SizedBox(height: AppDimensions.space4),
                         Text(
@@ -132,19 +142,35 @@ class ProfilePage extends ConsumerWidget {
                   context,
                   'Settings',
                   Icons.settings_outlined,
-                  () {},
+                  () {
+                    context.push('/settings');
+                  },
+                ),
+                _buildMenuItem(
+                  context,
+                  'Edit Profile',
+                  Icons.person_outline,
+                  () {
+                    context.push('/edit-profile');
+                  },
                 ),
                 _buildMenuItem(
                   context,
                   'Notifications',
                   Icons.notifications_outlined,
-                  () {},
+                  () {
+                    context.push(
+                      '/settings',
+                    ); // Notifications are inside settings
+                  },
                 ),
                 _buildMenuItem(
                   context,
                   'Security',
                   Icons.security_outlined,
-                  () {},
+                  () {
+                    context.push('/change-password');
+                  },
                 ),
                 _buildMenuItem(
                   context,

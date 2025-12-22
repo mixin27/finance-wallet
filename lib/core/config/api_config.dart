@@ -16,6 +16,7 @@ class ApiConfig {
   static const String register = '/auth/register';
   static const String refreshToken = '/auth/refresh';
   static const String currentUser = '/auth/me';
+  static const String updateProfile = '/auth/profile';
   static const String logout = '/auth/logout';
   static const String forgotPassword = '/auth/forgot-password';
   static const String changePassword = '/auth/change-password';

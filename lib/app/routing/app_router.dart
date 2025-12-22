@@ -9,6 +9,7 @@ import '../../features/accounts/presentation/pages/account_detail_page.dart';
 import '../../features/accounts/presentation/pages/accounts_page.dart';
 import '../../features/accounts/presentation/pages/add_account_page.dart';
 import '../../features/analytics/presentation/pages/analytics_page.dart';
+import '../../features/auth/presentation/pages/change_password_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/auth/presentation/pages/splash_page.dart';
@@ -22,7 +23,9 @@ import '../../features/dashboard/presentation/pages/dashboard_page.dart';
 import '../../features/goals/presentation/pages/add_goal_page.dart';
 import '../../features/goals/presentation/pages/goal_detail_page.dart';
 import '../../features/goals/presentation/pages/goals_page.dart';
+import '../../features/profile/presentation/pages/edit_profile_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/user_preferences/presentation/pages/settings_page.dart';
 import '../../features/transactions/presentation/pages/add_transaction_page.dart';
 import '../../features/transactions/presentation/pages/transaction_detail_page.dart';
 import '../../features/transactions/presentation/pages/transactions_page.dart';
@@ -207,6 +210,20 @@ GoRouter goRouter(Ref ref) {
       GoRoute(
         path: '/analytics',
         builder: (context, state) => const AnalyticsPage(),
+      ),
+
+      // Profile & Settings
+      GoRoute(
+        path: '/settings',
+        builder: (context, state) => const SettingsPage(),
+      ),
+      GoRoute(
+        path: '/edit-profile',
+        builder: (context, state) => const EditProfilePage(),
+      ),
+      GoRoute(
+        path: '/change-password',
+        builder: (context, state) => const ChangePasswordPage(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(

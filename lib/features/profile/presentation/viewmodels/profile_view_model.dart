@@ -32,4 +32,36 @@ class ProfileViewModel extends _$ProfileViewModel {
     await authService.logout();
     await repository.clearAllUserData();
   }
+
+  /// Update profile
+  Future<void> updateProfile({
+    String? username,
+    String? fullName,
+    String? phoneNumber,
+  }) async {
+    state = const AsyncLoading();
+    final repository = ref.read(profileRepositoryProvider);
+    final result = await repository.updateProfile(
+      username: username,
+      fullName: fullName,
+      phoneNumber: phoneNumber,
+    );
+
+    result.fold(
+      (failure) => state = AsyncError(failure, StackTrace.current),
+      (user) => state = AsyncData(user),
+    );
+  }
+
+  /// Update profile image
+  Future<void> updateProfileImage(String imageUrl) async {
+    state = const AsyncLoading();
+    final repository = ref.read(profileRepositoryProvider);
+    final result = await repository.updateProfileImage(imageUrl);
+
+    result.fold(
+      (failure) => state = AsyncError(failure, StackTrace.current),
+      (user) => state = AsyncData(user),
+    );
+  }
 }
