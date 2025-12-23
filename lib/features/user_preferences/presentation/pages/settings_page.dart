@@ -88,6 +88,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     state.userPreference!.firstDayOfWeek,
                   ),
                 ),
+                _buildListTile(
+                  context,
+                  'Timezone',
+                  state.userPreference!.timezone,
+                  Icons.public,
+                  () => _showTimezonePicker(
+                    context,
+                    state.userPreference!.timezone,
+                  ),
+                ),
 
                 const Divider(),
                 _buildSectionHeader(context, 'Appearance'),
@@ -338,6 +348,32 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     _showPicker(context, 'First Day of Week', days, (index) {
       _updatePreference(UpdateUserPreferenceRequest(firstDayOfWeek: index));
     }, current);
+  }
+
+  void _showTimezonePicker(BuildContext context, String current) {
+    final timezones = [
+      'UTC',
+      'GMT',
+      'EST',
+      'CST',
+      'MST',
+      'PST',
+      'Asia/Rangoon',
+      'Asia/Singapore',
+      'Asia/Tokyo',
+      'Asia/Dubai',
+      'Europe/London',
+      'Europe/Paris',
+      'America/New_York',
+      'America/Los_Angeles',
+      'America/Chicago',
+      'Australia/Sydney',
+    ];
+    _showPicker(context, 'Select Timezone', timezones, (index) {
+      _updatePreference(
+        UpdateUserPreferenceRequest(timezone: timezones[index]),
+      );
+    }, timezones.indexOf(current));
   }
 
   void _showPicker(
