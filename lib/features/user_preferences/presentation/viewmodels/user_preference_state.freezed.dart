@@ -208,8 +208,8 @@ return $default(_that.userPreference,_that.isLoading,_that.isUpdating,_that.erro
 /// @nodoc
 
 
-class _UserPreferenceState implements UserPreferenceState {
-  const _UserPreferenceState({this.userPreference, this.isLoading = false, this.isUpdating = false, this.errorMessage});
+class _UserPreferenceState extends UserPreferenceState {
+  const _UserPreferenceState({this.userPreference, this.isLoading = false, this.isUpdating = false, this.errorMessage}): super._();
   
 
 @override final  UserPreferenceEntity? userPreference;
