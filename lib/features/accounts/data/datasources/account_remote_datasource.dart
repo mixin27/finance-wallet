@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 
 import '../../../../core/config/api_config.dart';
@@ -125,9 +123,6 @@ class AccountRemoteDatasource {
       } else {
         throw NetworkException('No internet connection');
       }
-    } catch (e, stackTrace) {
-      log("Error Stacktrace => $stackTrace");
-      rethrow;
     }
   }
 

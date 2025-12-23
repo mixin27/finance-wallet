@@ -811,6 +811,18 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, Account> {
     type: DriftSqlType.double,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _balanceInDefaultCurrencyMeta =
+      const VerificationMeta('balanceInDefaultCurrency');
+  @override
+  late final GeneratedColumn<double> balanceInDefaultCurrency =
+      GeneratedColumn<double>(
+        'balance_in_default_currency',
+        aliasedName,
+        false,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+        defaultValue: const Constant(0.0),
+      );
   static const VerificationMeta _colorMeta = const VerificationMeta('color');
   @override
   late final GeneratedColumn<String> color = GeneratedColumn<String>(
@@ -842,6 +854,18 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, Account> {
     defaultConstraints: GeneratedColumn.constraintIsAlways(
       'CHECK ("is_included_in_total" IN (0, 1))',
     ),
+  );
+  static const VerificationMeta _displayOrderMeta = const VerificationMeta(
+    'displayOrder',
+  );
+  @override
+  late final GeneratedColumn<int> displayOrder = GeneratedColumn<int>(
+    'display_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(-1),
   );
   static const VerificationMeta _isActiveMeta = const VerificationMeta(
     'isActive',
@@ -892,9 +916,11 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, Account> {
     description,
     initialBalance,
     currentBalance,
+    balanceInDefaultCurrency,
     color,
     icon,
     isIncludedInTotal,
+    displayOrder,
     isActive,
     createdAt,
     updatedAt,
@@ -1016,6 +1042,15 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, Account> {
     } else if (isInserting) {
       context.missing(_currentBalanceMeta);
     }
+    if (data.containsKey('balance_in_default_currency')) {
+      context.handle(
+        _balanceInDefaultCurrencyMeta,
+        balanceInDefaultCurrency.isAcceptableOrUnknown(
+          data['balance_in_default_currency']!,
+          _balanceInDefaultCurrencyMeta,
+        ),
+      );
+    }
     if (data.containsKey('color')) {
       context.handle(
         _colorMeta,
@@ -1038,6 +1073,15 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, Account> {
       );
     } else if (isInserting) {
       context.missing(_isIncludedInTotalMeta);
+    }
+    if (data.containsKey('display_order')) {
+      context.handle(
+        _displayOrderMeta,
+        displayOrder.isAcceptableOrUnknown(
+          data['display_order']!,
+          _displayOrderMeta,
+        ),
+      );
     }
     if (data.containsKey('is_active')) {
       context.handle(
@@ -1116,6 +1160,10 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, Account> {
         DriftSqlType.double,
         data['${effectivePrefix}current_balance'],
       )!,
+      balanceInDefaultCurrency: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}balance_in_default_currency'],
+      )!,
       color: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}color'],
@@ -1127,6 +1175,10 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, Account> {
       isIncludedInTotal: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}is_included_in_total'],
+      )!,
+      displayOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}display_order'],
       )!,
       isActive: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
@@ -1161,9 +1213,11 @@ class Account extends DataClass implements Insertable<Account> {
   final String? description;
   final double initialBalance;
   final double currentBalance;
+  final double balanceInDefaultCurrency;
   final String? color;
   final String? icon;
   final bool isIncludedInTotal;
+  final int displayOrder;
   final bool isActive;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -1179,9 +1233,11 @@ class Account extends DataClass implements Insertable<Account> {
     this.description,
     required this.initialBalance,
     required this.currentBalance,
+    required this.balanceInDefaultCurrency,
     this.color,
     this.icon,
     required this.isIncludedInTotal,
+    required this.displayOrder,
     required this.isActive,
     required this.createdAt,
     required this.updatedAt,
@@ -1204,6 +1260,9 @@ class Account extends DataClass implements Insertable<Account> {
     }
     map['initial_balance'] = Variable<double>(initialBalance);
     map['current_balance'] = Variable<double>(currentBalance);
+    map['balance_in_default_currency'] = Variable<double>(
+      balanceInDefaultCurrency,
+    );
     if (!nullToAbsent || color != null) {
       map['color'] = Variable<String>(color);
     }
@@ -1211,6 +1270,7 @@ class Account extends DataClass implements Insertable<Account> {
       map['icon'] = Variable<String>(icon);
     }
     map['is_included_in_total'] = Variable<bool>(isIncludedInTotal);
+    map['display_order'] = Variable<int>(displayOrder);
     map['is_active'] = Variable<bool>(isActive);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
@@ -1234,11 +1294,13 @@ class Account extends DataClass implements Insertable<Account> {
           : Value(description),
       initialBalance: Value(initialBalance),
       currentBalance: Value(currentBalance),
+      balanceInDefaultCurrency: Value(balanceInDefaultCurrency),
       color: color == null && nullToAbsent
           ? const Value.absent()
           : Value(color),
       icon: icon == null && nullToAbsent ? const Value.absent() : Value(icon),
       isIncludedInTotal: Value(isIncludedInTotal),
+      displayOrder: Value(displayOrder),
       isActive: Value(isActive),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
@@ -1262,9 +1324,13 @@ class Account extends DataClass implements Insertable<Account> {
       description: serializer.fromJson<String?>(json['description']),
       initialBalance: serializer.fromJson<double>(json['initialBalance']),
       currentBalance: serializer.fromJson<double>(json['currentBalance']),
+      balanceInDefaultCurrency: serializer.fromJson<double>(
+        json['balanceInDefaultCurrency'],
+      ),
       color: serializer.fromJson<String?>(json['color']),
       icon: serializer.fromJson<String?>(json['icon']),
       isIncludedInTotal: serializer.fromJson<bool>(json['isIncludedInTotal']),
+      displayOrder: serializer.fromJson<int>(json['displayOrder']),
       isActive: serializer.fromJson<bool>(json['isActive']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
@@ -1285,9 +1351,13 @@ class Account extends DataClass implements Insertable<Account> {
       'description': serializer.toJson<String?>(description),
       'initialBalance': serializer.toJson<double>(initialBalance),
       'currentBalance': serializer.toJson<double>(currentBalance),
+      'balanceInDefaultCurrency': serializer.toJson<double>(
+        balanceInDefaultCurrency,
+      ),
       'color': serializer.toJson<String?>(color),
       'icon': serializer.toJson<String?>(icon),
       'isIncludedInTotal': serializer.toJson<bool>(isIncludedInTotal),
+      'displayOrder': serializer.toJson<int>(displayOrder),
       'isActive': serializer.toJson<bool>(isActive),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
@@ -1306,9 +1376,11 @@ class Account extends DataClass implements Insertable<Account> {
     Value<String?> description = const Value.absent(),
     double? initialBalance,
     double? currentBalance,
+    double? balanceInDefaultCurrency,
     Value<String?> color = const Value.absent(),
     Value<String?> icon = const Value.absent(),
     bool? isIncludedInTotal,
+    int? displayOrder,
     bool? isActive,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -1326,9 +1398,12 @@ class Account extends DataClass implements Insertable<Account> {
     description: description.present ? description.value : this.description,
     initialBalance: initialBalance ?? this.initialBalance,
     currentBalance: currentBalance ?? this.currentBalance,
+    balanceInDefaultCurrency:
+        balanceInDefaultCurrency ?? this.balanceInDefaultCurrency,
     color: color.present ? color.value : this.color,
     icon: icon.present ? icon.value : this.icon,
     isIncludedInTotal: isIncludedInTotal ?? this.isIncludedInTotal,
+    displayOrder: displayOrder ?? this.displayOrder,
     isActive: isActive ?? this.isActive,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
@@ -1364,11 +1439,17 @@ class Account extends DataClass implements Insertable<Account> {
       currentBalance: data.currentBalance.present
           ? data.currentBalance.value
           : this.currentBalance,
+      balanceInDefaultCurrency: data.balanceInDefaultCurrency.present
+          ? data.balanceInDefaultCurrency.value
+          : this.balanceInDefaultCurrency,
       color: data.color.present ? data.color.value : this.color,
       icon: data.icon.present ? data.icon.value : this.icon,
       isIncludedInTotal: data.isIncludedInTotal.present
           ? data.isIncludedInTotal.value
           : this.isIncludedInTotal,
+      displayOrder: data.displayOrder.present
+          ? data.displayOrder.value
+          : this.displayOrder,
       isActive: data.isActive.present ? data.isActive.value : this.isActive,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
@@ -1389,9 +1470,11 @@ class Account extends DataClass implements Insertable<Account> {
           ..write('description: $description, ')
           ..write('initialBalance: $initialBalance, ')
           ..write('currentBalance: $currentBalance, ')
+          ..write('balanceInDefaultCurrency: $balanceInDefaultCurrency, ')
           ..write('color: $color, ')
           ..write('icon: $icon, ')
           ..write('isIncludedInTotal: $isIncludedInTotal, ')
+          ..write('displayOrder: $displayOrder, ')
           ..write('isActive: $isActive, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
@@ -1412,9 +1495,11 @@ class Account extends DataClass implements Insertable<Account> {
     description,
     initialBalance,
     currentBalance,
+    balanceInDefaultCurrency,
     color,
     icon,
     isIncludedInTotal,
+    displayOrder,
     isActive,
     createdAt,
     updatedAt,
@@ -1434,9 +1519,11 @@ class Account extends DataClass implements Insertable<Account> {
           other.description == this.description &&
           other.initialBalance == this.initialBalance &&
           other.currentBalance == this.currentBalance &&
+          other.balanceInDefaultCurrency == this.balanceInDefaultCurrency &&
           other.color == this.color &&
           other.icon == this.icon &&
           other.isIncludedInTotal == this.isIncludedInTotal &&
+          other.displayOrder == this.displayOrder &&
           other.isActive == this.isActive &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
@@ -1454,9 +1541,11 @@ class AccountsCompanion extends UpdateCompanion<Account> {
   final Value<String?> description;
   final Value<double> initialBalance;
   final Value<double> currentBalance;
+  final Value<double> balanceInDefaultCurrency;
   final Value<String?> color;
   final Value<String?> icon;
   final Value<bool> isIncludedInTotal;
+  final Value<int> displayOrder;
   final Value<bool> isActive;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
@@ -1473,9 +1562,11 @@ class AccountsCompanion extends UpdateCompanion<Account> {
     this.description = const Value.absent(),
     this.initialBalance = const Value.absent(),
     this.currentBalance = const Value.absent(),
+    this.balanceInDefaultCurrency = const Value.absent(),
     this.color = const Value.absent(),
     this.icon = const Value.absent(),
     this.isIncludedInTotal = const Value.absent(),
+    this.displayOrder = const Value.absent(),
     this.isActive = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
@@ -1493,9 +1584,11 @@ class AccountsCompanion extends UpdateCompanion<Account> {
     this.description = const Value.absent(),
     required double initialBalance,
     required double currentBalance,
+    this.balanceInDefaultCurrency = const Value.absent(),
     this.color = const Value.absent(),
     this.icon = const Value.absent(),
     required bool isIncludedInTotal,
+    this.displayOrder = const Value.absent(),
     required bool isActive,
     required DateTime createdAt,
     required DateTime updatedAt,
@@ -1525,9 +1618,11 @@ class AccountsCompanion extends UpdateCompanion<Account> {
     Expression<String>? description,
     Expression<double>? initialBalance,
     Expression<double>? currentBalance,
+    Expression<double>? balanceInDefaultCurrency,
     Expression<String>? color,
     Expression<String>? icon,
     Expression<bool>? isIncludedInTotal,
+    Expression<int>? displayOrder,
     Expression<bool>? isActive,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
@@ -1545,9 +1640,12 @@ class AccountsCompanion extends UpdateCompanion<Account> {
       if (description != null) 'description': description,
       if (initialBalance != null) 'initial_balance': initialBalance,
       if (currentBalance != null) 'current_balance': currentBalance,
+      if (balanceInDefaultCurrency != null)
+        'balance_in_default_currency': balanceInDefaultCurrency,
       if (color != null) 'color': color,
       if (icon != null) 'icon': icon,
       if (isIncludedInTotal != null) 'is_included_in_total': isIncludedInTotal,
+      if (displayOrder != null) 'display_order': displayOrder,
       if (isActive != null) 'is_active': isActive,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
@@ -1567,9 +1665,11 @@ class AccountsCompanion extends UpdateCompanion<Account> {
     Value<String?>? description,
     Value<double>? initialBalance,
     Value<double>? currentBalance,
+    Value<double>? balanceInDefaultCurrency,
     Value<String?>? color,
     Value<String?>? icon,
     Value<bool>? isIncludedInTotal,
+    Value<int>? displayOrder,
     Value<bool>? isActive,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
@@ -1587,9 +1687,12 @@ class AccountsCompanion extends UpdateCompanion<Account> {
       description: description ?? this.description,
       initialBalance: initialBalance ?? this.initialBalance,
       currentBalance: currentBalance ?? this.currentBalance,
+      balanceInDefaultCurrency:
+          balanceInDefaultCurrency ?? this.balanceInDefaultCurrency,
       color: color ?? this.color,
       icon: icon ?? this.icon,
       isIncludedInTotal: isIncludedInTotal ?? this.isIncludedInTotal,
+      displayOrder: displayOrder ?? this.displayOrder,
       isActive: isActive ?? this.isActive,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -1633,6 +1736,11 @@ class AccountsCompanion extends UpdateCompanion<Account> {
     if (currentBalance.present) {
       map['current_balance'] = Variable<double>(currentBalance.value);
     }
+    if (balanceInDefaultCurrency.present) {
+      map['balance_in_default_currency'] = Variable<double>(
+        balanceInDefaultCurrency.value,
+      );
+    }
     if (color.present) {
       map['color'] = Variable<String>(color.value);
     }
@@ -1641,6 +1749,9 @@ class AccountsCompanion extends UpdateCompanion<Account> {
     }
     if (isIncludedInTotal.present) {
       map['is_included_in_total'] = Variable<bool>(isIncludedInTotal.value);
+    }
+    if (displayOrder.present) {
+      map['display_order'] = Variable<int>(displayOrder.value);
     }
     if (isActive.present) {
       map['is_active'] = Variable<bool>(isActive.value);
@@ -1671,9 +1782,11 @@ class AccountsCompanion extends UpdateCompanion<Account> {
           ..write('description: $description, ')
           ..write('initialBalance: $initialBalance, ')
           ..write('currentBalance: $currentBalance, ')
+          ..write('balanceInDefaultCurrency: $balanceInDefaultCurrency, ')
           ..write('color: $color, ')
           ..write('icon: $icon, ')
           ..write('isIncludedInTotal: $isIncludedInTotal, ')
+          ..write('displayOrder: $displayOrder, ')
           ..write('isActive: $isActive, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
@@ -7806,9 +7919,11 @@ typedef $$AccountsTableCreateCompanionBuilder =
       Value<String?> description,
       required double initialBalance,
       required double currentBalance,
+      Value<double> balanceInDefaultCurrency,
       Value<String?> color,
       Value<String?> icon,
       required bool isIncludedInTotal,
+      Value<int> displayOrder,
       required bool isActive,
       required DateTime createdAt,
       required DateTime updatedAt,
@@ -7827,9 +7942,11 @@ typedef $$AccountsTableUpdateCompanionBuilder =
       Value<String?> description,
       Value<double> initialBalance,
       Value<double> currentBalance,
+      Value<double> balanceInDefaultCurrency,
       Value<String?> color,
       Value<String?> icon,
       Value<bool> isIncludedInTotal,
+      Value<int> displayOrder,
       Value<bool> isActive,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
@@ -7900,6 +8017,11 @@ class $$AccountsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<double> get balanceInDefaultCurrency => $composableBuilder(
+    column: $table.balanceInDefaultCurrency,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<String> get color => $composableBuilder(
     column: $table.color,
     builder: (column) => ColumnFilters(column),
@@ -7912,6 +8034,11 @@ class $$AccountsTableFilterComposer
 
   ColumnFilters<bool> get isIncludedInTotal => $composableBuilder(
     column: $table.isIncludedInTotal,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get displayOrder => $composableBuilder(
+    column: $table.displayOrder,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -7995,6 +8122,11 @@ class $$AccountsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<double> get balanceInDefaultCurrency => $composableBuilder(
+    column: $table.balanceInDefaultCurrency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get color => $composableBuilder(
     column: $table.color,
     builder: (column) => ColumnOrderings(column),
@@ -8007,6 +8139,11 @@ class $$AccountsTableOrderingComposer
 
   ColumnOrderings<bool> get isIncludedInTotal => $composableBuilder(
     column: $table.isIncludedInTotal,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get displayOrder => $composableBuilder(
+    column: $table.displayOrder,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -8086,6 +8223,11 @@ class $$AccountsTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<double> get balanceInDefaultCurrency => $composableBuilder(
+    column: $table.balanceInDefaultCurrency,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<String> get color =>
       $composableBuilder(column: $table.color, builder: (column) => column);
 
@@ -8094,6 +8236,11 @@ class $$AccountsTableAnnotationComposer
 
   GeneratedColumn<bool> get isIncludedInTotal => $composableBuilder(
     column: $table.isIncludedInTotal,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get displayOrder => $composableBuilder(
+    column: $table.displayOrder,
     builder: (column) => column,
   );
 
@@ -8146,9 +8293,11 @@ class $$AccountsTableTableManager
                 Value<String?> description = const Value.absent(),
                 Value<double> initialBalance = const Value.absent(),
                 Value<double> currentBalance = const Value.absent(),
+                Value<double> balanceInDefaultCurrency = const Value.absent(),
                 Value<String?> color = const Value.absent(),
                 Value<String?> icon = const Value.absent(),
                 Value<bool> isIncludedInTotal = const Value.absent(),
+                Value<int> displayOrder = const Value.absent(),
                 Value<bool> isActive = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
@@ -8165,9 +8314,11 @@ class $$AccountsTableTableManager
                 description: description,
                 initialBalance: initialBalance,
                 currentBalance: currentBalance,
+                balanceInDefaultCurrency: balanceInDefaultCurrency,
                 color: color,
                 icon: icon,
                 isIncludedInTotal: isIncludedInTotal,
+                displayOrder: displayOrder,
                 isActive: isActive,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
@@ -8186,9 +8337,11 @@ class $$AccountsTableTableManager
                 Value<String?> description = const Value.absent(),
                 required double initialBalance,
                 required double currentBalance,
+                Value<double> balanceInDefaultCurrency = const Value.absent(),
                 Value<String?> color = const Value.absent(),
                 Value<String?> icon = const Value.absent(),
                 required bool isIncludedInTotal,
+                Value<int> displayOrder = const Value.absent(),
                 required bool isActive,
                 required DateTime createdAt,
                 required DateTime updatedAt,
@@ -8205,9 +8358,11 @@ class $$AccountsTableTableManager
                 description: description,
                 initialBalance: initialBalance,
                 currentBalance: currentBalance,
+                balanceInDefaultCurrency: balanceInDefaultCurrency,
                 color: color,
                 icon: icon,
                 isIncludedInTotal: isIncludedInTotal,
+                displayOrder: displayOrder,
                 isActive: isActive,
                 createdAt: createdAt,
                 updatedAt: updatedAt,

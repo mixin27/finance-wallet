@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Account {
 
- String get id; String get name; AccountType get accountType; Currency get currency; String? get description; double get initialBalance; double get currentBalance; String? get color; String? get icon; bool get isIncludedInTotal; bool get isActive; DateTime get createdAt; DateTime get updatedAt;
+ String get id; String get name; AccountType get accountType; Currency get currency; String? get description; double get initialBalance; double get currentBalance; double get balanceInDefaultCurrency; String? get color; String? get icon; bool get isIncludedInTotal; int get displayOrder; bool get isActive; DateTime get createdAt; DateTime get updatedAt;
 /// Create a copy of Account
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AccountCopyWith<Account> get copyWith => _$AccountCopyWithImpl<Account>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Account&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.accountType, accountType) || other.accountType == accountType)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.description, description) || other.description == description)&&(identical(other.initialBalance, initialBalance) || other.initialBalance == initialBalance)&&(identical(other.currentBalance, currentBalance) || other.currentBalance == currentBalance)&&(identical(other.color, color) || other.color == color)&&(identical(other.icon, icon) || other.icon == icon)&&(identical(other.isIncludedInTotal, isIncludedInTotal) || other.isIncludedInTotal == isIncludedInTotal)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Account&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.accountType, accountType) || other.accountType == accountType)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.description, description) || other.description == description)&&(identical(other.initialBalance, initialBalance) || other.initialBalance == initialBalance)&&(identical(other.currentBalance, currentBalance) || other.currentBalance == currentBalance)&&(identical(other.balanceInDefaultCurrency, balanceInDefaultCurrency) || other.balanceInDefaultCurrency == balanceInDefaultCurrency)&&(identical(other.color, color) || other.color == color)&&(identical(other.icon, icon) || other.icon == icon)&&(identical(other.isIncludedInTotal, isIncludedInTotal) || other.isIncludedInTotal == isIncludedInTotal)&&(identical(other.displayOrder, displayOrder) || other.displayOrder == displayOrder)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,accountType,currency,description,initialBalance,currentBalance,color,icon,isIncludedInTotal,isActive,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,name,accountType,currency,description,initialBalance,currentBalance,balanceInDefaultCurrency,color,icon,isIncludedInTotal,displayOrder,isActive,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Account(id: $id, name: $name, accountType: $accountType, currency: $currency, description: $description, initialBalance: $initialBalance, currentBalance: $currentBalance, color: $color, icon: $icon, isIncludedInTotal: $isIncludedInTotal, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Account(id: $id, name: $name, accountType: $accountType, currency: $currency, description: $description, initialBalance: $initialBalance, currentBalance: $currentBalance, balanceInDefaultCurrency: $balanceInDefaultCurrency, color: $color, icon: $icon, isIncludedInTotal: $isIncludedInTotal, displayOrder: $displayOrder, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AccountCopyWith<$Res>  {
   factory $AccountCopyWith(Account value, $Res Function(Account) _then) = _$AccountCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, AccountType accountType, Currency currency, String? description, double initialBalance, double currentBalance, String? color, String? icon, bool isIncludedInTotal, bool isActive, DateTime createdAt, DateTime updatedAt
+ String id, String name, AccountType accountType, Currency currency, String? description, double initialBalance, double currentBalance, double balanceInDefaultCurrency, String? color, String? icon, bool isIncludedInTotal, int displayOrder, bool isActive, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -65,7 +65,7 @@ class _$AccountCopyWithImpl<$Res>
 
 /// Create a copy of Account
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? accountType = null,Object? currency = null,Object? description = freezed,Object? initialBalance = null,Object? currentBalance = null,Object? color = freezed,Object? icon = freezed,Object? isIncludedInTotal = null,Object? isActive = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? accountType = null,Object? currency = null,Object? description = freezed,Object? initialBalance = null,Object? currentBalance = null,Object? balanceInDefaultCurrency = null,Object? color = freezed,Object? icon = freezed,Object? isIncludedInTotal = null,Object? displayOrder = null,Object? isActive = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -74,10 +74,12 @@ as AccountType,currency: null == currency ? _self.currency : currency // ignore:
 as Currency,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,initialBalance: null == initialBalance ? _self.initialBalance : initialBalance // ignore: cast_nullable_to_non_nullable
 as double,currentBalance: null == currentBalance ? _self.currentBalance : currentBalance // ignore: cast_nullable_to_non_nullable
+as double,balanceInDefaultCurrency: null == balanceInDefaultCurrency ? _self.balanceInDefaultCurrency : balanceInDefaultCurrency // ignore: cast_nullable_to_non_nullable
 as double,color: freezed == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as String?,icon: freezed == icon ? _self.icon : icon // ignore: cast_nullable_to_non_nullable
 as String?,isIncludedInTotal: null == isIncludedInTotal ? _self.isIncludedInTotal : isIncludedInTotal // ignore: cast_nullable_to_non_nullable
-as bool,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
+as bool,displayOrder: null == displayOrder ? _self.displayOrder : displayOrder // ignore: cast_nullable_to_non_nullable
+as int,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
@@ -180,10 +182,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  AccountType accountType,  Currency currency,  String? description,  double initialBalance,  double currentBalance,  String? color,  String? icon,  bool isIncludedInTotal,  bool isActive,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  AccountType accountType,  Currency currency,  String? description,  double initialBalance,  double currentBalance,  double balanceInDefaultCurrency,  String? color,  String? icon,  bool isIncludedInTotal,  int displayOrder,  bool isActive,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Account() when $default != null:
-return $default(_that.id,_that.name,_that.accountType,_that.currency,_that.description,_that.initialBalance,_that.currentBalance,_that.color,_that.icon,_that.isIncludedInTotal,_that.isActive,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.name,_that.accountType,_that.currency,_that.description,_that.initialBalance,_that.currentBalance,_that.balanceInDefaultCurrency,_that.color,_that.icon,_that.isIncludedInTotal,_that.displayOrder,_that.isActive,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -201,10 +203,10 @@ return $default(_that.id,_that.name,_that.accountType,_that.currency,_that.descr
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  AccountType accountType,  Currency currency,  String? description,  double initialBalance,  double currentBalance,  String? color,  String? icon,  bool isIncludedInTotal,  bool isActive,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  AccountType accountType,  Currency currency,  String? description,  double initialBalance,  double currentBalance,  double balanceInDefaultCurrency,  String? color,  String? icon,  bool isIncludedInTotal,  int displayOrder,  bool isActive,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _Account():
-return $default(_that.id,_that.name,_that.accountType,_that.currency,_that.description,_that.initialBalance,_that.currentBalance,_that.color,_that.icon,_that.isIncludedInTotal,_that.isActive,_that.createdAt,_that.updatedAt);}
+return $default(_that.id,_that.name,_that.accountType,_that.currency,_that.description,_that.initialBalance,_that.currentBalance,_that.balanceInDefaultCurrency,_that.color,_that.icon,_that.isIncludedInTotal,_that.displayOrder,_that.isActive,_that.createdAt,_that.updatedAt);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -218,10 +220,10 @@ return $default(_that.id,_that.name,_that.accountType,_that.currency,_that.descr
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  AccountType accountType,  Currency currency,  String? description,  double initialBalance,  double currentBalance,  String? color,  String? icon,  bool isIncludedInTotal,  bool isActive,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  AccountType accountType,  Currency currency,  String? description,  double initialBalance,  double currentBalance,  double balanceInDefaultCurrency,  String? color,  String? icon,  bool isIncludedInTotal,  int displayOrder,  bool isActive,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Account() when $default != null:
-return $default(_that.id,_that.name,_that.accountType,_that.currency,_that.description,_that.initialBalance,_that.currentBalance,_that.color,_that.icon,_that.isIncludedInTotal,_that.isActive,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.name,_that.accountType,_that.currency,_that.description,_that.initialBalance,_that.currentBalance,_that.balanceInDefaultCurrency,_that.color,_that.icon,_that.isIncludedInTotal,_that.displayOrder,_that.isActive,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -233,7 +235,7 @@ return $default(_that.id,_that.name,_that.accountType,_that.currency,_that.descr
 @JsonSerializable()
 
 class _Account implements Account {
-  const _Account({required this.id, required this.name, required this.accountType, required this.currency, this.description, required this.initialBalance, required this.currentBalance, this.color, this.icon, required this.isIncludedInTotal, required this.isActive, required this.createdAt, required this.updatedAt});
+  const _Account({required this.id, required this.name, required this.accountType, required this.currency, this.description, required this.initialBalance, required this.currentBalance, required this.balanceInDefaultCurrency, this.color, this.icon, required this.isIncludedInTotal, required this.displayOrder, required this.isActive, required this.createdAt, required this.updatedAt});
   factory _Account.fromJson(Map<String, dynamic> json) => _$AccountFromJson(json);
 
 @override final  String id;
@@ -243,9 +245,11 @@ class _Account implements Account {
 @override final  String? description;
 @override final  double initialBalance;
 @override final  double currentBalance;
+@override final  double balanceInDefaultCurrency;
 @override final  String? color;
 @override final  String? icon;
 @override final  bool isIncludedInTotal;
+@override final  int displayOrder;
 @override final  bool isActive;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
@@ -263,16 +267,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Account&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.accountType, accountType) || other.accountType == accountType)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.description, description) || other.description == description)&&(identical(other.initialBalance, initialBalance) || other.initialBalance == initialBalance)&&(identical(other.currentBalance, currentBalance) || other.currentBalance == currentBalance)&&(identical(other.color, color) || other.color == color)&&(identical(other.icon, icon) || other.icon == icon)&&(identical(other.isIncludedInTotal, isIncludedInTotal) || other.isIncludedInTotal == isIncludedInTotal)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Account&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.accountType, accountType) || other.accountType == accountType)&&(identical(other.currency, currency) || other.currency == currency)&&(identical(other.description, description) || other.description == description)&&(identical(other.initialBalance, initialBalance) || other.initialBalance == initialBalance)&&(identical(other.currentBalance, currentBalance) || other.currentBalance == currentBalance)&&(identical(other.balanceInDefaultCurrency, balanceInDefaultCurrency) || other.balanceInDefaultCurrency == balanceInDefaultCurrency)&&(identical(other.color, color) || other.color == color)&&(identical(other.icon, icon) || other.icon == icon)&&(identical(other.isIncludedInTotal, isIncludedInTotal) || other.isIncludedInTotal == isIncludedInTotal)&&(identical(other.displayOrder, displayOrder) || other.displayOrder == displayOrder)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,accountType,currency,description,initialBalance,currentBalance,color,icon,isIncludedInTotal,isActive,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,name,accountType,currency,description,initialBalance,currentBalance,balanceInDefaultCurrency,color,icon,isIncludedInTotal,displayOrder,isActive,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Account(id: $id, name: $name, accountType: $accountType, currency: $currency, description: $description, initialBalance: $initialBalance, currentBalance: $currentBalance, color: $color, icon: $icon, isIncludedInTotal: $isIncludedInTotal, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Account(id: $id, name: $name, accountType: $accountType, currency: $currency, description: $description, initialBalance: $initialBalance, currentBalance: $currentBalance, balanceInDefaultCurrency: $balanceInDefaultCurrency, color: $color, icon: $icon, isIncludedInTotal: $isIncludedInTotal, displayOrder: $displayOrder, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -283,7 +287,7 @@ abstract mixin class _$AccountCopyWith<$Res> implements $AccountCopyWith<$Res> {
   factory _$AccountCopyWith(_Account value, $Res Function(_Account) _then) = __$AccountCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, AccountType accountType, Currency currency, String? description, double initialBalance, double currentBalance, String? color, String? icon, bool isIncludedInTotal, bool isActive, DateTime createdAt, DateTime updatedAt
+ String id, String name, AccountType accountType, Currency currency, String? description, double initialBalance, double currentBalance, double balanceInDefaultCurrency, String? color, String? icon, bool isIncludedInTotal, int displayOrder, bool isActive, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -300,7 +304,7 @@ class __$AccountCopyWithImpl<$Res>
 
 /// Create a copy of Account
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? accountType = null,Object? currency = null,Object? description = freezed,Object? initialBalance = null,Object? currentBalance = null,Object? color = freezed,Object? icon = freezed,Object? isIncludedInTotal = null,Object? isActive = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? accountType = null,Object? currency = null,Object? description = freezed,Object? initialBalance = null,Object? currentBalance = null,Object? balanceInDefaultCurrency = null,Object? color = freezed,Object? icon = freezed,Object? isIncludedInTotal = null,Object? displayOrder = null,Object? isActive = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_Account(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -309,10 +313,12 @@ as AccountType,currency: null == currency ? _self.currency : currency // ignore:
 as Currency,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,initialBalance: null == initialBalance ? _self.initialBalance : initialBalance // ignore: cast_nullable_to_non_nullable
 as double,currentBalance: null == currentBalance ? _self.currentBalance : currentBalance // ignore: cast_nullable_to_non_nullable
+as double,balanceInDefaultCurrency: null == balanceInDefaultCurrency ? _self.balanceInDefaultCurrency : balanceInDefaultCurrency // ignore: cast_nullable_to_non_nullable
 as double,color: freezed == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as String?,icon: freezed == icon ? _self.icon : icon // ignore: cast_nullable_to_non_nullable
 as String?,isIncludedInTotal: null == isIncludedInTotal ? _self.isIncludedInTotal : isIncludedInTotal // ignore: cast_nullable_to_non_nullable
-as bool,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
+as bool,displayOrder: null == displayOrder ? _self.displayOrder : displayOrder // ignore: cast_nullable_to_non_nullable
+as int,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../currencies/data/models/currency.dart';
 import 'account.dart';
 
 part 'account_summary.freezed.dart';
@@ -13,6 +14,7 @@ sealed class AccountSummary with _$AccountSummary {
     required double totalBalance,
     required List<CurrencyBalance> balanceByCurrency,
     required List<Account> accounts,
+    required Currency defaultCurrency,
   }) = _AccountSummary;
 
   factory AccountSummary.fromJson(Map<String, dynamic> json) =>

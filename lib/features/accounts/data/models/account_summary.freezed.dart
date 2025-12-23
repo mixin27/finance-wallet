@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AccountSummary {
 
- int get totalAccounts; int get activeAccounts; double get totalBalance; List<CurrencyBalance> get balanceByCurrency; List<Account> get accounts;
+ int get totalAccounts; int get activeAccounts; double get totalBalance; List<CurrencyBalance> get balanceByCurrency; List<Account> get accounts; Currency get defaultCurrency;
 /// Create a copy of AccountSummary
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AccountSummaryCopyWith<AccountSummary> get copyWith => _$AccountSummaryCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountSummary&&(identical(other.totalAccounts, totalAccounts) || other.totalAccounts == totalAccounts)&&(identical(other.activeAccounts, activeAccounts) || other.activeAccounts == activeAccounts)&&(identical(other.totalBalance, totalBalance) || other.totalBalance == totalBalance)&&const DeepCollectionEquality().equals(other.balanceByCurrency, balanceByCurrency)&&const DeepCollectionEquality().equals(other.accounts, accounts));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountSummary&&(identical(other.totalAccounts, totalAccounts) || other.totalAccounts == totalAccounts)&&(identical(other.activeAccounts, activeAccounts) || other.activeAccounts == activeAccounts)&&(identical(other.totalBalance, totalBalance) || other.totalBalance == totalBalance)&&const DeepCollectionEquality().equals(other.balanceByCurrency, balanceByCurrency)&&const DeepCollectionEquality().equals(other.accounts, accounts)&&(identical(other.defaultCurrency, defaultCurrency) || other.defaultCurrency == defaultCurrency));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,totalAccounts,activeAccounts,totalBalance,const DeepCollectionEquality().hash(balanceByCurrency),const DeepCollectionEquality().hash(accounts));
+int get hashCode => Object.hash(runtimeType,totalAccounts,activeAccounts,totalBalance,const DeepCollectionEquality().hash(balanceByCurrency),const DeepCollectionEquality().hash(accounts),defaultCurrency);
 
 @override
 String toString() {
-  return 'AccountSummary(totalAccounts: $totalAccounts, activeAccounts: $activeAccounts, totalBalance: $totalBalance, balanceByCurrency: $balanceByCurrency, accounts: $accounts)';
+  return 'AccountSummary(totalAccounts: $totalAccounts, activeAccounts: $activeAccounts, totalBalance: $totalBalance, balanceByCurrency: $balanceByCurrency, accounts: $accounts, defaultCurrency: $defaultCurrency)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $AccountSummaryCopyWith<$Res>  {
   factory $AccountSummaryCopyWith(AccountSummary value, $Res Function(AccountSummary) _then) = _$AccountSummaryCopyWithImpl;
 @useResult
 $Res call({
- int totalAccounts, int activeAccounts, double totalBalance, List<CurrencyBalance> balanceByCurrency, List<Account> accounts
+ int totalAccounts, int activeAccounts, double totalBalance, List<CurrencyBalance> balanceByCurrency, List<Account> accounts, Currency defaultCurrency
 });
 
 
-
+$CurrencyCopyWith<$Res> get defaultCurrency;
 
 }
 /// @nodoc
@@ -65,17 +65,27 @@ class _$AccountSummaryCopyWithImpl<$Res>
 
 /// Create a copy of AccountSummary
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? totalAccounts = null,Object? activeAccounts = null,Object? totalBalance = null,Object? balanceByCurrency = null,Object? accounts = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? totalAccounts = null,Object? activeAccounts = null,Object? totalBalance = null,Object? balanceByCurrency = null,Object? accounts = null,Object? defaultCurrency = null,}) {
   return _then(_self.copyWith(
 totalAccounts: null == totalAccounts ? _self.totalAccounts : totalAccounts // ignore: cast_nullable_to_non_nullable
 as int,activeAccounts: null == activeAccounts ? _self.activeAccounts : activeAccounts // ignore: cast_nullable_to_non_nullable
 as int,totalBalance: null == totalBalance ? _self.totalBalance : totalBalance // ignore: cast_nullable_to_non_nullable
 as double,balanceByCurrency: null == balanceByCurrency ? _self.balanceByCurrency : balanceByCurrency // ignore: cast_nullable_to_non_nullable
 as List<CurrencyBalance>,accounts: null == accounts ? _self.accounts : accounts // ignore: cast_nullable_to_non_nullable
-as List<Account>,
+as List<Account>,defaultCurrency: null == defaultCurrency ? _self.defaultCurrency : defaultCurrency // ignore: cast_nullable_to_non_nullable
+as Currency,
   ));
 }
-
+/// Create a copy of AccountSummary
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CurrencyCopyWith<$Res> get defaultCurrency {
+  
+  return $CurrencyCopyWith<$Res>(_self.defaultCurrency, (value) {
+    return _then(_self.copyWith(defaultCurrency: value));
+  });
+}
 }
 
 
@@ -154,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int totalAccounts,  int activeAccounts,  double totalBalance,  List<CurrencyBalance> balanceByCurrency,  List<Account> accounts)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int totalAccounts,  int activeAccounts,  double totalBalance,  List<CurrencyBalance> balanceByCurrency,  List<Account> accounts,  Currency defaultCurrency)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AccountSummary() when $default != null:
-return $default(_that.totalAccounts,_that.activeAccounts,_that.totalBalance,_that.balanceByCurrency,_that.accounts);case _:
+return $default(_that.totalAccounts,_that.activeAccounts,_that.totalBalance,_that.balanceByCurrency,_that.accounts,_that.defaultCurrency);case _:
   return orElse();
 
 }
@@ -175,10 +185,10 @@ return $default(_that.totalAccounts,_that.activeAccounts,_that.totalBalance,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int totalAccounts,  int activeAccounts,  double totalBalance,  List<CurrencyBalance> balanceByCurrency,  List<Account> accounts)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int totalAccounts,  int activeAccounts,  double totalBalance,  List<CurrencyBalance> balanceByCurrency,  List<Account> accounts,  Currency defaultCurrency)  $default,) {final _that = this;
 switch (_that) {
 case _AccountSummary():
-return $default(_that.totalAccounts,_that.activeAccounts,_that.totalBalance,_that.balanceByCurrency,_that.accounts);}
+return $default(_that.totalAccounts,_that.activeAccounts,_that.totalBalance,_that.balanceByCurrency,_that.accounts,_that.defaultCurrency);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -192,10 +202,10 @@ return $default(_that.totalAccounts,_that.activeAccounts,_that.totalBalance,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int totalAccounts,  int activeAccounts,  double totalBalance,  List<CurrencyBalance> balanceByCurrency,  List<Account> accounts)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int totalAccounts,  int activeAccounts,  double totalBalance,  List<CurrencyBalance> balanceByCurrency,  List<Account> accounts,  Currency defaultCurrency)?  $default,) {final _that = this;
 switch (_that) {
 case _AccountSummary() when $default != null:
-return $default(_that.totalAccounts,_that.activeAccounts,_that.totalBalance,_that.balanceByCurrency,_that.accounts);case _:
+return $default(_that.totalAccounts,_that.activeAccounts,_that.totalBalance,_that.balanceByCurrency,_that.accounts,_that.defaultCurrency);case _:
   return null;
 
 }
@@ -207,7 +217,7 @@ return $default(_that.totalAccounts,_that.activeAccounts,_that.totalBalance,_tha
 @JsonSerializable()
 
 class _AccountSummary implements AccountSummary {
-  const _AccountSummary({required this.totalAccounts, required this.activeAccounts, required this.totalBalance, required final  List<CurrencyBalance> balanceByCurrency, required final  List<Account> accounts}): _balanceByCurrency = balanceByCurrency,_accounts = accounts;
+  const _AccountSummary({required this.totalAccounts, required this.activeAccounts, required this.totalBalance, required final  List<CurrencyBalance> balanceByCurrency, required final  List<Account> accounts, required this.defaultCurrency}): _balanceByCurrency = balanceByCurrency,_accounts = accounts;
   factory _AccountSummary.fromJson(Map<String, dynamic> json) => _$AccountSummaryFromJson(json);
 
 @override final  int totalAccounts;
@@ -227,6 +237,7 @@ class _AccountSummary implements AccountSummary {
   return EqualUnmodifiableListView(_accounts);
 }
 
+@override final  Currency defaultCurrency;
 
 /// Create a copy of AccountSummary
 /// with the given fields replaced by the non-null parameter values.
@@ -241,16 +252,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountSummary&&(identical(other.totalAccounts, totalAccounts) || other.totalAccounts == totalAccounts)&&(identical(other.activeAccounts, activeAccounts) || other.activeAccounts == activeAccounts)&&(identical(other.totalBalance, totalBalance) || other.totalBalance == totalBalance)&&const DeepCollectionEquality().equals(other._balanceByCurrency, _balanceByCurrency)&&const DeepCollectionEquality().equals(other._accounts, _accounts));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountSummary&&(identical(other.totalAccounts, totalAccounts) || other.totalAccounts == totalAccounts)&&(identical(other.activeAccounts, activeAccounts) || other.activeAccounts == activeAccounts)&&(identical(other.totalBalance, totalBalance) || other.totalBalance == totalBalance)&&const DeepCollectionEquality().equals(other._balanceByCurrency, _balanceByCurrency)&&const DeepCollectionEquality().equals(other._accounts, _accounts)&&(identical(other.defaultCurrency, defaultCurrency) || other.defaultCurrency == defaultCurrency));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,totalAccounts,activeAccounts,totalBalance,const DeepCollectionEquality().hash(_balanceByCurrency),const DeepCollectionEquality().hash(_accounts));
+int get hashCode => Object.hash(runtimeType,totalAccounts,activeAccounts,totalBalance,const DeepCollectionEquality().hash(_balanceByCurrency),const DeepCollectionEquality().hash(_accounts),defaultCurrency);
 
 @override
 String toString() {
-  return 'AccountSummary(totalAccounts: $totalAccounts, activeAccounts: $activeAccounts, totalBalance: $totalBalance, balanceByCurrency: $balanceByCurrency, accounts: $accounts)';
+  return 'AccountSummary(totalAccounts: $totalAccounts, activeAccounts: $activeAccounts, totalBalance: $totalBalance, balanceByCurrency: $balanceByCurrency, accounts: $accounts, defaultCurrency: $defaultCurrency)';
 }
 
 
@@ -261,11 +272,11 @@ abstract mixin class _$AccountSummaryCopyWith<$Res> implements $AccountSummaryCo
   factory _$AccountSummaryCopyWith(_AccountSummary value, $Res Function(_AccountSummary) _then) = __$AccountSummaryCopyWithImpl;
 @override @useResult
 $Res call({
- int totalAccounts, int activeAccounts, double totalBalance, List<CurrencyBalance> balanceByCurrency, List<Account> accounts
+ int totalAccounts, int activeAccounts, double totalBalance, List<CurrencyBalance> balanceByCurrency, List<Account> accounts, Currency defaultCurrency
 });
 
 
-
+@override $CurrencyCopyWith<$Res> get defaultCurrency;
 
 }
 /// @nodoc
@@ -278,18 +289,28 @@ class __$AccountSummaryCopyWithImpl<$Res>
 
 /// Create a copy of AccountSummary
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? totalAccounts = null,Object? activeAccounts = null,Object? totalBalance = null,Object? balanceByCurrency = null,Object? accounts = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? totalAccounts = null,Object? activeAccounts = null,Object? totalBalance = null,Object? balanceByCurrency = null,Object? accounts = null,Object? defaultCurrency = null,}) {
   return _then(_AccountSummary(
 totalAccounts: null == totalAccounts ? _self.totalAccounts : totalAccounts // ignore: cast_nullable_to_non_nullable
 as int,activeAccounts: null == activeAccounts ? _self.activeAccounts : activeAccounts // ignore: cast_nullable_to_non_nullable
 as int,totalBalance: null == totalBalance ? _self.totalBalance : totalBalance // ignore: cast_nullable_to_non_nullable
 as double,balanceByCurrency: null == balanceByCurrency ? _self._balanceByCurrency : balanceByCurrency // ignore: cast_nullable_to_non_nullable
 as List<CurrencyBalance>,accounts: null == accounts ? _self._accounts : accounts // ignore: cast_nullable_to_non_nullable
-as List<Account>,
+as List<Account>,defaultCurrency: null == defaultCurrency ? _self.defaultCurrency : defaultCurrency // ignore: cast_nullable_to_non_nullable
+as Currency,
   ));
 }
 
-
+/// Create a copy of AccountSummary
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CurrencyCopyWith<$Res> get defaultCurrency {
+  
+  return $CurrencyCopyWith<$Res>(_self.defaultCurrency, (value) {
+    return _then(_self.copyWith(defaultCurrency: value));
+  });
+}
 }
 
 

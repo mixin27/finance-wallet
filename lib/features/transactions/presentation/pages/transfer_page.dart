@@ -609,7 +609,12 @@ class _TransferPageState extends ConsumerState<TransferPage>
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(account.name, maxLines: 1, overflow: TextOverflow.ellipsis),
+        Text(
+          account.name,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.labelSmall,
+        ),
         Text(
           '${account.currency.symbol}${account.currentBalance.toStringAsFixed(2)}',
           style: const TextStyle(color: AppColors.grey500, fontSize: 12),

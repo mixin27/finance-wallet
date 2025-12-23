@@ -29,9 +29,12 @@ class Accounts extends Table {
   TextColumn get description => text().nullable()();
   RealColumn get initialBalance => real()();
   RealColumn get currentBalance => real()();
+  RealColumn get balanceInDefaultCurrency =>
+      real().withDefault(const Constant(0.0))();
   TextColumn get color => text().nullable()();
   TextColumn get icon => text().nullable()();
   BoolColumn get isIncludedInTotal => boolean()();
+  IntColumn get displayOrder => integer().withDefault(const Constant(-1))();
   BoolColumn get isActive => boolean()();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();

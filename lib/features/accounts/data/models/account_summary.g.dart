@@ -17,6 +17,9 @@ _AccountSummary _$AccountSummaryFromJson(Map<String, dynamic> json) =>
       accounts: (json['accounts'] as List<dynamic>)
           .map((e) => Account.fromJson(e as Map<String, dynamic>))
           .toList(),
+      defaultCurrency: Currency.fromJson(
+        json['defaultCurrency'] as Map<String, dynamic>,
+      ),
     );
 
 Map<String, dynamic> _$AccountSummaryToJson(_AccountSummary instance) =>
@@ -26,6 +29,7 @@ Map<String, dynamic> _$AccountSummaryToJson(_AccountSummary instance) =>
       'totalBalance': instance.totalBalance,
       'balanceByCurrency': instance.balanceByCurrency,
       'accounts': instance.accounts,
+      'defaultCurrency': instance.defaultCurrency,
     };
 
 _CurrencyBalance _$CurrencyBalanceFromJson(Map<String, dynamic> json) =>

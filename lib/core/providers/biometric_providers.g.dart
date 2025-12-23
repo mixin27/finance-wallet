@@ -53,7 +53,7 @@ final class BiometricServiceProvider
   }
 }
 
-String _$biometricServiceHash() => r'11ffe653aa126c397b1734cecdfbf464e3f61260';
+String _$biometricServiceHash() => r'd13b3194e57bb984c452857712b3300be3bc3346';
 
 @ProviderFor(isBiometricAvailable)
 const isBiometricAvailableProvider = IsBiometricAvailableProvider._();
@@ -87,4 +87,4 @@ final class IsBiometricAvailableProvider
 }
 
 String _$isBiometricAvailableHash() =>
-    r'a35f23c404a45c4b6458609dd940883e57d14fd3';
+    r'ed4244520766f94cfbea712ff133acbacb4144b3';
