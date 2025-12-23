@@ -20,8 +20,9 @@ class AppTheme {
         surface: AppColors.surface,
         onPrimary: AppColors.white,
         onSecondary: AppColors.white,
-        onSurface: AppColors.grey900,
+        onSurface: AppColors.grey700,
         onError: AppColors.white,
+        surfaceContainerHighest: AppColors.grey100,
       ),
 
       // Scaffold
@@ -30,12 +31,12 @@ class AppTheme {
       // App Bar
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.white,
-        foregroundColor: AppColors.grey900,
+        foregroundColor: AppColors.grey700,
         elevation: 0,
         centerTitle: false,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         titleTextStyle: TextStyle(
-          color: AppColors.grey900,
+          color: AppColors.grey700,
           fontSize: 20,
           fontWeight: FontWeight.w600,
         ),
@@ -44,9 +45,10 @@ class AppTheme {
       // Card
       cardTheme: CardThemeData(
         color: AppColors.white,
-        elevation: AppDimensions.cardElevation,
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
+          side: const BorderSide(color: AppColors.grey200, width: 1),
         ),
       ),
 
@@ -64,7 +66,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
           ),
-          textStyle: AppTextStyles.labelLarge,
+          textStyle: AppTextStyles.labelLarge.copyWith(color: AppColors.white),
         ),
       ),
 
@@ -83,14 +85,14 @@ class AppTheme {
       // Input Decoration
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.grey100,
+        fillColor: AppColors.grey50,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
-          borderSide: BorderSide.none,
+          borderSide: const BorderSide(color: AppColors.grey200),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
-          borderSide: BorderSide.none,
+          borderSide: const BorderSide(color: AppColors.grey200),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
@@ -143,7 +145,7 @@ class AppTheme {
         labelLarge: AppTextStyles.labelLarge,
         labelMedium: AppTextStyles.labelMedium,
         labelSmall: AppTextStyles.labelSmall,
-      ),
+      ).apply(bodyColor: AppColors.grey700, displayColor: AppColors.grey700),
     );
   }
 
@@ -153,24 +155,23 @@ class AppTheme {
       brightness: Brightness.dark,
 
       colorScheme: const ColorScheme.dark(
-        primary: AppColors.primaryLight,
+        primary: AppColors.primary,
         secondary: AppColors.secondary,
         tertiary: AppColors.accent,
         error: AppColors.error,
         surface: AppColors.surfaceDark,
         onPrimary: AppColors.white,
         onSecondary: AppColors.white,
-        onSurface: AppColors.grey100,
+        onSurface: AppColors.white,
         onError: AppColors.white,
+        surfaceContainerHighest: AppColors.grey700,
       ),
 
       scaffoldBackgroundColor: AppColors.backgroundDark,
 
-      // Rest of dark theme configuration...
-      // (Similar structure to light theme with dark colors)
       // App Bar
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.black,
+        backgroundColor: AppColors.backgroundDark,
         foregroundColor: AppColors.white,
         elevation: 0,
         centerTitle: false,
@@ -185,7 +186,7 @@ class AppTheme {
       // Card
       cardTheme: CardThemeData(
         color: AppColors.surfaceDark,
-        elevation: AppDimensions.cardElevation,
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
         ),
@@ -205,7 +206,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
           ),
-          textStyle: AppTextStyles.labelLarge,
+          textStyle: AppTextStyles.labelLarge.copyWith(color: AppColors.white),
         ),
       ),
 
@@ -265,7 +266,7 @@ class AppTheme {
 
       // Divider
       dividerTheme: const DividerThemeData(
-        color: AppColors.grey700,
+        color: AppColors.grey600,
         thickness: 1,
         space: 1,
       ),
@@ -284,7 +285,7 @@ class AppTheme {
         labelLarge: AppTextStyles.labelLarge,
         labelMedium: AppTextStyles.labelMedium,
         labelSmall: AppTextStyles.labelSmall,
-      ),
+      ).apply(bodyColor: AppColors.white, displayColor: AppColors.white),
     );
   }
 }

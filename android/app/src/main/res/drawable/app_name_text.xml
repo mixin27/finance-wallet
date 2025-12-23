@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="40dp"
+    android:viewportWidth="100"
+    android:viewportHeight="40">
+
+    <!-- "FinWallet" text path -->
+    <!-- Note: For best results, convert your font to path using a design tool -->
+    <!-- This is a simplified representation -->
+    <path
+        android:pathData="M20,10 L20,30 M20,10 L35,10 M20,20 L32,20"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"/>
+
+    <path
+        android:pathData="M40,15 Q40,10 45,10 Q50,10 50,15 L50,30"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="@android:color/transparent"/>
+
+    <path
+        android:pathData="M55,10 L55,30 M55,10 L65,30 M65,30 L75,10 L75,30"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"/>
+
+    <!-- Add more letter paths as needed -->
+
+</vector>

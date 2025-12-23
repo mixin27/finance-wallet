@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Wallet Main Body with Gold Gradient -->
+    <path
+        android:pathData="M30,60 L170,60 A15,15 0 0,1 185,75 L185,145 A15,15 0 0,1 170,160 L30,160 A15,15 0 0,1 15,145 L15,75 A15,15 0 0,1 30,60 Z"
+        android:strokeWidth="3"
+        android:strokeColor="#FFFFFFFF">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startY="60"
+                android:startX="15"
+                android:endY="160"
+                android:endX="185"
+                android:type="linear">
+                <item android:offset="0" android:color="#FFFFD700"/>
+                <item android:offset="1" android:color="#FFFFA500"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Wallet Flap -->
+    <path
+        android:pathData="M30,40 L170,40 A15,15 0 0,1 185,55 L185,75 L15,75 L15,55 A15,15 0 0,1 30,40 Z"
+        android:fillColor="#4DFFFFFF"/>
+
+    <!-- Wallet Button (Circle as Path) -->
+    <path
+        android:pathData="M140,102 A8,8 0 1,1 140,118 A8,8 0 1,1 140,102"
+        android:fillColor="#FFFFFFFF"/>
+
+    <!-- Dollar Sign - Vertical Line -->
+    <path
+        android:pathData="M 100,85 L 100,135"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="6"
+        android:strokeLineCap="round"/>
+
+    <!-- Dollar Sign - S Curve -->
+    <path
+        android:pathData="M 90,95 Q 100,88 110,95 Q 115,100 110,105 L 90,105 Q 85,110 90,115 Q 100,122 110,115"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="@android:color/transparent"/>
+
+</vector>

@@ -19,6 +19,9 @@ class GlassErrorMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final errorColor = theme.colorScheme.error;
+
     return Container(
       margin: margin ?? const EdgeInsets.only(bottom: 16),
       child: ClipRRect(
@@ -27,23 +30,23 @@ class GlassErrorMessage extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Container(
             decoration: BoxDecoration(
-              color: const Color(0xFFEF4444).withValues(alpha: 0.15),
+              color: errorColor.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: const Color(0xFFEF4444).withValues(alpha: 0.3),
+                color: errorColor.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
             padding: const EdgeInsets.all(12),
             child: Row(
               children: [
-                Icon(icon, color: const Color(0xFFFFCACA), size: 20),
+                Icon(icon, color: errorColor, size: 20),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     message,
-                    style: const TextStyle(
-                      color: Color(0xFFFFCACA),
+                    style: TextStyle(
+                      color: errorColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
@@ -55,7 +58,7 @@ class GlassErrorMessage extends StatelessWidget {
                     onTap: onDismiss,
                     child: Icon(
                       Icons.close,
-                      color: const Color(0xFFFFCACA).withValues(alpha: 0.7),
+                      color: errorColor.withValues(alpha: 0.7),
                       size: 18,
                     ),
                   ),
@@ -86,6 +89,9 @@ class GlassSuccessMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // We use a custom green for success since it's not always in basic ColorScheme
+    const successColor = Color(0xFF48BB78);
+
     return Container(
       margin: margin ?? const EdgeInsets.only(bottom: 16),
       child: ClipRRect(
@@ -94,23 +100,23 @@ class GlassSuccessMessage extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Container(
             decoration: BoxDecoration(
-              color: const Color(0xFF22C55E).withValues(alpha: 0.15),
+              color: successColor.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: const Color(0xFF22C55E).withValues(alpha: 0.3),
+                color: successColor.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
             padding: const EdgeInsets.all(12),
             child: Row(
               children: [
-                Icon(icon, color: const Color(0xFFBBF7D0), size: 20),
+                Icon(icon, color: successColor, size: 20),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     message,
                     style: const TextStyle(
-                      color: Color(0xFFBBF7D0),
+                      color: successColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
@@ -122,7 +128,7 @@ class GlassSuccessMessage extends StatelessWidget {
                     onTap: onDismiss,
                     child: Icon(
                       Icons.close,
-                      color: const Color(0xFFBBF7D0).withValues(alpha: 0.7),
+                      color: successColor.withValues(alpha: 0.7),
                       size: 18,
                     ),
                   ),

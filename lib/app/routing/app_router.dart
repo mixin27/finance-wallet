@@ -45,7 +45,7 @@ GoRouter goRouter(Ref ref) {
   return GoRouter(
     debugLogDiagnostics: kDebugMode,
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/',
+    initialLocation: '/auth/login',
     refreshListenable: GoRouterRefreshStream(authService.authStateStream),
     redirect: (context, state) {
       final isOnPublicRoute =

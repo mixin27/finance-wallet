@@ -52,9 +52,13 @@ class ProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userAsync = ref.watch(profileViewModelProvider);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Scaffold(
-      backgroundColor: AppColors.grey50,
+      backgroundColor: colorScheme.surfaceContainerHighest.withValues(
+        alpha: 0.3,
+      ),
       body: RefreshIndicator.adaptive(
         onRefresh: () => _handleRefresh(ref),
         child: userAsync.when(
@@ -67,21 +71,18 @@ class ProfilePage extends ConsumerWidget {
                   expandedHeight: 280,
                   pinned: true,
                   stretch: true,
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: colorScheme.primary,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Stack(
                       fit: StackFit.expand,
                       children: [
                         // Gradient Background
                         Container(
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             gradient: LinearGradient(
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
-                              colors: [
-                                AppColors.primary,
-                                Color(0xFF3F51B5), // Deep Indigo
-                              ],
+                              colors: AppColors.primaryGradient,
                             ),
                           ),
                         ),
@@ -116,9 +117,9 @@ class ProfilePage extends ConsumerWidget {
                                   backgroundColor: AppColors.grey200,
                                   child: Text(
                                     user.fullName[0].toUpperCase(),
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 40,
-                                      color: AppColors.primary,
+                                      color: colorScheme.primary,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -131,11 +132,11 @@ class ProfilePage extends ConsumerWidget {
                             const SizedBox(height: AppDimensions.space16),
                             Text(
                                   user.fullName,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: theme.textTheme.headlineMedium
+                                      ?.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                 )
                                 .animate()
                                 .fadeIn(delay: 200.ms)
@@ -143,9 +144,8 @@ class ProfilePage extends ConsumerWidget {
                             const SizedBox(height: 4),
                             Text(
                                   user.email,
-                                  style: TextStyle(
+                                  style: theme.textTheme.bodyMedium?.copyWith(
                                     color: Colors.white.withValues(alpha: 0.8),
-                                    fontSize: 14,
                                   ),
                                 )
                                 .animate()
@@ -182,14 +182,14 @@ class ProfilePage extends ConsumerWidget {
                   padding: const EdgeInsets.fromLTRB(16, 24, 16, 40),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
-                      _buildSectionHeader('FINANCE'),
-                      _buildMenuContainer([
+                      _buildSectionHeader(context, 'FINANCE'),
+                      _buildMenuContainer(context, [
                         _buildMenuItem(
                           context,
                           'Categories',
                           'Manage your income and expense categories',
                           Icons.category_rounded,
-                          AppColors.primary,
+                          colorScheme.primary,
                           () => context.push('/categories'),
                         ),
                         _buildMenuItem(
@@ -197,7 +197,7 @@ class ProfilePage extends ConsumerWidget {
                           'Budgeting',
                           'Set and track your monthly budget',
                           Icons.account_balance_wallet_rounded,
-                          const Color(0xFF4CAF50), // Green
+                          AppColors.success,
                           () => context.push('/budgets'),
                         ),
                         _buildMenuItem(
@@ -205,7 +205,7 @@ class ProfilePage extends ConsumerWidget {
                           'Financial Goals',
                           'Track your savings and spending goals',
                           Icons.flag_rounded,
-                          const Color(0xFFFF9800), // Orange
+                          AppColors.accentDark,
                           () => context.push('/goals'),
                         ),
                         _buildMenuItem(
@@ -213,19 +213,19 @@ class ProfilePage extends ConsumerWidget {
                           'Reports & Analytics',
                           'Visual insights of your wallet activity',
                           Icons.analytics_rounded,
-                          const Color(0xFF9C27B0), // Purple
+                          AppColors.secondary,
                           () => context.push('/analytics'),
                         ),
                       ]),
                       const SizedBox(height: 24),
-                      _buildSectionHeader('PREFERENCES'),
-                      _buildMenuContainer([
+                      _buildSectionHeader(context, 'PREFERENCES'),
+                      _buildMenuContainer(context, [
                         _buildMenuItem(
                           context,
                           'App Settings',
                           'Language, currency, and theme preferences',
                           Icons.settings_rounded,
-                          AppColors.grey700,
+                          colorScheme.onSurfaceVariant,
                           () => context.push('/settings'),
                         ),
                         _buildMenuItem(
@@ -233,19 +233,19 @@ class ProfilePage extends ConsumerWidget {
                           'Notifications',
                           'Manage your alerts and daily reminders',
                           Icons.notifications_rounded,
-                          const Color(0xFF2196F3), // Blue
+                          AppColors.info,
                           () => context.push('/settings'),
                         ),
                       ]),
                       const SizedBox(height: 24),
-                      _buildSectionHeader('GENERAL'),
-                      _buildMenuContainer([
+                      _buildSectionHeader(context, 'GENERAL'),
+                      _buildMenuContainer(context, [
                         _buildMenuItem(
                           context,
                           'Help & Support',
                           'Get help or contact our support team',
                           Icons.help_outline_rounded,
-                          AppColors.grey700,
+                          colorScheme.onSurfaceVariant,
                           () {},
                         ),
                         _buildMenuItem(
@@ -253,7 +253,7 @@ class ProfilePage extends ConsumerWidget {
                           'Logout',
                           'Sign out of your account securely',
                           Icons.logout_rounded,
-                          AppColors.error,
+                          colorScheme.error,
                           () => _handleLogout(context, ref),
                           isDestructive: true,
                         ),
@@ -269,7 +269,7 @@ class ProfilePage extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                Icon(Icons.error_outline, size: 48, color: colorScheme.error),
                 const SizedBox(height: 16),
                 const Text('Something went wrong'),
                 const SizedBox(height: 16),
@@ -319,25 +319,26 @@ class ProfilePage extends ConsumerWidget {
     );
   }
 
-  Widget _buildSectionHeader(String title) {
+  Widget _buildSectionHeader(BuildContext context, String title) {
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.only(left: 4, bottom: 8),
       child: Text(
         title,
-        style: const TextStyle(
-          fontSize: 12,
+        style: theme.textTheme.labelSmall?.copyWith(
           fontWeight: FontWeight.bold,
-          color: AppColors.grey500,
           letterSpacing: 1.2,
+          color: theme.colorScheme.onSurfaceVariant,
         ),
       ),
     ).animate().fadeIn(delay: 100.ms).slideX(begin: -0.1);
   }
 
-  Widget _buildMenuContainer(List<Widget> children) {
+  Widget _buildMenuContainer(BuildContext context, List<Widget> children) {
+    final theme = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -360,6 +361,7 @@ class ProfilePage extends ConsumerWidget {
     VoidCallback onTap, {
     bool isDestructive = false,
   }) {
+    final theme = Theme.of(context);
     return ListTile(
       onTap: onTap,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -373,23 +375,24 @@ class ProfilePage extends ConsumerWidget {
       ),
       title: Text(
         title,
-        style: TextStyle(
+        style: theme.textTheme.titleMedium?.copyWith(
           fontWeight: FontWeight.w600,
-          color: isDestructive ? AppColors.error : AppColors.grey800,
+          color: isDestructive
+              ? theme.colorScheme.error
+              : theme.colorScheme.onSurface,
         ),
       ),
       subtitle: Text(
         subtitle,
-        style: TextStyle(
-          fontSize: 12,
+        style: theme.textTheme.bodySmall?.copyWith(
           color: isDestructive
-              ? AppColors.error.withValues(alpha: 0.6)
-              : AppColors.grey500,
+              ? theme.colorScheme.error.withValues(alpha: 0.6)
+              : theme.colorScheme.onSurfaceVariant,
         ),
       ),
-      trailing: const Icon(
+      trailing: Icon(
         Icons.chevron_right_rounded,
-        color: AppColors.grey400,
+        color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
         size: 20,
       ),
     );
