@@ -327,14 +327,18 @@ class _AddGoalPageState extends ConsumerState<AddGoalPage> {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? AppColors.primary.withValues(alpha: 0.1)
-                            : AppColors.grey100,
+                            : Theme.of(
+                                context,
+                              ).colorScheme.onSurface.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(
                           AppDimensions.radiusMedium,
                         ),
                         border: Border.all(
                           color: isSelected
                               ? AppColors.primary
-                              : AppColors.grey200,
+                              : Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withValues(alpha: 0.2),
                           width: 2,
                         ),
                       ),
@@ -374,7 +378,9 @@ class _AddGoalPageState extends ConsumerState<AddGoalPage> {
                         ),
                         border: Border.all(
                           color: isSelected
-                              ? AppColors.grey900
+                              ? Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withValues(alpha: 0.9)
                               : Colors.transparent,
                           width: 3,
                         ),

@@ -33,7 +33,9 @@ class CurrencySelectorSheet extends ConsumerWidget {
             height: 4,
             margin: const EdgeInsets.only(bottom: AppDimensions.space16),
             decoration: BoxDecoration(
-              color: Colors.grey[300],
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -58,11 +60,18 @@ class CurrencySelectorSheet extends ConsumerWidget {
                     leading: CircleAvatar(
                       backgroundColor: isSelected
                           ? AppColors.primary
-                          : AppColors.surface,
+                          : Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withValues(alpha: 0.1),
                       child: Text(
                         currency.symbol,
                         style: TextStyle(
-                          color: isSelected ? Colors.white : AppColors.grey900,
+                          color: isSelected
+                              ? Theme.of(context).colorScheme.onPrimary
+                              : Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withValues(alpha: 0.9),
+                          fontSize: 11,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

@@ -61,7 +61,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
               backgroundColor: AppColors.primary,
               foregroundColor: AppColors.white,
               flexibleSpace: FlexibleSpaceBar(
-                title: const Text('Dashboard'),
+                title: const Text(
+                  'Dashboard',
+                  style: TextStyle(color: AppColors.white),
+                ),
                 titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
                 background: Container(
                   decoration: const BoxDecoration(
@@ -161,10 +164,12 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.error_outline,
                           size: 64,
-                          color: AppColors.grey400,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.4),
                         ),
                         const SizedBox(height: 16),
                         Text(
@@ -463,9 +468,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
       child: Container(
         padding: const EdgeInsets.all(AppDimensions.space16),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
-          border: Border.all(color: AppColors.grey200),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+          ),
         ),
         child: Column(
           children: [
@@ -480,7 +487,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             const SizedBox(height: AppDimensions.space8),
             Text(
               label,
-              style: Theme.of(context).textTheme.labelMedium,
+              style: Theme.of(context).textTheme.labelSmall,
               textAlign: TextAlign.center,
             ),
           ],
@@ -530,10 +537,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                           ],
                         ),
                         Text(
-                          CurrencyFormatter.format(
-                            category.amount,
-                            symbol: overview.defaultCurrency.symbol,
-                          ),
+                          CurrencyFormatter.format(category.amount, symbol: ''),
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(fontWeight: FontWeight.w600),
                         ),
@@ -542,7 +546,9 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                     const SizedBox(height: 6),
                     LinearProgressIndicator(
                       value: percentage / 100,
-                      backgroundColor: AppColors.grey200,
+                      backgroundColor: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.2),
                       valueColor: AlwaysStoppedAnimation(
                         _parseColor(category.color),
                       ),
@@ -596,9 +602,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             ),
             subtitle: Text(
               transaction.account.name,
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(color: AppColors.grey500),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.5),
+              ),
             ),
             trailing: Text(
               '${isExpense
@@ -628,24 +636,30 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         padding: const EdgeInsets.all(AppDimensions.space16),
         child: Column(
           children: [
-            const Icon(
+            Icon(
               Icons.receipt_long_outlined,
               size: 64,
-              color: AppColors.grey300,
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.4),
             ),
             const SizedBox(height: AppDimensions.space16),
             Text(
               'No transactions yet',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(color: AppColors.grey600),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
             ),
             const SizedBox(height: AppDimensions.space8),
             Text(
               'Start adding your income and expenses',
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(color: AppColors.grey400),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.4),
+              ),
               textAlign: TextAlign.center,
             ),
           ],
@@ -655,9 +669,12 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
   }
 
   Widget _buildShimmerCard({required double height}) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Shimmer.fromColors(
-      baseColor: AppColors.grey200,
-      highlightColor: AppColors.grey100,
+      baseColor: colorScheme.surfaceContainerHighest,
+      highlightColor: colorScheme.surfaceContainerHighest.withValues(
+        alpha: 0.5,
+      ),
       child: Container(
         height: height,
         decoration: BoxDecoration(

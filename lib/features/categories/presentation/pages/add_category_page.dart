@@ -199,7 +199,9 @@ class _AddCategoryPageState extends ConsumerState<AddCategoryPage> {
                         ),
                         border: Border.all(
                           color: isSelected
-                              ? AppColors.grey900
+                              ? Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withValues(alpha: 0.9)
                               : Colors.transparent,
                           width: 3,
                         ),
@@ -231,20 +233,27 @@ class _AddCategoryPageState extends ConsumerState<AddCategoryPage> {
                         _selectedIcon = icon;
                       });
                     },
+                    borderRadius: BorderRadius.circular(
+                      AppDimensions.radiusMedium,
+                    ),
                     child: Container(
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
                         color: isSelected
                             ? AppColors.primary.withValues(alpha: 0.1)
-                            : AppColors.grey100,
+                            : Theme.of(
+                                context,
+                              ).colorScheme.onSurface.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(
                           AppDimensions.radiusMedium,
                         ),
                         border: Border.all(
                           color: isSelected
                               ? AppColors.primary
-                              : AppColors.grey200,
+                              : Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withValues(alpha: 0.2),
                           width: 2,
                         ),
                       ),

@@ -103,9 +103,11 @@ class _AccountsPageState extends ConsumerState<AccountsPage> {
             ),
             Text(
               '${accounts.length} ${accounts.length == 1 ? 'Account' : 'Accounts'}',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.grey500),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.5),
+              ),
             ),
           ],
         ).animate().fadeIn(delay: 200.ms, duration: 600.ms),
@@ -310,9 +312,11 @@ class _AccountsPageState extends ConsumerState<AccountsPage> {
                     const SizedBox(height: 4),
                     Text(
                       '${account.accountType.name} • ${account.currency.code}',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(color: AppColors.grey500),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.5),
+                      ),
                     ),
                   ],
                 ),
@@ -330,15 +334,19 @@ class _AccountsPageState extends ConsumerState<AccountsPage> {
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: account.currentBalance >= 0
-                          ? AppColors.grey900
-                          : AppColors.error,
+                          ? Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withValues(alpha: 0.9)
+                          : Theme.of(context).colorScheme.error,
                     ),
                   ),
                   if (!account.isIncludedInTotal)
                     Text(
                       'Not in total',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.grey400,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.4),
                         fontSize: 10,
                       ),
                     ),
@@ -363,9 +371,12 @@ class _AccountsPageState extends ConsumerState<AccountsPage> {
   }
 
   Widget _buildShimmerCard({required double height}) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Shimmer.fromColors(
-      baseColor: AppColors.grey200,
-      highlightColor: AppColors.grey100,
+      baseColor: colorScheme.surfaceContainerHighest,
+      highlightColor: colorScheme.surfaceContainerHighest.withValues(
+        alpha: 0.5,
+      ),
       child: Container(
         height: height,
         margin: const EdgeInsets.only(bottom: AppDimensions.space12),
@@ -387,7 +398,9 @@ class _AccountsPageState extends ConsumerState<AccountsPage> {
             Icon(
               Icons.account_balance_wallet_outlined,
               size: 100,
-              color: AppColors.grey300,
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.3),
             ).animate().scale(
               delay: 100.ms,
               duration: 600.ms,
@@ -398,9 +411,11 @@ class _AccountsPageState extends ConsumerState<AccountsPage> {
 
             Text(
               'No Accounts Yet',
-              style: Theme.of(
-                context,
-              ).textTheme.headlineSmall?.copyWith(color: AppColors.grey600),
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.7),
+              ),
             ).animate().fadeIn(delay: 200.ms, duration: 600.ms),
 
             const SizedBox(height: AppDimensions.space8),
@@ -408,9 +423,11 @@ class _AccountsPageState extends ConsumerState<AccountsPage> {
             Text(
               'Create your first account to start\nmanaging your finances',
               textAlign: TextAlign.center,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.grey400),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.4),
+              ),
             ).animate().fadeIn(delay: 300.ms, duration: 600.ms),
 
             const SizedBox(height: AppDimensions.space32),

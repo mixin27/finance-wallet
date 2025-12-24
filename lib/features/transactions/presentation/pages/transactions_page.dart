@@ -151,7 +151,9 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               fontWeight: FontWeight.w600,
-                              color: AppColors.grey700,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurface.withValues(alpha: 0.7),
                             ),
                       ),
                     ),
@@ -198,7 +200,9 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
     final isExpense = transaction.type == 'EXPENSE';
     final isTransfer = transaction.type == 'TRANSFER';
 
-    Color typeColor = AppColors.grey500;
+    Color typeColor = Theme.of(
+      context,
+    ).colorScheme.onSurface.withValues(alpha: 0.5);
     IconData typeIcon = Icons.swap_horiz;
 
     if (isIncome) {
@@ -280,7 +284,9 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
                               ? AppColors.success
                               : isExpense
                               ? AppColors.error
-                              : AppColors.grey700,
+                              : Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                       Text(
@@ -296,7 +302,9 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
                               ? AppColors.success
                               : isExpense
                               ? AppColors.error
-                              : AppColors.grey700,
+                              : Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                       if (transaction.tags.isNotEmpty) ...[
@@ -310,14 +318,17 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
                                 vertical: 2,
                               ),
                               decoration: BoxDecoration(
-                                color: AppColors.grey200,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
                                 '#${tag.name}',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 10,
-                                  color: AppColors.grey600,
+                                  color: Theme.of(context).colorScheme.onSurface
+                                      .withValues(alpha: 0.6),
                                 ),
                               ),
                             );
@@ -339,20 +350,28 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
                   if (transaction.category != null) ...[
                     Text(
                       transaction.category!.name,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(color: AppColors.grey500),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.5),
+                      ),
                     ),
-                    const Text(
+                    Text(
                       ' • ',
-                      style: TextStyle(color: AppColors.grey400),
+                      style: TextStyle(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.4),
+                      ),
                     ),
                   ],
                   Text(
                     transaction.account.name,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodySmall?.copyWith(color: AppColors.grey500),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.5),
+                    ),
                   ),
                 ],
               ),
@@ -363,13 +382,17 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
                     Icon(
                       Icons.arrow_forward,
                       size: 12,
-                      color: AppColors.grey400,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.4),
                     ),
                     const SizedBox(width: 4),
                     Text(
                       transaction.toAccount!.name,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.grey400,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.4),
                         fontSize: 11,
                       ),
                     ),
@@ -419,8 +442,8 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
         // final categories = ref.watch(categoriesProvider);
 
         return Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(AppDimensions.radiusLarge),
             ),
@@ -437,7 +460,9 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: AppColors.grey300,
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -534,18 +559,29 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: AppColors.grey100,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(
                           AppDimensions.radiusMedium,
                         ),
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.calendar_today, color: AppColors.grey400),
+                          Icon(
+                            Icons.calendar_today,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withValues(alpha: 0.4),
+                          ),
                           const SizedBox(width: 12),
                           Text(
                             'Custom date range - Coming soon',
-                            style: TextStyle(color: AppColors.grey500),
+                            style: TextStyle(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurface.withValues(alpha: 0.5),
+                            ),
                           ),
                         ],
                       ),
@@ -579,15 +615,21 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
       label: Text(label),
       selected: isSelected,
       onSelected: (_) => onTap(),
-      backgroundColor: AppColors.grey100,
+      backgroundColor: Theme.of(
+        context,
+      ).colorScheme.onSurface.withValues(alpha: 0.1),
       selectedColor: chipColor.withValues(alpha: 0.2),
       checkmarkColor: chipColor,
       labelStyle: TextStyle(
-        color: isSelected ? chipColor : AppColors.grey700,
+        color: isSelected
+            ? chipColor
+            : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
         fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
       ),
       side: BorderSide(
-        color: isSelected ? chipColor : AppColors.grey300,
+        color: isSelected
+            ? chipColor
+            : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
         width: isSelected ? 2 : 1,
       ),
     );
@@ -601,9 +643,12 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
   }
 
   Widget _buildShimmerCard() {
+    final colorScheme = Theme.of(context).colorScheme;
     return Shimmer.fromColors(
-      baseColor: AppColors.grey200,
-      highlightColor: AppColors.grey100,
+      baseColor: colorScheme.surfaceContainerHighest,
+      highlightColor: colorScheme.surfaceContainerHighest.withValues(
+        alpha: 0.5,
+      ),
       child: Container(
         height: 80,
         margin: const EdgeInsets.only(bottom: AppDimensions.space12),
@@ -625,7 +670,9 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
             Icon(
               Icons.receipt_long_outlined,
               size: 100,
-              color: AppColors.grey300,
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.3),
             ).animate().scale(
               delay: 100.ms,
               duration: 600.ms,
@@ -636,9 +683,11 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
 
             Text(
               'No Transactions Yet',
-              style: Theme.of(
-                context,
-              ).textTheme.headlineSmall?.copyWith(color: AppColors.grey600),
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
             ).animate().fadeIn(delay: 200.ms, duration: 600.ms),
 
             const SizedBox(height: AppDimensions.space8),
@@ -646,9 +695,11 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
             Text(
               'Start tracking your income and expenses\nby adding your first transaction',
               textAlign: TextAlign.center,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.grey400),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.4),
+              ),
             ).animate().fadeIn(delay: 300.ms, duration: 600.ms),
 
             const SizedBox(height: AppDimensions.space32),

@@ -231,18 +231,28 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     VoidCallback onTap,
   ) {
     return ListTile(
-      leading: Icon(icon, color: AppColors.grey700),
+      leading: Icon(
+        icon,
+        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+      ),
       title: Text(title),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             trailing,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: AppColors.grey600),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.6),
+            ),
           ),
-          const Icon(Icons.chevron_right, color: AppColors.grey400),
+          Icon(
+            Icons.chevron_right,
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.4),
+          ),
         ],
       ),
       onTap: onTap,
@@ -292,7 +302,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     return day.toString();
   }
 
-  void _showLanguagePicker(BuildContext context, String current) {
+void _showLanguagePicker(BuildContext context, String current) {
     final languages = [
       {'code': 'en', 'name': 'English'},
       {'code': 'es', 'name': 'Spanish'},

@@ -114,7 +114,10 @@ class ProfilePage extends ConsumerWidget {
                                 ),
                                 child: CircleAvatar(
                                   radius: 50,
-                                  backgroundColor: AppColors.grey200,
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withValues(alpha: 0.2),
                                   child: Text(
                                     user.fullName[0].toUpperCase(),
                                     style: TextStyle(

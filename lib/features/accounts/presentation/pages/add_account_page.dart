@@ -293,7 +293,10 @@ class _AddAccountPageState extends ConsumerState<AddAccountPage> {
                                   ),
                                   border: Border.all(
                                     color: isSelected
-                                        ? AppColors.grey900
+                                        ? Theme.of(context)
+                                              .colorScheme
+                                              .onSurface
+                                              .withValues(alpha: 0.9)
                                         : Colors.transparent,
                                     width: 3,
                                   ),

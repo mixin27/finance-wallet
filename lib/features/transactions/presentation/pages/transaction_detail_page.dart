@@ -30,7 +30,9 @@ class TransactionDetailPage extends ConsumerWidget {
     final isExpense = transaction.type == 'EXPENSE';
     final isTransfer = transaction.type == 'TRANSFER';
 
-    Color typeColor = AppColors.grey500;
+    Color typeColor = Theme.of(
+      context,
+    ).colorScheme.onSurface.withValues(alpha: 0.5);
     IconData typeIcon = Icons.swap_horiz;
     String typeLabel = 'Transfer';
 
@@ -390,7 +392,13 @@ class TransactionDetailPage extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: AppDimensions.space8),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: AppColors.grey500),
+          Icon(
+            icon,
+            size: 20,
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.5),
+          ),
           const SizedBox(width: AppDimensions.space12),
           Expanded(
             child: Column(
@@ -398,9 +406,11 @@ class TransactionDetailPage extends ConsumerWidget {
               children: [
                 Text(
                   label,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: AppColors.grey500),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.5),
+                  ),
                 ),
                 const SizedBox(height: 2),
                 Text(

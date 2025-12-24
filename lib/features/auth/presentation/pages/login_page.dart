@@ -89,7 +89,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.displaySmall?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: AppColors.grey900,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.9),
                       ),
                     )
                     .animate()
@@ -101,9 +103,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 Text(
                       'Sign in to continue',
                       textAlign: TextAlign.center,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyLarge?.copyWith(color: AppColors.grey500),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.5),
+                      ),
                     )
                     .animate()
                     .fadeIn(delay: 400.ms, duration: 600.ms)
@@ -225,7 +229,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       child: Text(
                         'OR',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.grey400,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.4),
                         ),
                       ),
                     ),

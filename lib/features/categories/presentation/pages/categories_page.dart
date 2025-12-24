@@ -107,9 +107,11 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage>
         if (systemCategories.isNotEmpty) ...[
           Text(
             'System Categories',
-            style: Theme.of(
-              context,
-            ).textTheme.titleMedium?.copyWith(color: AppColors.grey600),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.6),
+            ),
           ).animate().fadeIn(delay: 100.ms, duration: 600.ms),
           const SizedBox(height: AppDimensions.space12),
           ...systemCategories.asMap().entries.map((entry) {
@@ -122,9 +124,11 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage>
         if (customCategories.isNotEmpty) ...[
           Text(
             'Custom Categories',
-            style: Theme.of(
-              context,
-            ).textTheme.titleMedium?.copyWith(color: AppColors.grey600),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.6),
+            ),
           ).animate().fadeIn(delay: 200.ms, duration: 600.ms),
           const SizedBox(height: AppDimensions.space12),
           ...customCategories.asMap().entries.map((entry) {
@@ -139,24 +143,30 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage>
               padding: const EdgeInsets.all(AppDimensions.space16),
               child: Column(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.add_circle_outline,
                     size: 48,
-                    color: AppColors.grey300,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.3),
                   ),
                   const SizedBox(height: AppDimensions.space8),
                   Text(
                     'No custom categories yet',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.copyWith(color: AppColors.grey500),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.5),
+                    ),
                   ),
                   const SizedBox(height: AppDimensions.space4),
                   Text(
                     'Create your own categories',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodySmall?.copyWith(color: AppColors.grey400),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.4),
+                    ),
                   ),
                 ],
               ),
@@ -248,7 +258,10 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage>
                           Text(
                             '${category.subCategories.length} ${category.subCategories.length == 1 ? 'subcategory' : 'subcategories'}',
                             style: Theme.of(context).textTheme.bodySmall
-                                ?.copyWith(color: AppColors.grey500),
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.onSurface
+                                      .withValues(alpha: 0.5),
+                                ),
                           ),
                         ],
                       ],
@@ -257,7 +270,12 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage>
 
                   // Arrow or Actions
                   if (!isSystem)
-                    Icon(Icons.chevron_right, color: AppColors.grey400),
+                    Icon(
+                      Icons.chevron_right,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.4),
+                    ),
                 ],
               ),
             ),
@@ -269,13 +287,16 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage>
   }
 
   Widget _buildLoadingState() {
+    final colorScheme = Theme.of(context).colorScheme;
     return ListView(
       padding: const EdgeInsets.all(AppDimensions.space16),
       children: List.generate(
         8,
         (index) => Shimmer.fromColors(
-          baseColor: AppColors.grey200,
-          highlightColor: AppColors.grey100,
+          baseColor: colorScheme.surfaceContainerHighest,
+          highlightColor: colorScheme.surfaceContainerHighest.withValues(
+            alpha: 0.5,
+          ),
           child: Container(
             height: 80,
             margin: const EdgeInsets.only(bottom: AppDimensions.space12),
@@ -299,7 +320,9 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage>
             Icon(
               Icons.category_outlined,
               size: 100,
-              color: AppColors.grey300,
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.3),
             ).animate().scale(
               delay: 100.ms,
               duration: 600.ms,
@@ -310,18 +333,22 @@ class _CategoriesPageState extends ConsumerState<CategoriesPage>
 
             Text(
               'No Categories',
-              style: Theme.of(
-                context,
-              ).textTheme.headlineSmall?.copyWith(color: AppColors.grey600),
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
             ).animate().fadeIn(delay: 200.ms, duration: 600.ms),
 
             const SizedBox(height: AppDimensions.space8),
 
             Text(
               'No $type categories found',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.grey400),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.4),
+              ),
             ).animate().fadeIn(delay: 300.ms, duration: 600.ms),
           ],
         ),

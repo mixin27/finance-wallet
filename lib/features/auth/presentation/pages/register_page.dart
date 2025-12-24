@@ -96,9 +96,11 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                 Text(
                       'Join us to start managing your finances better',
                       textAlign: TextAlign.center,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyLarge?.copyWith(color: AppColors.grey600),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.6),
+                      ),
                     )
                     .animate()
                     .fadeIn(delay: 100.ms, duration: 600.ms)
@@ -255,9 +257,11 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                 Text(
                   'By creating an account, you agree to our\nTerms of Service and Privacy Policy',
                   textAlign: TextAlign.center,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: AppColors.grey500),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.5),
+                  ),
                 ).animate().fadeIn(delay: 800.ms, duration: 600.ms),
 
                 const SizedBox(height: AppDimensions.space32),
@@ -269,7 +273,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                     Text(
                       'Already have an account? ',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppColors.grey600,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                     ),
                     TextButton(

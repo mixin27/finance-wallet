@@ -237,10 +237,13 @@ class AccountDetailPage extends ConsumerWidget {
                             Center(
                               child: Column(
                                 children: [
-                                  const Icon(
+                                  Icon(
                                     Icons.receipt_long_outlined,
                                     size: 48,
-                                    color: AppColors.grey300,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withValues(alpha: 0.3),
                                   ),
                                   const SizedBox(height: AppDimensions.space8),
                                   Text(
@@ -248,7 +251,12 @@ class AccountDetailPage extends ConsumerWidget {
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium
-                                        ?.copyWith(color: AppColors.grey500),
+                                        ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface
+                                              .withValues(alpha: 0.5),
+                                        ),
                                   ),
                                 ],
                               ),
@@ -278,7 +286,13 @@ class AccountDetailPage extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: AppDimensions.space8),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: AppColors.grey500),
+          Icon(
+            icon,
+            size: 20,
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.5),
+          ),
           const SizedBox(width: AppDimensions.space12),
           Expanded(
             child: Column(
@@ -286,9 +300,11 @@ class AccountDetailPage extends ConsumerWidget {
               children: [
                 Text(
                   label,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: AppColors.grey500),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.5),
+                  ),
                 ),
                 const SizedBox(height: 2),
                 Text(

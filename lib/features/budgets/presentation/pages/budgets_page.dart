@@ -85,7 +85,12 @@ class _BudgetsPageState extends ConsumerState<BudgetsPage> {
                             Text(
                               budget.categoryName!,
                               style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(color: AppColors.grey500),
+                                  ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withValues(alpha: 0.5),
+                                  ),
                             ),
                         ],
                       ),
@@ -150,7 +155,9 @@ class _BudgetsPageState extends ConsumerState<BudgetsPage> {
                         symbol: budget.currencySymbol,
                       ),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppColors.grey500,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.5),
                       ),
                     ),
                   ],
@@ -158,7 +165,9 @@ class _BudgetsPageState extends ConsumerState<BudgetsPage> {
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: (budget.percentageUsed / 100).clamp(0.0, 1.0),
-                  backgroundColor: AppColors.grey200,
+                  backgroundColor: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withValues(alpha: 0.2),
                   valueColor: AlwaysStoppedAnimation(color),
                   minHeight: 8,
                   borderRadius: BorderRadius.circular(4),
@@ -169,15 +178,19 @@ class _BudgetsPageState extends ConsumerState<BudgetsPage> {
                   children: [
                     Text(
                       '${budget.percentageUsed.toStringAsFixed(1)}% used',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(color: AppColors.grey600),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.6),
+                      ),
                     ),
                     Text(
                       '${budget.remaining >= 0 ? 'Remaining' : 'Over'}: ${CurrencyFormatter.format(budget.remaining.abs(), symbol: budget.currencySymbol)}',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: budget.remaining >= 0
-                            ? AppColors.grey600
+                            ? Theme.of(
+                                context,
+                              ).colorScheme.onSurface.withValues(alpha: 0.6)
                             : AppColors.error,
                       ),
                     ),
@@ -198,24 +211,30 @@ class _BudgetsPageState extends ConsumerState<BudgetsPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               Icons.account_balance_wallet_outlined,
               size: 100,
-              color: AppColors.grey300,
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.3),
             ).animate().scale(delay: 100.ms, curve: Curves.elasticOut),
             const SizedBox(height: 24),
             Text(
               'No Budgets Yet',
-              style: Theme.of(
-                context,
-              ).textTheme.headlineSmall?.copyWith(color: AppColors.grey600),
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
             ),
             const SizedBox(height: 8),
             Text(
               'Create budgets to track your spending',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.grey400),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.4),
+              ),
             ),
             const SizedBox(height: 32),
             ElevatedButton.icon(

@@ -539,7 +539,15 @@ class _TransferPageState extends ConsumerState<TransferPage>
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
-        Text(symbol, style: TextStyle(color: AppColors.grey500, fontSize: 11)),
+        Text(
+          symbol,
+          style: TextStyle(
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.5),
+            fontSize: 11,
+          ),
+        ),
       ],
     );
   }
@@ -617,7 +625,12 @@ class _TransferPageState extends ConsumerState<TransferPage>
         ),
         Text(
           '${account.currency.symbol}${account.currentBalance.toStringAsFixed(2)}',
-          style: const TextStyle(color: AppColors.grey500, fontSize: 12),
+          style: TextStyle(
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.5),
+            fontSize: 12,
+          ),
         ),
       ],
     );

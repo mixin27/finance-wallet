@@ -392,7 +392,7 @@ class _AddTransactionPageState extends ConsumerState<AddTransactionPage>
   Widget _buildTypeSelector() {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.grey100,
+        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppDimensions.radiusLarge),
       ),
       padding: const EdgeInsets.all(4),
@@ -464,14 +464,22 @@ class _AddTransactionPageState extends ConsumerState<AddTransactionPage>
           children: [
             Icon(
               icon,
-              color: isSelected ? Colors.white : AppColors.grey600,
+              color: isSelected
+                  ? Colors.white
+                  : Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.6),
               size: 22,
             ),
             const SizedBox(width: 8),
             Text(
               label,
               style: TextStyle(
-                color: isSelected ? Colors.white : AppColors.grey600,
+                color: isSelected
+                    ? Colors.white
+                    : Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.6),
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                 fontSize: 16,
               ),

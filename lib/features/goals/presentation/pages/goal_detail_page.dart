@@ -184,7 +184,9 @@ class GoalDetailPage extends ConsumerWidget {
                         const SizedBox(height: 16),
                         LinearProgressIndicator(
                           value: goal.percentageComplete / 100,
-                          backgroundColor: AppColors.grey200,
+                          backgroundColor: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.2),
                           valueColor: AlwaysStoppedAnimation(color),
                           minHeight: 12,
                           borderRadius: BorderRadius.circular(6),
@@ -199,7 +201,12 @@ class GoalDetailPage extends ConsumerWidget {
                                 Text(
                                   'Remaining',
                                   style: Theme.of(context).textTheme.bodySmall
-                                      ?.copyWith(color: AppColors.grey500),
+                                      ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                            .withValues(alpha: 0.5),
+                                      ),
                                 ),
                                 Text(
                                   CurrencyFormatter.format(
@@ -217,7 +224,12 @@ class GoalDetailPage extends ConsumerWidget {
                                 Text(
                                   'Days Left',
                                   style: Theme.of(context).textTheme.bodySmall
-                                      ?.copyWith(color: AppColors.grey500),
+                                      ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                            .withValues(alpha: 0.5),
+                                      ),
                                 ),
                                 Text(
                                   daysLeft > 0
@@ -227,7 +239,10 @@ class GoalDetailPage extends ConsumerWidget {
                                       ?.copyWith(
                                         fontWeight: FontWeight.w600,
                                         color: daysLeft > 0
-                                            ? AppColors.grey900
+                                            ? Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurface
+                                                  .withValues(alpha: 0.9)
                                             : AppColors.error,
                                       ),
                                 ),
@@ -338,7 +353,13 @@ class GoalDetailPage extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: AppColors.grey500),
+          Icon(
+            icon,
+            size: 20,
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.5),
+          ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -346,9 +367,11 @@ class GoalDetailPage extends ConsumerWidget {
               children: [
                 Text(
                   label,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: AppColors.grey500),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.5),
+                  ),
                 ),
                 Text(
                   value,

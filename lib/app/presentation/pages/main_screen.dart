@@ -31,7 +31,9 @@ class MainScreen extends StatelessWidget {
                   onTap: _onTap,
                   type: BottomNavigationBarType.fixed,
                   selectedItemColor: AppColors.primary,
-                  unselectedItemColor: AppColors.grey400,
+                  unselectedItemColor: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withValues(alpha: 0.4),
                   selectedFontSize: 12,
                   unselectedFontSize: 12,
                   items: const [

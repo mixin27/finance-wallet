@@ -149,7 +149,9 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
                       Text(
                         '${incomePercentage.toStringAsFixed(1)}%',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.grey500,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.5),
                         ),
                       ),
                     ],
@@ -189,7 +191,9 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
                       Text(
                         '${expensePercentage.toStringAsFixed(1)}%',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.grey500,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.5),
                         ),
                       ),
                     ],
@@ -450,7 +454,9 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
                     const SizedBox(height: 6),
                     LinearProgressIndicator(
                       value: percentage / 100,
-                      backgroundColor: AppColors.grey200,
+                      backgroundColor: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.2),
                       valueColor: AlwaysStoppedAnimation(color),
                       minHeight: 6,
                       borderRadius: BorderRadius.circular(3),

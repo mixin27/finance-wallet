@@ -125,7 +125,12 @@ class _GoalsPageState extends ConsumerState<GoalsPage> {
                               Text(
                                 goal.description!,
                                 style: Theme.of(context).textTheme.bodySmall
-                                    ?.copyWith(color: AppColors.grey500),
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withValues(alpha: 0.5),
+                                    ),
                               ),
                           ],
                         ),
@@ -171,7 +176,9 @@ class _GoalsPageState extends ConsumerState<GoalsPage> {
                           symbol: goal.currencySymbol,
                         ),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.grey500,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.5),
                         ),
                       ),
                     ],
@@ -179,7 +186,9 @@ class _GoalsPageState extends ConsumerState<GoalsPage> {
                   const SizedBox(height: 8),
                   LinearProgressIndicator(
                     value: goal.percentageComplete / 100,
-                    backgroundColor: AppColors.grey200,
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.2),
                     valueColor: AlwaysStoppedAnimation(color),
                     minHeight: 8,
                     borderRadius: BorderRadius.circular(4),
@@ -191,7 +200,9 @@ class _GoalsPageState extends ConsumerState<GoalsPage> {
                       Text(
                         '${goal.percentageComplete.toStringAsFixed(1)}% complete',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.grey600,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.6),
                         ),
                       ),
                       if (!goal.isCompleted)
@@ -200,7 +211,8 @@ class _GoalsPageState extends ConsumerState<GoalsPage> {
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(
                                 color: daysLeft > 0
-                                    ? AppColors.grey600
+                                    ? Theme.of(context).colorScheme.onSurface
+                                          .withValues(alpha: 0.6)
                                     : AppColors.error,
                               ),
                         ),
@@ -227,10 +239,12 @@ class _GoalsPageState extends ConsumerState<GoalsPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               Icons.flag_outlined,
               size: 100,
-              color: AppColors.grey300,
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.3),
             ).animate().scale(
               delay: 100.ms,
               duration: 600.ms,
@@ -239,17 +253,21 @@ class _GoalsPageState extends ConsumerState<GoalsPage> {
             const SizedBox(height: AppDimensions.space24),
             Text(
               'No Goals Yet',
-              style: Theme.of(
-                context,
-              ).textTheme.headlineSmall?.copyWith(color: AppColors.grey600),
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
             ),
             const SizedBox(height: AppDimensions.space8),
             Text(
               'Start setting financial goals\nto track your savings progress',
               textAlign: TextAlign.center,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.grey400),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.4),
+              ),
             ),
             const SizedBox(height: AppDimensions.space32),
             ElevatedButton.icon(
