@@ -7,6 +7,7 @@ import '../../data/datasources/account_remote_datasource.dart';
 import '../../data/models/account.dart';
 import '../../data/models/account_summary.dart';
 import '../../data/models/account_type.dart';
+import '../../data/models/account_filter.dart';
 import '../../data/repositories/account_repository_impl.dart';
 import '../../domain/repositories/account_repository.dart';
 
@@ -41,3 +42,8 @@ final accountTypesProvider = StateProvider<List<AccountType>>((ref) => []);
 
 // Selected Account Provider (for details/edit)
 final selectedAccountProvider = StateProvider<Account?>((ref) => null);
+
+// Account Filter Provider
+final accountFilterProvider = StateProvider<AccountFilter>(
+  (ref) => AccountFilter(),
+);

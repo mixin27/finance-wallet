@@ -13,6 +13,7 @@ import '../../data/models/account.dart';
 import '../../data/models/account_summary.dart';
 import '../providers/account_providers.dart';
 import '../viewmodels/account_list_viewmodel.dart';
+import '../widgets/account_filter_sheet.dart';
 
 class AccountsPage extends ConsumerStatefulWidget {
   const AccountsPage({super.key});
@@ -42,16 +43,29 @@ class _AccountsPageState extends ConsumerState<AccountsPage> {
     final state = ref.watch(accountListViewModelProvider);
     final accounts = ref.watch(accountsProvider);
     final summary = ref.watch(accountSummaryProvider);
+    final filter = ref.watch(accountFilterProvider);
+
+    final isFiltered = filter.accountType != null || filter.includeInactive;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Accounts'),
         actions: [
+          if (isFiltered)
+            Container(
+                  margin: const EdgeInsets.only(right: 8),
+                  padding: const EdgeInsets.all(8),
+                  decoration: const BoxDecoration(
+                    color: AppColors.primary,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.filter_alt, size: 20),
+                )
+                .animate(onPlay: (controller) => controller.repeat())
+                .shimmer(delay: 1000.ms, duration: 1500.ms),
           IconButton(
             icon: const Icon(Icons.filter_list),
-            onPressed: () {
-              // todo(mixin27): Show filter options
-            },
+            onPressed: () => AccountFilterSheet.show(context),
           ),
         ],
       ),

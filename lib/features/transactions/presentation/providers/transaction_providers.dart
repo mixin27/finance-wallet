@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' show DateTimeRange;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
@@ -47,9 +48,12 @@ final transactionTypeFilterProvider = StateProvider<String?>((ref) => null);
 // Date Range Filter Provider
 final dateRangeFilterProvider = StateProvider<DateTimeRange?>((ref) => null);
 
-class DateTimeRange {
-  final DateTime start;
-  final DateTime end;
+// Category Filter Provider
+final categoryIdFilterProvider = StateProvider<String?>((ref) => null);
 
-  DateTimeRange(this.start, this.end);
-}
+// class DateTimeRange {
+//   final DateTime start;
+//   final DateTime end;
+//
+//   DateTimeRange(this.start, this.end);
+// }

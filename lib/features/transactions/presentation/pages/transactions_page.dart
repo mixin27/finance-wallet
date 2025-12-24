@@ -11,6 +11,7 @@ import '../../../../core/utils/date_formatter.dart';
 import '../../data/models/transaction.dart';
 import '../providers/transaction_providers.dart';
 import '../viewmodels/transaction_list_viewmodel.dart';
+import '../widgets/transaction_filter_sheet.dart';
 
 class TransactionsPage extends ConsumerStatefulWidget {
   const TransactionsPage({super.key});
@@ -55,12 +56,7 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
   }
 
   void _showFilterSheet() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => _buildFilterSheet(),
-    );
+    TransactionFilterSheet.show(context);
   }
 
   @override
@@ -432,206 +428,6 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
           backgroundColor: AppColors.primary,
         ),
       ],
-    );
-  }
-
-  Widget _buildFilterSheet() {
-    return Consumer(
-      builder: (context, ref, child) {
-        final typeFilter = ref.watch(transactionTypeFilterProvider);
-        // final categories = ref.watch(categoriesProvider);
-
-        return Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(AppDimensions.radiusLarge),
-            ),
-          ),
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Handle
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 12),
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.all(AppDimensions.space16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Filters',
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            ref
-                                .read(transactionListViewModelProvider.notifier)
-                                .clearFilters();
-                            Navigator.pop(context);
-                          },
-                          child: const Text('Clear All'),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: AppDimensions.space16),
-
-                    // Type Filter
-                    Text(
-                      'Transaction Type',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(height: AppDimensions.space8),
-                    Wrap(
-                      spacing: 8,
-                      children: [
-                        _buildFilterChip(
-                          label: 'All',
-                          isSelected: typeFilter == null,
-                          onTap: () {
-                            ref
-                                .read(transactionListViewModelProvider.notifier)
-                                .filterByType(null);
-                            Navigator.pop(context);
-                          },
-                        ),
-                        _buildFilterChip(
-                          label: 'Income',
-                          isSelected: typeFilter == 'INCOME',
-                          color: AppColors.success,
-                          onTap: () {
-                            ref
-                                .read(transactionListViewModelProvider.notifier)
-                                .filterByType('INCOME');
-                            Navigator.pop(context);
-                          },
-                        ),
-                        _buildFilterChip(
-                          label: 'Expense',
-                          isSelected: typeFilter == 'EXPENSE',
-                          color: AppColors.error,
-                          onTap: () {
-                            ref
-                                .read(transactionListViewModelProvider.notifier)
-                                .filterByType('EXPENSE');
-                            Navigator.pop(context);
-                          },
-                        ),
-                        _buildFilterChip(
-                          label: 'Transfer',
-                          isSelected: typeFilter == 'TRANSFER',
-                          color: AppColors.info,
-                          onTap: () {
-                            ref
-                                .read(transactionListViewModelProvider.notifier)
-                                .filterByType('TRANSFER');
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: AppDimensions.space24),
-
-                    // Date Range (Coming soon placeholder)
-                    Text(
-                      'Date Range',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(height: AppDimensions.space8),
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(
-                          AppDimensions.radiusMedium,
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.calendar_today,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onSurface.withValues(alpha: 0.4),
-                          ),
-                          const SizedBox(width: 12),
-                          Text(
-                            'Custom date range - Coming soon',
-                            style: TextStyle(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurface.withValues(alpha: 0.5),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: AppDimensions.space16),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ).animate().slideY(
-          begin: 0.3,
-          end: 0,
-          duration: 300.ms,
-          curve: Curves.easeOut,
-        );
-      },
-    );
-  }
-
-  Widget _buildFilterChip({
-    required String label,
-    required bool isSelected,
-    Color? color,
-    required VoidCallback onTap,
-  }) {
-    final chipColor = color ?? AppColors.primary;
-
-    return FilterChip(
-      label: Text(label),
-      selected: isSelected,
-      onSelected: (_) => onTap(),
-      backgroundColor: Theme.of(
-        context,
-      ).colorScheme.onSurface.withValues(alpha: 0.1),
-      selectedColor: chipColor.withValues(alpha: 0.2),
-      checkmarkColor: chipColor,
-      labelStyle: TextStyle(
-        color: isSelected
-            ? chipColor
-            : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
-        fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-      ),
-      side: BorderSide(
-        color: isSelected
-            ? chipColor
-            : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
-        width: isSelected ? 2 : 1,
-      ),
     );
   }
 

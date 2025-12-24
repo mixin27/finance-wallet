@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' show DateTimeRange;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
@@ -65,10 +66,11 @@ class TransactionListViewModel extends StateNotifier<TransactionListState> {
     final currentPage = _ref.read(currentPageProvider);
     final typeFilter = _ref.read(transactionTypeFilterProvider);
     final dateRange = _ref.read(dateRangeFilterProvider);
+    final categoryFilter = _ref.read(categoryIdFilterProvider);
 
     final filter = TransactionFilter(
       accountId: accountId,
-      categoryId: categoryId,
+      categoryId: categoryId ?? categoryFilter,
       type: typeFilter,
       startDate: dateRange?.start,
       endDate: dateRange?.end,
@@ -166,11 +168,18 @@ class TransactionListViewModel extends StateNotifier<TransactionListState> {
     await loadTransactions(accountId: accountId, categoryId: categoryId);
   }
 
+  /// Filter by category
+  Future<void> filterByCategory(String? categoryId, {String? accountId}) async {
+    _ref.read(categoryIdFilterProvider.notifier).state = categoryId;
+    await loadTransactions(accountId: accountId);
+  }
+
   /// Clear all filters
-  Future<void> clearFilters({String? accountId, String? categoryId}) async {
+  Future<void> clearFilters({String? accountId}) async {
     _ref.read(transactionTypeFilterProvider.notifier).state = null;
     _ref.read(dateRangeFilterProvider.notifier).state = null;
-    await loadTransactions(accountId: accountId, categoryId: categoryId);
+    _ref.read(categoryIdFilterProvider.notifier).state = null;
+    await loadTransactions(accountId: accountId);
   }
 
   /// Delete transaction

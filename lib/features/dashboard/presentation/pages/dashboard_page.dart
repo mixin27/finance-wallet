@@ -50,6 +50,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
 
     return Scaffold(
       body: RefreshIndicator.adaptive(
+        color: Theme.of(context).colorScheme.onPrimary,
         onRefresh: _onRefresh,
         child: CustomScrollView(
           slivers: [

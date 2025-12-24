@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 import '../../../../core/errors/failure.dart';
+import '../../data/models/account_filter.dart';
 import '../../domain/repositories/account_repository.dart';
 import '../providers/account_providers.dart';
 
@@ -35,14 +36,13 @@ class AccountListViewModel extends StateNotifier<AccountListState> {
 
   AccountListViewModel(this._repository, this._ref) : super(AccountListState());
 
-  Future<void> loadAccounts({
-    bool includeInactive = false,
-    bool forceRefresh = false,
-  }) async {
+  Future<void> loadAccounts({bool forceRefresh = false}) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
 
+    final filter = _ref.read(accountFilterProvider);
+
     final result = await _repository.getAccounts(
-      includeInactive: includeInactive,
+      includeInactive: filter.includeInactive,
       forceRefresh: forceRefresh,
     );
 
@@ -75,11 +75,36 @@ class AccountListViewModel extends StateNotifier<AccountListState> {
     );
   }
 
+  Future<void> loadAccountTypes() async {
+    final result = await _repository.getAccountTypes();
+
+    result.fold(
+      (failure) {
+        // Silently fail for account types
+      },
+      (types) {
+        _ref.read(accountTypesProvider.notifier).state = types;
+      },
+    );
+  }
+
   Future<void> refreshAccounts() async {
     state = state.copyWith(isRefreshing: true);
     await loadAccounts(forceRefresh: true);
     await loadAccountSummary(forceRefresh: true);
     state = state.copyWith(isRefreshing: false);
+  }
+
+  /// Update filter and reload
+  Future<void> updateFilter(AccountFilter filter) async {
+    _ref.read(accountFilterProvider.notifier).state = filter;
+    await loadAccounts();
+  }
+
+  /// Clear filters and reload
+  Future<void> clearFilters() async {
+    _ref.read(accountFilterProvider.notifier).state = AccountFilter();
+    await loadAccounts();
   }
 
   Future<bool> deleteAccount(String id) async {

@@ -30,9 +30,7 @@ class TransactionDetailPage extends ConsumerWidget {
     final isExpense = transaction.type == 'EXPENSE';
     final isTransfer = transaction.type == 'TRANSFER';
 
-    Color typeColor = Theme.of(
-      context,
-    ).colorScheme.onSurface.withValues(alpha: 0.5);
+    Color typeColor = AppColors.grey600;
     IconData typeIcon = Icons.swap_horiz;
     String typeLabel = 'Transfer';
 
